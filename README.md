@@ -32,7 +32,7 @@ This course is a detailed exploration of statistical techniques, designed to equ
 - **Rigorous Focus on Statistical Theory:** Detailed explanations of mathematical foundations and derivations where applicable.
 - **Practical Application:** Examples and problems based on real-world datasets and scenarios using the ubiquitous Microsoft Excel.
 - **Technical Implementation:** Step-by-step walkthroughs for statistical computations.
-
+---
 ## Video Lectures
 ### Descriptive Statistics
 1. [Introduction to Statistics](https://uopstdedu-my.sharepoint.com/:v:/g/personal/mohammed_fasha_uop_edu_jo/ETOGRimBsspFsESOhsuo_dIBcKmhgySuDeVk5i5o1Jc7Tg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=sm4CmU)  
