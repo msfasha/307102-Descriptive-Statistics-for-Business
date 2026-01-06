@@ -43,6 +43,7 @@
 | IMDb Datasets                     | بيانات IMDb                  | [IMDb Datasets](https://datasets.imdbws.com/)                                                                                          | Real film, ratings, and people metadata for analysis                          |
 | Netflix Prize Dataset             | بيانات مسابقة نيتفليكس       | [Netflix Prize Data](https://www.netflixprize.com/)                                                                                    | Movie ratings dataset used for recommendation model research                  |
 | COVID-19 Open Data (Google Cloud) | بيانات كوفيد-19 العامة       | [BigQuery COVID-19 Dataset](https://console.cloud.google.com/marketplace/product/bigquery-public-datasets/covid19-public-data-program) | Global public health and mobility data during COVID-19 pandemic               |
-| Snowflake Marketplace | Snowflake Marketplace      | [Snowflake Marketplace](https://app.snowflake.com/marketplace/data-products?pricing=free) | Multiple Datasets 
+| Snowflake Marketplace | Snowflake Marketplace      | [Snowflake Marketplace](https://app.snowflake.com/marketplace/data-products?pricing=free) | Multiple Datasets |
+| Statmodels Library | Statmodels    | [Statmodels](https://www.statsmodels.org/stable/datasets/index.html) | Multiple Datasets |
 ---
 
