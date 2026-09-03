@@ -1,0 +1,162 @@
+---
+title: "Setting Up R"
+subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+---
+
+You have two options. Read the comparison, pick one, and follow only that section.
+
+| | Posit Cloud | Local install |
+|---|---|---|
+| Time to start | About 1 minute | 20–40 minutes |
+| Needs admin rights on the laptop | No | Yes |
+| Works on a Chromebook or tablet | Yes | No |
+| Works without internet | No | Yes |
+| Free | Yes, with monthly hour limits | Yes, unlimited |
+| Recommended for | Getting started quickly, lab sessions | Working offline, heavy use |
+
+If you are unsure, start with Posit Cloud. You can switch to a local install later
+without losing any work, because the notebooks are identical in both.
+
+---
+
+## Option A — Posit Cloud (no installation)
+
+Posit Cloud runs R inside your web browser. Nothing is installed on your computer.
+
+**Step 1.** Go to <https://posit.cloud> and click **Sign Up**. The free plan is
+enough for this course.
+
+**Step 2.** Your instructor will share a link to the course workspace. Click it,
+then click **Save a Permanent Copy**. This gives you your own copy of all the
+notebooks and data that you can edit freely.
+
+**Step 3.** In the **Files** pane at the bottom right, open `1-Intro-to-R-Language` and click
+`setup.R`. Then click the **Source** button at the top of the editor. Wait for it
+to finish — the first run takes a few minutes because it downloads packages.
+
+**Step 4.** When you see `SETUP COMPLETE`, you are ready. Open
+`Fast-Intro-to-R.Rmd` and begin.
+
+::: {.callout-warning title="Free-plan hours"}
+The free plan gives you a limited number of compute hours per month. To avoid wasting
+them, click the small **stop sign** icon on your project when you finish a session
+rather than just closing the browser tab.
+:::
+
+---
+
+## Option B — Local install (R + RStudio)
+
+You must install **two** separate programs, in this order. R is the engine;
+RStudio is the dashboard you actually work in. RStudio will not run without R.
+
+### Step 1 — Install R
+
+**Windows**
+
+1. Go to <https://cran.r-project.org/bin/windows/base/>
+2. Click **Download R for Windows** at the top.
+3. Run the downloaded `.exe` file.
+4. Accept every default. Do not change the install location.
+
+**macOS**
+
+1. Go to <https://cran.r-project.org/bin/macosx/>
+2. Download the `.pkg` file. There are usually two — pick the one matching your
+   chip. If your Mac was bought in 2021 or later it is almost certainly
+   **Apple silicon (arm64)**. If you are not sure, click the Apple menu, then
+   **About This Mac**, and look at the **Chip** or **Processor** line. "M1", "M2",
+   "M3" or "M4" means arm64; "Intel" means the Intel version.
+3. Run the `.pkg` and accept the defaults.
+
+### Step 2 — Install RStudio
+
+1. Go to <https://posit.co/download/rstudio-desktop/>
+2. The page detects your operating system and offers the correct download. Scroll
+   to step 2 on that page and click the download button.
+3. Install it.
+   - On **Windows**, run the `.exe` and accept the defaults.
+   - On **macOS**, open the `.dmg` and drag the RStudio icon into your
+     Applications folder.
+
+### Step 3 — Check it worked
+
+Open **RStudio** (not R — you should never need to open R directly again).
+
+You will see several panes. The one on the left labelled **Console** is where R
+prints things. Click into it, type the line below, and press Enter:
+
+```r
+2 + 2
+```
+
+If R replies with `[1] 4`, everything is working. The `[1]` is not part of the
+answer — it is R telling you that this line of output starts at the first result.
+You will see it constantly and can safely ignore it.
+
+If you get an error instead, see Troubleshooting below.
+
+### Step 4 — Get the course files
+
+Copy the entire `R-Version` folder to somewhere sensible on your computer — your
+Documents folder is fine. Do **not** leave it in Downloads, because you will
+eventually clear that folder out and lose your work.
+
+Then, in RStudio, use the menu: **File → Open File**, navigate to
+`R-Version/1-Intro-to-R-Language/setup.R`, and open it.
+
+### Step 5 — Run the setup script
+
+With `setup.R` open, click the **Source** button in the top right of the editor
+pane. The first run downloads several packages and may take five minutes. You will
+see a lot of red text scroll past — this is normal. Red text in R is not
+necessarily an error; it is just how R prints certain messages.
+
+When you see `SETUP COMPLETE`, you are ready.
+
+---
+
+## Troubleshooting
+
+**"RStudio cannot find an R installation."**
+You installed RStudio but not R, or you installed them in the wrong order. Install
+R (Step 1), then restart RStudio.
+
+**A package fails to install with a message about compilation.**
+R tried to build the package from source code instead of downloading a ready-made
+version. Run this line in the Console and answer `no` if it asks whether to install
+from source:
+
+```r
+install.packages("tidyverse", type = "binary")
+```
+
+**"Cannot open file ... No such file or directory" when reading the data.**
+R is looking in the wrong folder. In RStudio use **Session → Set Working Directory
+→ To Source File Location**, then run the chunk again. Part 0 explains why this
+happens.
+
+**Everything is tiny / the fonts are unreadable.**
+**Tools → Global Options → Appearance** lets you change the editor font size and
+theme.
+
+**Nothing happens when I press Enter in the Console, and the prompt shows `+`.**
+R thinks your command is unfinished — usually a missing closing bracket or quote.
+Press **Esc** to cancel and start the line again.
+
+---
+
+## A note before you begin
+
+Everyone finds their first week of R frustrating. Typos produce error messages that
+look alarming and say nothing useful. This is normal and it passes quickly.
+
+Two habits will save you most of that frustration:
+
+1. **Read the error message.** It is usually more helpful than it first appears.
+   `object 'sales' not found` genuinely means you have not created `sales` yet.
+2. **Check your brackets and quotes.** The overwhelming majority of beginner errors
+   are one missing `)` or `"`.
+
+Do not worry if the code feels like memorisation at first. It stops feeling that
+way around week three.

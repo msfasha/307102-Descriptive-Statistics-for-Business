@@ -1,0 +1,644 @@
+---
+title: "1. Fast Intro to R"
+subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+---
+
+This is the only part of the course that is about R rather than about statistics.
+It exists so that everything afterwards can be about statistics.
+
+There are **eight things** to learn here. That is the whole list. You will not be
+asked to write loops, define your own functions, or do anything a programmer would
+recognise as programming. You are learning to operate a tool, not to build one.
+
+Expect this to take about ninety minutes. Do not skip it - every later notebook
+assumes you have done it.
+
+::: {.callout-tip title="Before you start"}
+You will make typing mistakes and R will respond with error messages. This happens
+to everyone, including people who have used R for twenty years.
+
+An error is not a sign that something has gone seriously wrong. It is R saying "I
+did not understand that", which is almost always a missing bracket, a missing quote,
+or a misspelled name. Read the message, check those three things, and try again.
+:::
+
+## Objectives
+
+By the end of this notebook you will be able to:
+
+- Run R code and read what R prints back to you
+- Store a value in an object and use it later
+- Explain what a data frame is and why it matters
+- Load a spreadsheet into R
+- Pull a single column out of a dataset
+- Read code written with the pipe operator
+- Use five commands to filter, sort, summarise and reshape data
+
+## How to use this notebook
+
+This file is an **R Notebook**. It mixes explanation (like this paragraph) with
+**code chunks** (the grey boxes).
+
+To run a chunk, click the small green triangle at its top-right corner, or click
+inside it and press **Ctrl+Shift+Enter** (**Cmd+Shift+Enter** on Mac). The result
+appears directly beneath.
+
+Run every chunk as you come to it. Reading code without running it teaches you
+almost nothing.
+
+# 1. R is a calculator that remembers
+
+At its simplest, R is a calculator.
+
+```{r calculator}
+2 + 2
+
+150 * 0.05
+
+(45 + 52 + 38) / 3
+```
+
+The `[1]` in front of each answer is not part of the answer. It is R numbering the
+output, telling you this line begins with the first result. You will see it
+constantly. Ignore it.
+
+So far this is Excel with extra steps. What makes R different is the next idea.
+
+# 2. Objects - giving things names
+
+In Excel a number lives in a cell and you refer to it by address, like `B7`. Insert
+a row and `B7` becomes something else, and your formulas break.
+
+In R you give a value a **name** instead. The name never moves.
+
+The arrow `<-` means "store this under this name". Read it as "gets".
+
+```{r objects}
+tax_rate <- 0.05
+
+item_price <- 120
+
+tax_amount <- item_price * tax_rate
+
+tax_amount
+```
+
+Three things worth noticing.
+
+**Storing something produces no output.** When you ran `tax_rate <- 0.05`, nothing
+printed. That is correct - you told R to remember a value, not to show it. To see
+what is stored, type the name on its own, as the last line does.
+
+**Names should say what the thing is.** `tax_amount` is a good name. `x` is a bad
+one. In three weeks you will not remember what `x` was.
+
+**Names are case-sensitive and cannot contain spaces.** `Tax_Rate` and `tax_rate`
+are different names. Use lowercase with underscores and you will avoid most
+problems.
+
+Once a value is stored you can reuse it as often as you like:
+
+```{r objects_reuse}
+total_paid <- item_price + tax_amount
+total_paid
+```
+
+Look at the **Environment** pane in the top right of RStudio. Every name you have
+created is listed there. That pane is your R memory - if something is not in it, R
+does not know about it.
+
+# 3. Functions - verbs that do things
+
+A **function** is a command that does something to a value. You have used functions
+in Excel: `SUM`, `AVERAGE`, `COUNT`. R works the same way with different names.
+
+A function is its name followed by round brackets, with the thing it works on
+inside.
+
+```{r functions_intro}
+prices <- c(12.5, 8.0, 45.2, 19.9, 33.1)
+
+mean(prices)
+
+max(prices)
+
+length(prices)
+```
+
+The `c()` is itself a function. It stands for "combine" and glues several values
+into a single list of numbers. In R this is a **vector** - simply a column of values
+of the same type.
+
+Some functions take extra instructions, called **arguments**, separated by commas:
+
+```{r functions_arguments}
+messy_prices <- c(12.5, 8.0, NA, 19.9, 33.1)
+
+mean(messy_prices)
+
+mean(messy_prices, na.rm = TRUE)
+```
+
+`NA` means "missing value" - a blank cell. The first `mean()` returns `NA` because R
+refuses to guess: if one value is unknown, the true average is unknown too. The
+argument `na.rm = TRUE` says "remove the missing values first, then average what is
+left".
+
+::: {.callout-warning title="Remember this one"}
+When a calculation unexpectedly returns `NA`, **missing data is almost always the
+reason**. This causes more confusion later in the course than any other single
+thing.
+:::
+
+:::: {.callout-note title="Self-check 1"}
+Without running it, what will `length(messy_prices)` return - 4 or 5?
+
+::: {.callout-note collapse="true" title="Show the answer"}
+**5.** `length()` counts how many slots the vector has, and the missing value still
+occupies a slot. `NA` means "there is a value here and we do not know it", not
+"there is nothing here".
+
+That distinction matters commercially: a customer who declined to give their age is
+not the same as a customer who does not exist.
+:::
+::::
+
+# 4. Data frames - the spreadsheet inside R
+
+A single vector is one column. Real data has many columns of different types - some
+numbers, some text, some dates - all lined up so that row 7 in every column refers
+to the same transaction.
+
+That structure is a **data frame**. It is the single most important idea in this
+notebook: a spreadsheet that lives inside R.
+
+Here is a tiny one, built by hand:
+
+```{r data_frame_manual}
+library(tidyverse)
+
+branches <- data.frame(
+  branch      = c("A", "B", "C"),
+  city        = c("Yangon", "Mandalay", "Naypyitaw"),
+  staff_count = c(24, 19, 21),
+  open_year   = c(2015, 2017, 2016)
+)
+
+branches
+```
+
+Three rows, four columns. Each **row** is one branch. Each **column** is one piece
+of information recorded about every branch.
+
+::: {.callout-tip title="The rule that makes analysis possible"}
+**One row per thing, one column per measurement.**
+
+Almost everything you do in this course assumes your data is arranged this way.
+When an analysis will not work, the first thing to check is whether the data
+actually follows this rule.
+:::
+
+The `library(tidyverse)` line loads the add-on packages you installed during setup.
+You need one `library()` call at the start of every session. If you restart R, run
+it again.
+
+# 5. Loading real data
+
+You will not usually type data by hand. You will load it from a file.
+
+For the rest of this course the file is `supermarket_sales.xlsx`: 1,000 transactions
+from a supermarket chain with three branches. `read_excel()` reads it.
+
+```{r load_data}
+library(readxl)
+
+sales <- read_excel("../data/supermarket_sales.xlsx")
+
+sales
+```
+
+The path `"../data/supermarket_sales.xlsx"` reads as: go up one folder from where
+this notebook lives (`..`), then into `data`, then take that file.
+
+If you get an error saying the file does not exist, open `307102-R-Track.Rproj` in
+the `R-Version` folder and work from there. That tells RStudio which folder is
+"home".
+
+## Getting your bearings
+
+Before analysing any dataset, look at it. Three functions do this.
+
+```{r inspect_dim}
+dim(sales)
+```
+
+`dim()` gives the size: rows first, then columns. So 1,000 transactions, each with
+17 pieces of information.
+
+```{r inspect_names}
+names(sales)
+```
+
+`names()` lists the column names. Notice that several contain spaces - `Unit price`,
+`Product line`, `Customer type`. That is common in real business data and it has a
+consequence you will meet in a moment.
+
+```{r inspect_glimpse}
+glimpse(sales)
+```
+
+`glimpse()` is the most useful of the three. Each line is one column, showing its
+name, its **type**, and the first few values.
+
+Those types matter:
+
+| What you see | What it means | Example column |
+|---|---|---|
+| `<chr>` | Character - text | `Branch`, `Gender` |
+| `<dbl>` | Double - a number that can have decimals | `Total`, `Rating` |
+| `<int>` | Integer - a whole number | `Quantity` |
+| `<dttm>` | Date and time | `Date` |
+
+R will refuse to average a `<chr>` column, and it is right to. The average of "Male"
+and "Female" is not a meaningful quantity.
+
+But R will **not** protect you from averaging something numeric that should not be
+averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would
+happily report a mean of 2.03. Only you can know that number is meaningless.
+
+# 6. The dollar sign - pulling out one column
+
+To work with a single column, write the data frame name, then `$`, then the column
+name.
+
+```{r dollar_basic}
+mean(sales$Rating)
+```
+
+Read `sales$Rating` as "the Rating column of sales".
+
+Because `sales$Rating` is just a vector of numbers, every function from section 3
+works on it:
+
+```{r dollar_more}
+max(sales$Total)
+
+min(sales$Total)
+
+length(sales$Total)
+```
+
+::: {.callout-warning title="Column names with spaces"}
+When a column name contains a space, R needs help seeing where the name starts and
+ends. Wrap it in **backticks** - the key above Tab on most keyboards.
+
+```{r dollar_backticks}
+mean(sales$`Unit price`)
+```
+
+Without backticks R reads `sales$Unit`, stops at the space, and cannot find a column
+called `Unit`.
+
+**This is the single most common error in this course**, and now you know the fix.
+:::
+
+:::: {.callout-note title="Self-check 2"}
+Write one line that finds the average `gross income` per transaction.
+
+::: {.callout-note collapse="true" title="Show the answer"}
+```r
+mean(sales$`gross income`)
+```
+
+Backticks are required because of the space. Note also that this column is spelled
+in lowercase - `gross income`, not `Gross Income`. R is case-sensitive, so
+capitalisation must match exactly what `names(sales)` showed you.
+:::
+::::
+
+# 7. The pipe - reading code as a sentence
+
+Suppose you want the average transaction value for Branch A only. Written the direct
+way:
+
+```{r pipe_nested, eval=FALSE}
+summarise(filter(sales, Branch == "A"), avg = mean(Total))
+```
+
+That works, but it reads inside-out: the first thing that happens (`filter`) is
+buried in the middle. With four or five steps it becomes unreadable.
+
+The **pipe**, written `|>`, fixes this. It takes whatever is on its left and passes
+it into the function on its right. It means **"and then"**.
+
+```{r pipe_basic}
+sales |>
+  filter(Branch == "A") |>
+  summarise(avg_transaction = mean(Total))
+```
+
+Read that top to bottom as a sentence:
+
+> Take the sales data, **and then** keep only Branch A, **and then** compute the
+> average of Total.
+
+That is the whole idea. Every analysis in this course is written this way.
+
+Two practical points. Put the pipe at the **end** of a line, never the start of the
+next one. And RStudio types it for you with **Ctrl+Shift+M** (**Cmd+Shift+M**).
+
+# 8. The five verbs
+
+Nearly everything you will do to a dataset is one of five operations.
+
+| Verb | What it does | Business question it answers |
+|---|---|---|
+| `filter()` | Keeps some **rows** | "Show me only the credit card sales" |
+| `select()` | Keeps some **columns** | "I only care about branch and total" |
+| `arrange()` | **Sorts** the rows | "Which sale was largest?" |
+| `mutate()` | **Adds** a new column | "What was the margin on each sale?" |
+| `summarise()` | **Collapses** to a summary | "What is our average sale?" |
+
+## filter() - choosing rows
+
+```{r verb_filter}
+sales |>
+  filter(Branch == "A")
+```
+
+Note the **double** equals sign. A single `=` means "set this to"; `==` means "is
+this equal to". Using `=` where you meant `==` is another very common early error.
+
+```{r verb_filter_more}
+sales |>
+  filter(Total > 900)
+```
+
+Conditions can be combined. A comma means "and":
+
+```{r verb_filter_and}
+sales |>
+  filter(Branch == "A", Payment == "Cash")
+```
+
+## select() - choosing columns
+
+```{r verb_select}
+sales |>
+  select(Branch, `Product line`, Total, Rating)
+```
+
+Useful when a dataset has 17 columns and you care about four.
+
+## arrange() - sorting
+
+```{r verb_arrange}
+sales |>
+  arrange(desc(Total)) |>
+  select(`Invoice ID`, Branch, `Product line`, Total)
+```
+
+`arrange()` sorts smallest-first by default. Wrapping the column in `desc()` sorts
+largest-first, which is usually what you want when looking for top performers.
+
+Notice this chain has two steps: sort, then narrow the columns so the result is
+readable. That is the pipe earning its keep.
+
+## mutate() - adding a column
+
+```{r verb_mutate}
+sales |>
+  mutate(margin_pct = (`gross income` / Total) * 100) |>
+  select(`Invoice ID`, Total, `gross income`, margin_pct)
+```
+
+`mutate()` calculates a new column from existing ones, row by row. This is the
+direct equivalent of typing a formula in a new spreadsheet column and dragging it
+down - except that it cannot silently fail to cover the last twenty rows.
+
+## summarise() - collapsing to one number
+
+```{r verb_summarise}
+sales |>
+  summarise(
+    transactions  = n(),
+    avg_sale      = mean(Total),
+    total_revenue = sum(Total),
+    avg_rating    = mean(Rating)
+  )
+```
+
+`n()` is a helper that counts rows. It only works inside `summarise()`.
+
+## group_by() - the one that makes summarise powerful
+
+A single average across all 1,000 transactions is rarely the interesting number.
+What you usually want is the average **for each branch**, or **for each product
+line**.
+
+```{r verb_group_by}
+sales |>
+  group_by(Branch) |>
+  summarise(
+    transactions  = n(),
+    avg_sale      = mean(Total),
+    total_revenue = sum(Total)
+  )
+```
+
+One row per branch instead of one row overall. `group_by()` changes nothing about
+the data - it only tells the next command to work separately within each group.
+
+This is the R equivalent of a PivotTable, and it is the single most useful thing in
+this notebook.
+
+You can group by more than one column:
+
+```{r verb_group_by_two}
+sales |>
+  group_by(Branch, `Customer type`) |>
+  summarise(
+    transactions = n(),
+    avg_sale     = mean(Total),
+    .groups      = "drop"
+  )
+```
+
+:::: {.callout-note title="Self-check 3"}
+Which product line earns the most total gross income? Write a pipeline using
+`group_by()`, `summarise()` and `arrange()`.
+
+::: {.callout-note collapse="true" title="Show the answer"}
+```r
+sales |>
+  group_by(`Product line`) |>
+  summarise(total_income = sum(`gross income`)) |>
+  arrange(desc(total_income))
+```
+
+The order matters. You must group and summarise before you can sort, because the
+column you are sorting by (`total_income`) does not exist until `summarise()`
+creates it.
+
+A follow-up worth thinking about: the product line with the highest total income is
+not necessarily the most profitable *per sale*. Adding `mean()` of the same column
+would let you check whether the leader is winning on margin or simply on volume.
+That distinction is exactly what descriptive statistics exists to expose, and you
+will meet it again in section 2 of the course.
+:::
+::::
+
+# Putting it together
+
+Here is a realistic question answered with everything above:
+
+> Among member customers, which branch has the highest average customer rating, and
+> how many transactions is that average based on?
+
+```{r putting_together}
+sales |>
+  filter(`Customer type` == "Member") |>
+  group_by(Branch) |>
+  summarise(
+    transactions = n(),
+    avg_rating   = mean(Rating)
+  ) |>
+  arrange(desc(avg_rating))
+```
+
+Four lines, and it reads as English: take the sales, keep members only, group by
+branch, work out the count and average rating for each, sort best first.
+
+::: {.callout-tip title="Why the count column is there"}
+An average of 7.2 built from 200 transactions and an average of 7.2 built from 6
+transactions are not equally trustworthy.
+
+Reporting a summary statistic without its sample size is one of the most common ways
+to mislead with data. You will meet the formal version of this idea in section 3.
+:::
+
+# Your turn
+
+Fill in the blanks. The answer to each is directly above.
+
+**Exercise 1.** How many transactions were paid for with an Ewallet?
+
+```{r ex1, eval=FALSE}
+sales |>
+  filter(Payment == "______") |>
+  summarise(count = n())
+```
+
+**Exercise 2.** What is the average `Unit price` in each product line, sorted from
+most expensive to least?
+
+```{r ex2, eval=FALSE}
+sales |>
+  group_by(`______`) |>
+  summarise(avg_price = mean(`______`)) |>
+  arrange(desc(______))
+```
+
+**Exercise 3.** Add a column showing the tax as a percentage of the total, then show
+only the invoice ID, total, and your new column.
+
+```{r ex3, eval=FALSE}
+sales |>
+  mutate(tax_pct = (`Tax 5%` / ______) * 100) |>
+  select(`Invoice ID`, ______, tax_pct)
+```
+
+**Exercise 4.** Write this one from scratch. Which single transaction had the
+highest gross income, and which branch was it in?
+
+```{r ex4, eval=FALSE}
+# YOUR CODE HERE
+```
+
+::: {.callout-note collapse="true" title="Show all answers"}
+```r
+# Exercise 1
+sales |>
+  filter(Payment == "Ewallet") |>
+  summarise(count = n())
+
+# Exercise 2
+sales |>
+  group_by(`Product line`) |>
+  summarise(avg_price = mean(`Unit price`)) |>
+  arrange(desc(avg_price))
+
+# Exercise 3
+sales |>
+  mutate(tax_pct = (`Tax 5%` / Total) * 100) |>
+  select(`Invoice ID`, Total, tax_pct)
+
+# Exercise 4
+sales |>
+  arrange(desc(`gross income`)) |>
+  select(`Invoice ID`, Branch, `Product line`, `gross income`) |>
+  head(1)
+```
+
+On Exercise 3, every answer comes out at 4.7619 percent rather than 5. That is not
+an error. The tax is 5 percent *of the pre-tax amount*, and `Total` already includes
+the tax, so the tax is a slightly smaller share of the larger number.
+
+Noticing that a result is not quite what you expected, and then working out why, is
+the habit this whole course is trying to build.
+:::
+
+# Reference card
+
+Everything from this notebook in one place. Come back here whenever you are stuck.
+
+| Code | What it does |
+|---|---|
+| `x <- 5` | Store 5 under the name `x` |
+| `c(1, 2, 3)` | Combine values into a vector |
+| `mean(x)`, `sum(x)`, `max(x)`, `min(x)` | Basic summaries |
+| `length(x)` | How many values |
+| `mean(x, na.rm = TRUE)` | Average, ignoring missing values |
+| `library(tidyverse)` | Load the packages - once per session |
+| `read_excel("path/file.xlsx")` | Load a spreadsheet |
+| `dim(d)`, `names(d)`, `glimpse(d)` | Inspect a data frame |
+| `d$column` | One column |
+| ``d$`two words` `` | One column whose name has a space |
+| `d |> f()` | Pipe: "take d, and then do f" |
+| `filter(d, x == "A")` | Keep matching rows |
+| `select(d, a, b)` | Keep chosen columns |
+| `arrange(d, desc(x))` | Sort, largest first |
+| `mutate(d, new = a / b)` | Add a calculated column |
+| `summarise(d, avg = mean(x))` | Collapse to a summary |
+| `group_by(d, g)` | Summarise separately per group |
+| `n()` | Count rows, inside `summarise()` |
+
+# Common errors and what they mean
+
+| Message | Cause | Fix |
+|---|---|---|
+| `object 'sales' not found` | You have not created it, or R restarted | Run the chunk that creates it |
+| `could not find function "filter"` | Packages not loaded | Run `library(tidyverse)` |
+| `object 'Unit' not found` | Space in a column name | Use backticks: `` `Unit price` `` |
+| `unexpected '='` | Used `=` instead of `==` | Change to `==` inside `filter()` |
+| Result is `NA` | Missing values in the column | Add `na.rm = TRUE` |
+| `unexpected symbol` | Missing comma, bracket or quote | Check the line *above* the one flagged |
+| Console shows `+` and nothing runs | Unfinished command | Press Esc, check your brackets |
+
+# Summary
+
+You now know:
+
+- R stores values under **names** using `<-`
+- **Functions** do things and take **arguments** for extra instructions
+- A **data frame** is a spreadsheet inside R: one row per thing, one column per measurement
+- `read_excel()` loads data; `glimpse()` shows you what you loaded
+- `$` pulls out a column, with backticks if the name has a space
+- The **pipe** `|>` means "and then", letting code read like a sentence
+- **Five verbs** - `filter`, `select`, `arrange`, `mutate`, `summarise` - plus `group_by()` cover most of what you need
+
+That is the entire Fast Intro to R. Later notebooks introduce a handful of new
+functions each, always with a "New R this week" table at the top, but the foundation
+does not change.
+
+**Next:** section 2, `2-Descriptive-Statistics/`, where the statistics begins.

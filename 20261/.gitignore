@@ -1,0 +1,30 @@
+# R session artifacts
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# Quarto
+/.quarto/
+**/*.quarto_ipynb
+/_site/
+
+# NOTE: /_freeze/ is deliberately NOT ignored.
+# Quarto stores executed chunk results there. Committing it means the site can be
+# rebuilt (and published) without re-running R, and guarantees everyone sees the
+# same numbers. Delete a folder under _freeze/ to force that page to re-execute.
+
+# Legacy R Markdown output, if any survives
+*.nb.html
+*_files/
+figure/
+
+# IMPORTANT: R-Version/data/ is deliberately NOT ignored.
+#
+# The course root .gitignore excludes "**/beta/", which is where the original
+# supermarket_sales.xlsx lives. That means the primary dataset for this track is
+# not in version control at its original location. The copy in R-Version/data/
+# must therefore be committed, or students who clone the repository will have no
+# data and setup.R will report the file as MISSING.
+#
+# Run setup.R once, then commit R-Version/data/.

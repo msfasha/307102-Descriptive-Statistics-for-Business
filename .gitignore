@@ -116,3 +116,4 @@ Desktop.ini
 
 # Pyre type checker
 .pyre/
+.Rproj.user

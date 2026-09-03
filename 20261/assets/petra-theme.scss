@@ -1,0 +1,157 @@
+/*-- scss:defaults --*/
+
+// ===========================================================================
+// 307102 Descriptive Statistics for Business - R Track
+// University of Petra
+//
+// Quarto theme. Built on Bootstrap 5 via Quarto's Sass pipeline.
+//
+// Design principle: the brand purple is an accent, not a background. Quarto's
+// own callout and heading styling is already well judged, so this file adjusts
+// colour and a little spacing rather than rebuilding anything.
+// ===========================================================================
+
+$petra-purple:      #A83296 !default;
+$petra-purple-dark: #7A2470 !default;
+$petra-purple-tint: #FBF3F9 !default;
+
+$teal:  #17706E !default;
+$amber: #B8860B !default;
+$ink:   #1A1A1A !default;
+
+// Bootstrap variables Quarto reads
+$primary:       $petra-purple;
+$link-color:    $petra-purple;
+$body-color:    $ink;
+$body-bg:       #FFFFFF;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Helvetica Neue", Arial, sans-serif !default;
+$font-size-root: 16px;
+$line-height-base: 1.65;
+
+$h1-font-size: 1.7rem;
+$h2-font-size: 1.32rem;
+$h3-font-size: 1.08rem;
+
+$headings-font-weight: 600;
+$headings-color: $ink;
+
+// Quarto callout colours, remapped onto the course palette.
+// Semantics are kept from Quarto; only the hues change.
+$callout-color-note:      $petra-purple;   // exercises and self-checks
+$callout-color-warning:   $amber;          // gotchas, Excel differences
+$callout-color-tip:       $teal;           // key ideas
+$callout-color-caution:   #6B6B72;         // instructor-only notes
+$callout-color-important: #C0392B;         // reserved, rarely used
+
+// Code
+$code-color: $petra-purple-dark;
+$code-bg: $petra-purple-tint;
+
+
+/*-- scss:rules --*/
+
+// ------------------------------------------------------------------ headings
+// Real markdown headings with a coloured rule, rather than filled bars.
+// Filled bars on every section flatten the hierarchy; a rule keeps the
+// structure visible without shouting.
+
+h1, .h1 {
+  margin-top: 2.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 3px solid $petra-purple;
+}
+
+h2, .h2 {
+  margin-top: 2.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid rgba($petra-purple, 0.55);
+}
+
+h3, .h3 {
+  margin-top: 1.8rem;
+  color: $petra-purple-dark;
+}
+
+// The document title block
+.quarto-title-block .quarto-title .title {
+  color: $petra-purple-dark;
+  border-bottom: none;
+  margin-top: 0;
+}
+
+#title-block-header.quarto-title-block.default .quarto-title-meta {
+  color: #5A5A62;
+}
+
+.quarto-title-block .subtitle {
+  color: #5A5A62;
+  font-size: 0.98rem;
+  font-weight: 400;
+}
+
+// ------------------------------------------------------------------- tables
+
+.table > thead {
+  background: $petra-purple-tint;
+  color: $petra-purple-dark;
+  border-bottom: 2px solid $petra-purple;
+}
+
+.table > thead th { font-weight: 600; }
+
+.table td, .table th { padding: 0.5rem 0.7rem; vertical-align: top; }
+
+// --------------------------------------------------------------------- code
+
+div.sourceCode {
+  border-left: 3px solid $petra-purple;
+  border-radius: 4px;
+}
+
+pre.sourceCode { font-size: 0.87rem; }
+
+// Printed R output blocks
+pre:not(.sourceCode) {
+  border-left: 3px solid #9A9AA2;
+  background: #F6F6F7;
+  font-size: 0.85rem;
+}
+
+// ----------------------------------------------------------------- callouts
+
+.callout { margin: 1.5rem 0; }
+
+.callout.callout-titled .callout-title {
+  font-weight: 600;
+}
+
+.callout .callout-title p { margin-bottom: 0; }
+
+// Nested callout (a collapsible answer inside an exercise) needs a little
+// breathing room and should not repeat the parent's heavy left border.
+.callout .callout {
+  margin: 1rem 0 0.3rem 0;
+}
+
+// ------------------------------------------------------------------ sidebar
+
+.sidebar-navigation .sidebar-item-container .sidebar-item-text.active,
+.sidebar navigation li a.active {
+  color: $petra-purple !important;
+  font-weight: 600;
+}
+
+.sidebar-item-text:hover { color: $petra-purple-dark; }
+
+// ------------------------------------------------------------------ figures
+
+img { max-width: 100%; height: auto; }
+
+// ------------------------------------------------------------------ printing
+
+@media print {
+  .callout { break-inside: avoid; }
+  #quarto-sidebar, #quarto-margin-sidebar { display: none; }
+}

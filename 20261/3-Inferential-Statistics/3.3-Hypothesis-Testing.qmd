@@ -1,0 +1,615 @@
+---
+title: "3.3 Hypothesis Testing"
+subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+---
+
+## New R this week
+
+| Function | What it does | When you reach for it |
+|---|---|---|
+| `t.test()` | Compares a mean to a value, or two means | "Do members spend more than non-members?" |
+| `aov()` | Compares three or more means | "Do the six product lines differ in rating?" |
+| `TukeyHSD()` | Says *which* groups differ, after `aov()` | "Fine - but which two?" |
+| `chisq.test()` | Tests association between two categorical variables | "Do branches differ in payment method?" |
+| `shapiro.test()`, `leveneTest()` | Check the assumptions before you trust the test | Always |
+| `cohens_d()`, `eta_squared()` | Effect size - is the difference big enough to care? | Always |
+
+## Objectives
+
+By the end of this notebook you will be able to:
+
+- State a null and alternative hypothesis for a business question
+- Explain what a p-value is, and what it is not
+- Run and interpret one-sample, paired and independent t-tests
+- Run a one-way ANOVA and follow it with a post-hoc test
+- Run a chi-square test of independence
+- Check the assumptions each test requires
+- Report an effect size alongside every p-value, and explain why that matters
+
+## Setup
+
+```{r load}
+library(tidyverse)
+library(readxl)
+library(car)
+library(effectsize)
+
+sales <- read_excel("../data/supermarket_sales.xlsx")
+```
+
+# 1. The logic of a hypothesis test
+
+Section 3.2 estimated values. This section tests **claims**.
+
+The reasoning is deliberately backwards, and that is what makes it hard at first.
+
+::: {.callout-tip title="The argument, in four steps"}
+1. Assume **nothing is going on**. This is the null hypothesis.
+2. Work out what data you would expect to see if that were true.
+3. Compare it with the data you actually got.
+4. If your data would be very surprising under that assumption, **reject** it.
+:::
+
+It is proof by contradiction with a probability attached. You never prove the
+alternative; you only show the null is an uncomfortable place to stand.
+
+| Hypothesis | Symbol | What it says | Example |
+|---|---|---|---|
+| **Null** | H0 | No effect, no difference, no association | Members and non-members spend the same |
+| **Alternative** | H1 | There is an effect | They do not spend the same |
+
+Two rules students break constantly:
+
+- The null hypothesis always contains the **equals** sign.
+- You test the null, but you **never accept** it. You either reject it or you fail to reject it, which is not the same as proving it true.
+
+## The p-value
+
+The p-value is the probability of getting data **at least as extreme as yours**, *if
+the null hypothesis were true*.
+
+::: {.callout-warning title="What a p-value is NOT"}
+It is **not** the probability the null hypothesis is true.
+
+It is **not** the probability your result happened by chance.
+
+It is **not** a measure of how large or important the effect is.
+
+A p-value is a statement about *data given a hypothesis*, never about *a hypothesis
+given data*. Reversing those two is the most common error in applied statistics, and
+it appears in published research constantly.
+:::
+
+By convention, `p < 0.05` counts as evidence against the null. That threshold, called
+alpha, is arbitrary - it was a suggestion by Ronald Fisher in the 1920s, not a law of
+nature. A p-value of 0.049 and one of 0.051 mean essentially the same thing.
+
+## Two ways to be wrong
+
+| | H0 is actually true | H0 is actually false |
+|---|---|---|
+| **You reject H0** | **Type I error** (false alarm) | Correct |
+| **You fail to reject H0** | Correct | **Type II error** (missed it) |
+
+Setting alpha to 0.05 means accepting a 5 percent Type I error rate. Lowering it to
+0.01 reduces false alarms but increases missed real effects. You cannot minimise both
+at once, so the right threshold depends on which mistake is more costly in context -
+a question statistics cannot answer for you.
+
+# 2. One-sample t-test
+
+**The question:** management claims the average transaction is 300. Our sample says
+otherwise. Is the difference real?
+
+- H0: the population mean equals 300
+- H1: the population mean does not equal 300
+
+```{r one_sample}
+t.test(sales$Total, mu = 300)
+```
+
+Reading that output:
+
+| Line | Meaning |
+|---|---|
+| `t = ...` | The test statistic: how many standard errors the sample mean sits from 300 |
+| `df = 999` | Degrees of freedom, `n - 1` |
+| `p-value` | Probability of a result this extreme if the true mean really were 300 |
+| `95 percent confidence interval` | The plausible range for the true mean |
+| `mean of x` | Our sample mean |
+
+**The conclusion in business language.** The interval does not contain 300 and the
+p-value is small, so the average transaction value is higher than management's figure.
+Note that the confidence interval and the test always agree: if the interval excludes
+the null value, the test rejects it. They are two views of the same calculation.
+
+## One-tailed tests
+
+If you only care about one direction, say so:
+
+```{r one_tailed}
+t.test(sales$Total, mu = 300, alternative = "greater")
+```
+
+::: {.callout-warning title="Decide the direction before you look"}
+A one-tailed test has more power to detect an effect in the direction you specified -
+but you must choose that direction **before** seeing the data.
+
+Running a two-tailed test, noticing the result points one way, and then switching to
+one-tailed to halve the p-value is a form of cheating with a name: **p-hacking**. It
+roughly doubles your false positive rate.
+:::
+
+# 3. Two-sample t-test
+
+**The question:** do members spend more than non-members?
+
+- H0: the two group means are equal
+- H1: they are not
+
+```{r two_sample_explore}
+sales |>
+  group_by(`Customer type`) |>
+  summarise(
+    n         = n(),
+    mean_spend = round(mean(Total), 2),
+    sd_spend   = round(sd(Total), 2)
+  )
+```
+
+Always look before you test.
+
+```{r two_sample_plot}
+ggplot(sales, aes(x = `Customer type`, y = Total)) +
+  geom_boxplot(fill = "#A83296", alpha = 0.7) +
+  labs(title = "Transaction value by customer type",
+       x = NULL, y = "Transaction total") +
+  theme_minimal()
+```
+
+```{r two_sample_test}
+t.test(Total ~ `Customer type`, data = sales)
+```
+
+The formula `Total ~ \`Customer type\`` reads as "Total **broken down by** customer
+type". You will see this `~` notation constantly from here on.
+
+R runs **Welch's t-test** by default, which does not assume the two groups have equal
+variances. This is the right default and you should almost always keep it.
+
+## Paired t-test
+
+When the two measurements come from the **same** unit - before and after, left and
+right, same customer twice - the samples are not independent and you must say so.
+
+```{r paired_demo}
+set.seed(2024)
+
+# 30 customers rated us before and after a service change
+before <- rnorm(30, mean = 6.8, sd = 1.2)
+after  <- before + rnorm(30, mean = 0.4, sd = 0.8)
+
+t.test(before, after, paired = TRUE)
+```
+
+```{r paired_wrong}
+# The same data analysed WRONGLY as if independent
+t.test(before, after, paired = FALSE)
+```
+
+Compare the two p-values. The paired test is far more sensitive, because it removes
+the variation *between customers* and looks only at the change *within* each one.
+
+::: {.callout-tip title="The pairing question"}
+Ask: **could I shuffle one group without losing information?**
+
+If each value in group A is meaningfully tied to a specific value in group B, the test
+is paired. Getting this wrong throws away real statistical power - or invents power
+you do not have.
+:::
+
+# 4. Checking assumptions
+
+Every test has conditions. Reporting a p-value from a test whose assumptions fail is
+reporting a number that does not mean what you say it means.
+
+The t-test assumes:
+
+1. Observations are **independent** - a design question, not a statistical one
+2. The data is roughly **normal** within each group, or the sample is large enough for the CLT
+3. For the classic pooled test, **equal variances** - but Welch's test removes this
+
+## Normality
+
+```{r assump_normality}
+member_spend <- sales |> filter(`Customer type` == "Member") |> pull(Total)
+
+shapiro.test(member_spend)
+```
+
+Shapiro-Wilk tests H0: the data is normal. A small p-value means **reject normality**.
+
+::: {.callout-warning title="The paradox of normality tests"}
+With a large sample, a normality test rejects almost everything. Real data is never
+exactly normal, and with 500 observations even trivial departures become
+"statistically significant".
+
+So a significant Shapiro-Wilk on a large sample tells you very little. **Look at a Q-Q
+plot instead** and ask whether the departure is big enough to matter.
+:::
+
+```{r assump_qq}
+ggplot(sales, aes(sample = Total)) +
+  stat_qq(colour = "#A83296", alpha = 0.4) +
+  stat_qq_line(colour = "#1A1A1A") +
+  facet_wrap(~ `Customer type`) +
+  labs(title = "Q-Q plots of transaction total by customer type",
+       x = "Theoretical quantiles", y = "Observed") +
+  theme_minimal()
+```
+
+Both groups curve upward at the right - the right skew you found in section 2. With
+roughly 500 observations per group, the Central Limit Theorem makes the t-test robust
+to this. The skew would be a genuine problem at n = 15.
+
+## Equal variances
+
+```{r assump_levene}
+leveneTest(Total ~ factor(`Customer type`), data = sales)
+```
+
+Levene's test has H0: the variances are equal. A large p-value means no evidence
+against equality.
+
+Since we are using Welch's test, which does not assume equal variances anyway, this is
+informational rather than decisive.
+
+# 5. Effect size - the question p-values cannot answer
+
+A p-value tells you whether an effect exists. It says nothing about whether it
+**matters**.
+
+::: {.callout-tip title="Why this section exists"}
+With a large enough sample, **any** difference becomes statistically significant -
+including differences far too small to act on.
+
+A test can tell you a branch's average sale is genuinely 2 dinars higher. Only you can
+decide 2 dinars is not worth a strategy.
+:::
+
+```{r effect_size}
+cohens_d(Total ~ `Customer type`, data = sales)
+```
+
+Cohen's d expresses the difference between two means in standard deviations - the same
+idea as a z-score, applied to a gap between groups.
+
+| Cohen's d | Conventional label |
+|---|---|
+| 0.2 | Small |
+| 0.5 | Medium |
+| 0.8 | Large |
+
+These labels are conventions, not laws. In a context where a tiny effect is
+enormously valuable - a 0.1 percent improvement in conversion on millions of visits -
+a "small" effect can be worth a great deal.
+
+## The sample size demonstration
+
+```{r effect_demo}
+set.seed(2024)
+
+# A deliberately trivial difference: 0.02 of a standard deviation
+demo_test <- function(n) {
+  a <- rnorm(n, mean = 100, sd = 15)
+  b <- rnorm(n, mean = 100.3, sd = 15)
+  tibble(
+    n       = n,
+    p_value = round(t.test(a, b)$p.value, 4),
+    cohens_d = round(as.numeric(cohens_d(a, b)$Cohens_d), 4)
+  )
+}
+
+map_dfr(c(50, 500, 5000, 50000), demo_test)
+```
+
+The effect size stays trivially small at every sample size. The p-value marches
+steadily towards zero.
+
+**This is the single most important table in the notebook.** It shows that
+"statistically significant" and "practically important" are different questions, and
+that only one of them is answered by a p-value.
+
+Always report both.
+
+# 6. ANOVA - comparing three or more groups
+
+**The question:** do the six product lines differ in customer rating?
+
+You might think to run all 15 pairwise t-tests. Do not. Each test has a 5 percent
+false positive rate, so across 15 tests the chance of at least one false alarm is
+about 54 percent.
+
+```{r anova_multiple}
+# Probability of at least one false positive across 15 independent tests
+round(1 - 0.95^15, 3)
+```
+
+ANOVA asks the question once: **are all the group means equal?**
+
+```{r anova_explore}
+sales |>
+  group_by(`Product line`) |>
+  summarise(
+    n           = n(),
+    mean_rating = round(mean(Rating), 3),
+    sd_rating   = round(sd(Rating), 3)
+  ) |>
+  arrange(desc(mean_rating))
+```
+
+```{r anova_plot}
+ggplot(sales, aes(x = `Product line`, y = Rating)) +
+  geom_boxplot(fill = "#A83296", alpha = 0.7) +
+  coord_flip() +
+  labs(title = "Customer rating by product line", x = NULL, y = "Rating") +
+  theme_minimal()
+```
+
+::: {.callout-warning title="Give the column a name without a space first"}
+Backticks work fine in `aov()` itself, but some of the functions you run *afterwards* -
+`TukeyHSD()` in particular - cannot cope with a column name containing a space, and
+fail with the unhelpful message `undefined columns selected`.
+
+The fix takes one line: make a copy of the column with a simple name before you model
+it. Do this whenever you are about to fit a model on a column whose name has a space.
+:::
+
+```{r anova_prep}
+sales_anova <- sales |>
+  mutate(product_line = factor(`Product line`))
+```
+
+```{r anova_test}
+anova_model <- aov(Rating ~ product_line, data = sales_anova)
+
+summary(anova_model)
+```
+
+Reading the ANOVA table:
+
+| Column | Meaning |
+|---|---|
+| `Df` | Degrees of freedom: groups minus 1, then the remainder |
+| `Sum Sq` | Variation between groups, then within groups |
+| `Mean Sq` | Sum of squares divided by degrees of freedom |
+| `F value` | Between-group variation divided by within-group variation |
+| `Pr(>F)` | The p-value |
+
+The intuition behind F: if the groups genuinely differ, the variation *between* group
+means should be large relative to the variation *within* groups. F near 1 means the
+groups are no more different from each other than random members of the same group.
+
+## Effect size for ANOVA
+
+```{r anova_effect}
+eta_squared(anova_model)
+```
+
+Eta-squared is the **proportion of variation in the outcome explained by the grouping**.
+Read a value of 0.01 as "product line explains 1 percent of the variation in ratings",
+which leaves 99 percent explained by something else.
+
+## Post-hoc testing
+
+ANOVA says *whether* the groups differ, not *which* ones. For that you need a post-hoc
+test that corrects for multiple comparisons.
+
+```{r anova_tukey}
+TukeyHSD(anova_model)
+```
+
+Tukey's HSD compares every pair while holding the overall false positive rate at 5
+percent. Read the `p adj` column - the adjusted p-value - and the confidence interval
+for each difference. **Any interval containing zero means that pair is not
+distinguishable.**
+
+## ANOVA assumptions
+
+```{r anova_assumptions}
+leveneTest(Rating ~ product_line, data = sales_anova)
+```
+
+```{r anova_residuals}
+ggplot(tibble(residual = residuals(anova_model)), aes(sample = residual)) +
+  stat_qq(colour = "#A83296", alpha = 0.4) +
+  stat_qq_line(colour = "#1A1A1A") +
+  labs(title = "Q-Q plot of ANOVA residuals",
+       x = "Theoretical quantiles", y = "Residual") +
+  theme_minimal()
+```
+
+ANOVA assumes independent observations, roughly normal residuals, and roughly equal
+variances across groups. With group sizes over 150 it is fairly robust to moderate
+departures.
+
+# 7. Chi-square test of independence
+
+Everything so far compared **means**. The chi-square test works with **counts**, and
+asks whether two categorical variables are associated.
+
+**The question:** do the three branches differ in how customers pay?
+
+- H0: branch and payment method are independent
+- H1: they are associated
+
+```{r chisq_table}
+payment_table <- table(sales$Branch, sales$Payment)
+
+payment_table
+```
+
+```{r chisq_test}
+chisq.test(payment_table)
+```
+
+## What the test is actually doing
+
+```{r chisq_expected}
+chi_result <- chisq.test(payment_table)
+
+# What we would expect if branch and payment were completely independent
+round(chi_result$expected, 1)
+```
+
+```{r chisq_residuals}
+# Where the observed counts deviate most from expectation
+round(chi_result$residuals, 2)
+```
+
+The residuals show which cells drive the result. Values beyond about +2 or -2 mark
+cells where the observed count differs notably from what independence predicts. This
+turns a single p-value into an actual finding you can describe.
+
+::: {.callout-warning title="The chi-square assumption"}
+Chi-square needs **expected** counts of at least 5 in each cell - check
+`chi_result$expected`, not the observed table.
+
+If some cells are too small, either combine categories or use
+`fisher.test()` instead.
+:::
+
+## Goodness of fit
+
+A different chi-square question: does one categorical variable match an expected
+distribution?
+
+```{r chisq_gof}
+# Are the three branches equally busy?
+chisq.test(table(sales$Branch))
+```
+
+By default this tests whether all categories are equally likely.
+
+# 8. Choosing the right test
+
+| Your question | Data type | Test |
+|---|---|---|
+| Is this mean different from a fixed value? | One numeric variable | `t.test(x, mu = value)` |
+| Do two independent groups differ? | Numeric outcome, 2 groups | `t.test(y ~ group)` |
+| Did the same units change? | Numeric, measured twice | `t.test(a, b, paired = TRUE)` |
+| Do three or more groups differ? | Numeric outcome, 3+ groups | `aov(y ~ group)` |
+| Which specific groups differ? | After a significant ANOVA | `TukeyHSD()` |
+| Are two categorical variables associated? | Two categorical variables | `chisq.test(table(a, b))` |
+| Does one categorical variable match expectations? | One categorical variable | `chisq.test(table(a))` |
+
+:::: {.callout-note title="Self-check"}
+A manager runs 20 separate tests looking for anything that differs between branches.
+One comes back with p = 0.04. He announces a finding. What is wrong?
+
+::: {.callout-note collapse="true" title="Show the answer"}
+With 20 tests at alpha = 0.05, the expected number of false positives **when nothing
+is going on at all** is exactly one.
+
+```r
+1 - 0.95^20   # about 0.64
+```
+
+There was roughly a 64 percent chance of finding at least one "significant" result
+even if every branch were identical. Finding exactly one at p = 0.04 is precisely what
+pure noise looks like.
+
+This is the **multiple comparisons problem**, and it is why ANOVA exists rather than
+running every pairwise t-test.
+
+What should he do? Either correct for the number of tests - `p.adjust()` does this - or
+treat the finding as a **hypothesis to test on fresh data** rather than a conclusion.
+The second is almost always better science.
+:::
+::::
+
+# Your turn - full exercises
+
+**Exercise 1 - One-sample.**
+Management claims average customer satisfaction is 7.0 out of 10. Test this claim.
+State your hypotheses, run the test, and write a one-sentence conclusion in business
+language.
+
+```{r full_ex1, eval=FALSE}
+# YOUR CODE HERE
+```
+
+**Exercise 2 - Two-sample with assumptions and effect size.**
+Do male and female customers spend different amounts? Explore first with a table and a
+boxplot, check assumptions, run the test, report Cohen's d, and state whether the
+result is both statistically significant and practically important.
+
+```{r full_ex2, eval=FALSE}
+# YOUR CODE HERE
+```
+
+**Exercise 3 - ANOVA.**
+Does average transaction value differ across the three branches? Run the ANOVA, report
+eta-squared, and if the result is significant, run `TukeyHSD()` to identify which pairs
+differ.
+
+```{r full_ex3, eval=FALSE}
+# YOUR CODE HERE
+```
+
+**Exercise 4 - Chi-square.**
+Is there an association between `Customer type` and `Product line`? Build the table,
+check the expected counts, run the test, and examine the residuals to say where any
+association comes from.
+
+```{r full_ex4, eval=FALSE}
+# YOUR CODE HERE
+```
+
+**Exercise 5 - Choose and defend.**
+For each question, name the test and justify it in one sentence:
+
+a. Do customers rate us differently in the morning than the afternoon?
+b. Is the proportion of members the same in all three branches?
+c. Did our average rating improve after a training programme, measured on the same 40 customers before and after?
+d. Do the six product lines generate different average gross income?
+
+```{r full_ex5, eval=FALSE}
+# YOUR CODE HERE - reasoning as comments
+```
+
+Solutions are in `3.3-Hypothesis-Testing-SOLUTIONS.Rmd`.
+
+# Reference card
+
+| Code | What it does |
+|---|---|
+| `t.test(x, mu = 300)` | One-sample t-test |
+| `t.test(x, mu = 300, alternative = "greater")` | One-tailed |
+| `t.test(y ~ group, data = d)` | Independent two-sample (Welch) |
+| `t.test(a, b, paired = TRUE)` | Paired t-test |
+| `aov(y ~ group, data = d)` | One-way ANOVA |
+| `summary(model)` | The ANOVA table |
+| `TukeyHSD(model)` | Post-hoc pairwise comparisons |
+| `chisq.test(table(a, b))` | Test of independence |
+| `chisq.test(table(a))` | Goodness of fit |
+| `result$expected`, `result$residuals` | Diagnose a chi-square result |
+| `shapiro.test(x)` | Normality test |
+| `leveneTest(y ~ factor(g), data = d)` | Equal variance test |
+| `cohens_d(y ~ group, data = d)` | Effect size for two means |
+| `eta_squared(aov_model)` | Effect size for ANOVA |
+| `p.adjust(pvals, method = "holm")` | Correct for multiple tests |
+
+# Summary
+
+- A hypothesis test assumes **nothing is going on**, then asks how surprising your data would be under that assumption.
+- A **p-value** is the probability of data this extreme *if the null were true*. It is not the probability the null is true, and not a measure of importance.
+- **Type I** error is a false alarm; **Type II** is a missed effect. Lowering one raises the other.
+- Use **t-tests** for one or two means, **ANOVA** for three or more, **chi-square** for counts.
+- **Paired** tests apply when the same units are measured twice, and are far more sensitive.
+- **Check assumptions** - but on large samples read a Q-Q plot rather than a normality test's p-value.
+- **Always report an effect size.** With enough data, everything is significant; only effect size tells you whether it matters.
+- Running many tests manufactures false positives. That is what ANOVA and post-hoc corrections exist to prevent.
+
+**Next:** section 3.4, where instead of comparing groups you model a relationship and
+use it to predict.
