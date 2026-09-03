@@ -2,9 +2,11 @@
 title: "2. Descriptive Statistics"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
 
-# Two outputs from this one file:
-#   html      - the notebook students read and work through
-#   revealjs  - the lecture deck, written to *-slides.html
+editor:
+  markdown:
+    wrap: 72
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
 #
 # Content that should differ between them is wrapped in a div:
 #   ::: {.content-visible unless-format="revealjs"}   notebook prose
@@ -26,11 +28,7 @@ format:
     chalkboard: true
     preview-links: auto
     history: false
-    footer: "307102 · Section 2 · Descriptive Statistics"
-
-editor:
-  markdown:
-    wrap: 72
+    footer: "307102 · Section 2 · Descriptive Statistics · University of Petra"
 ---
 
 :::: {.content-visible unless-format="revealjs"}
@@ -44,8 +42,7 @@ slides.
 :::
 ::::
 
-## New R this week
-
+## New R this week {.smaller}
 Five new functions. That is all you need to add to section 1.
 
 | Function | What it does | Why a business needs it |
@@ -56,8 +53,7 @@ Five new functions. That is all you need to add to section 1.
 | `quantile()` | Percentiles and quartiles | What a typical and a top-10-percent customer spend |
 | `cor()` | Correlation between two columns | Does a bigger basket mean a happier customer |
 
-## Objectives
-
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - Identify the measurement level of a variable and say which statistics
@@ -1124,8 +1120,7 @@ You have just done statistical inference without a single formula.
 Section 3 shows you the formulas, and they will make more sense for
 having seen this first.
 
-# Your turn - full exercises
-
+# Your turn - full exercises {.smaller}
 These have less scaffolding. Work them out from what is above.
 
 **Exercise 1 - Branch performance report.** Produce one table showing,
@@ -1212,8 +1207,7 @@ mostly is not.
 | `+ coord_flip()` | Turn a chart sideways |
 | `+ labs(title = , x = , y = )` | Titles and labels |
 
-# Summary
-
+# Summary {.smaller}
 - **Measurement level** decides which statistics are legitimate. R
   checks types; only you can check sense.
 - **Frequency tables** are the complete analysis for nominal data, and

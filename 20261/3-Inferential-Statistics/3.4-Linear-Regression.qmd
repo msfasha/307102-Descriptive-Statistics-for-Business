@@ -1,10 +1,43 @@
 ---
 title: "3.4 Linear Regression"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: 3.4-Linear-Regression-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 3.4 · Linear Regression · University of Petra"
 ---
 
-## New R this week
+::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck:
+[**Open the slides →**](3.4-Linear-Regression-slides.html)
 
+Arrow keys to move, **F** for full screen, **S** for the presenter view with
+speaker notes, **B** for the chalkboard, **Esc** for a grid of all slides.
+:::
+:::
+
+## New R this week {.smaller}
 | Function | What it does | Why a business needs it |
 |---|---|---|
 | `lm()` | Fits a linear model | "How much does each extra item add to the bill?" |
@@ -13,8 +46,7 @@ subtitle: "307102 Descriptive Statistics for Business | University of Petra"
 | `augment()` | Adds fitted values and residuals to the data | Diagnostics |
 | `plot(model)` | Four diagnostic plots in one call | Checking the model is trustworthy |
 
-## Objectives
-
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - Fit a simple linear regression and interpret its slope and intercept in business terms
@@ -136,6 +168,14 @@ plots, which come in section 5.
 **What counts as a good R-squared depends entirely on the field.** In physics, 0.99 is
 routine. In predicting human behaviour, 0.30 can be excellent. Judge it against what
 is achievable for the question, never against an absolute standard.
+
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Resist giving a threshold. Students want to know what counts as good, and any
+number you say will be quoted back at you out of context for the rest of the
+semester.
+:::
+:::
 
 # 3. Multiple regression
 
@@ -301,6 +341,13 @@ spread.
 That is the single most useful sentence in this notebook.
 :::
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Show a clean residual plot and a badly violated one side by side. The contrast
+teaches this faster than any description of what to look for.
+:::
+:::
+
 # 6. When regression misleads
 
 ## Correlation is still not causation
@@ -349,8 +396,7 @@ Cook's distance measures how much the fitted line would move if a point were del
 High values are not errors, but they are worth understanding - a conclusion resting on
 one observation is a fragile conclusion.
 
-# Your turn - full exercises
-
+# Your turn - full exercises {.smaller}
 **Exercise 1 - Simple regression.**
 Fit a model predicting `gross income` from `Quantity`. Interpret the slope and the
 intercept in business terms, report R-squared, and say whether the model is useful.
@@ -396,8 +442,7 @@ recommend, and does the best-fitting model tell you anything a manager could act
 
 Solutions are in `3.4-Linear-Regression-SOLUTIONS.Rmd`.
 
-# Reference card
-
+# Reference card {.smaller}
 | Code | What it does |
 |---|---|
 | `lm(y ~ x, data = d)` | Simple linear regression |
@@ -416,8 +461,7 @@ Solutions are in `3.4-Linear-Regression-SOLUTIONS.Rmd`.
 | `residuals(model)`, `fitted(model)` | Extract residuals and fitted values |
 | `geom_smooth(method = "lm")` | Add a fitted line to a ggplot |
 
-# Summary
-
+# Summary {.smaller}
 - Regression models the **relationship** between an outcome and one or more predictors, letting you predict rather than only compare.
 - The **slope** is the change in `y` per one-unit change in `x`. The **intercept** is often not meaningful.
 - **R-squared** is the proportion of variation explained. It says nothing about causation, correct model shape, or whether assumptions hold.
@@ -430,3 +474,15 @@ Solutions are in `3.4-Linear-Regression-SOLUTIONS.Rmd`.
 This completes the R track. You now have the full path from describing a dataset to
 modelling the process behind it - and, more importantly, a working sense of when to
 distrust the answer.
+
+::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section before
+the next lecture.
+
+::: {.notes}
+Point them at the notebook rather than the slides for homework - the slides
+drop the longer explanations deliberately.
+:::
+:::

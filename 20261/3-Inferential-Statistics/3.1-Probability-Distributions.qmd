@@ -1,10 +1,43 @@
 ---
 title: "3.1 Probability Distributions"
 subtitle: ""
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: 3.1-Probability-Distributions-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 3.1 · Probability Distributions · University of Petra"
 ---
 
-## New R this week
+::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck:
+[**Open the slides →**](3.1-Probability-Distributions-slides.html)
 
+Arrow keys to move, **F** for full screen, **S** for the presenter view with
+speaker notes, **B** for the chalkboard, **Esc** for a grid of all slides.
+:::
+:::
+
+## New R this week {.smaller}
 R uses a single naming system for every distribution. Learn it once and you know all
 of them.
 
@@ -18,8 +51,7 @@ of them.
 Attach a prefix to a distribution name: `binom`, `pois`, `norm`, `unif`, `t`.
 So `pbinom`, `rpois`, `qnorm` and so on. That is 20 functions from one table.
 
-## Objectives
-
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - Explain what a random variable is, and the difference between discrete and continuous
@@ -250,6 +282,14 @@ around 2 percent.
 This is the entire point of probability distributions in business: **planning for the
 average guarantees you fail about half the time.** You have to plan for the tail.
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Ask the room to guess the overflow probability at capacity 4 before revealing
+the table. Most say 10 or 20 percent. The real figure of roughly 37 percent is
+the moment the idea lands.
+:::
+:::
+
 :::: {.callout-note title="Your turn"}
 A branch receives an average of 2.5 customer complaints per week. What is the
 probability of a week with **no complaints at all**?
@@ -452,6 +492,14 @@ standard deviation used to compute it.
 
 This is the part that matters in practice, and the part exams test.
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Do not give them a list of examples to memorise. Give them the one question -
+is there a fixed number of trials? - and make them apply it. The list runs out;
+the question does not.
+:::
+:::
+
 | If you are counting... | And... | Use |
 |---|---|---|
 | Successes in a fixed number of trials | Each trial is independent, same probability | **Binomial** |
@@ -527,8 +575,7 @@ Always set a seed in work you will hand in. An analysis nobody can reproduce - n
 even you, tomorrow - is not an analysis.
 :::
 
-# Your turn - full exercises
-
+# Your turn - full exercises {.smaller}
 **Exercise 1 - Binomial.**
 Historically 30 percent of customers buy a product from the Health and beauty line.
 Out of the next 25 customers:
@@ -586,8 +633,7 @@ d. Number of the next 40 online orders that are returned
 
 Solutions are in `3.1-Probability-Distributions-SOLUTIONS.Rmd`.
 
-# Reference card
-
+# Reference card {.smaller}
 | Code | What it does |
 |---|---|
 | `dbinom(k, n, p)` | P(exactly k successes) |
@@ -605,8 +651,7 @@ Solutions are in `3.1-Probability-Distributions-SOLUTIONS.Rmd`.
 | `mean(vec == "A")` | Proportion of a column equal to "A" |
 | `set.seed(2024)` | Make random results reproducible |
 
-# Summary
-
+# Summary {.smaller}
 - A **random variable** is a numerical outcome of an uncertain process; it is either **discrete** or **continuous**.
 - The **binomial** counts successes in a fixed number of independent trials.
 - The **Poisson** counts events in an interval with no fixed maximum; its mean equals its variance.
@@ -618,3 +663,15 @@ Solutions are in `3.1-Probability-Distributions-SOLUTIONS.Rmd`.
 
 **Next:** section 3.2, where you use these distributions to put a margin of error
 around an estimate.
+
+::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section before
+the next lecture.
+
+::: {.notes}
+Point them at the notebook rather than the slides for homework - the slides
+drop the longer explanations deliberately.
+:::
+:::

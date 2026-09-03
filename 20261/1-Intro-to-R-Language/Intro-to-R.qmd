@@ -1,6 +1,30 @@
 ---
 title: "1. Fast Intro to R"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: Intro-to-R-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 1 · Intro to R · University of Petra"
 ---
 
 This is the only part of the course that is about R rather than about statistics.
@@ -22,8 +46,17 @@ did not understand that", which is almost always a missing bracket, a missing qu
 or a misspelled name. Read the message, check those three things, and try again.
 :::
 
-## Objectives
+::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck:
+[**Open the slides →**](Intro-to-R-slides.html)
 
+Arrow keys to move, **F** for full screen, **S** for the presenter view with
+speaker notes, **B** for the chalkboard, **Esc** for a grid of all slides.
+:::
+:::
+
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - Run R code and read what R prints back to you
@@ -198,6 +231,14 @@ When an analysis will not work, the first thing to check is whether the data
 actually follows this rule.
 :::
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+This is the idea to slow down on. Almost every problem students bring to office
+hours is data that is not shaped this way. Ask them to say out loud what one row
+represents; if they cannot, that is the bug.
+:::
+:::
+
 The `library(tidyverse)` line loads the add-on packages you installed during setup.
 You need one `library()` call at the start of every session. If you restart R, run
 it again.
@@ -344,6 +385,14 @@ Read that top to bottom as a sentence:
 
 That is the whole idea. Every analysis in this course is written this way.
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Read a pipeline out loud as a sentence the first few times - "take the sales,
+and then keep Branch A, and then average the total". Students who read it as
+a sentence stop being frightened of it within about ten minutes.
+:::
+:::
+
 Two practical points. Put the pipe at the **end** of a line, never the start of the
 next one. And RStudio types it for you with **Ctrl+Shift+M** (**Cmd+Shift+M**).
 
@@ -488,8 +537,7 @@ will meet it again in section 2 of the course.
 :::
 ::::
 
-# Putting it together
-
+# Putting it together {.smaller}
 Here is a realistic question answered with everything above:
 
 > Among member customers, which branch has the highest average customer rating, and
@@ -588,8 +636,7 @@ Noticing that a result is not quite what you expected, and then working out why,
 the habit this whole course is trying to build.
 :::
 
-# Reference card
-
+# Reference card {.smaller}
 Everything from this notebook in one place. Come back here whenever you are stuck.
 
 | Code | What it does |
@@ -613,8 +660,7 @@ Everything from this notebook in one place. Come back here whenever you are stuc
 | `group_by(d, g)` | Summarise separately per group |
 | `n()` | Count rows, inside `summarise()` |
 
-# Common errors and what they mean
-
+# Common errors and what they mean {.smaller}
 | Message | Cause | Fix |
 |---|---|---|
 | `object 'sales' not found` | You have not created it, or R restarted | Run the chunk that creates it |
@@ -625,8 +671,7 @@ Everything from this notebook in one place. Come back here whenever you are stuc
 | `unexpected symbol` | Missing comma, bracket or quote | Check the line *above* the one flagged |
 | Console shows `+` and nothing runs | Unfinished command | Press Esc, check your brackets |
 
-# Summary
-
+# Summary {.smaller}
 You now know:
 
 - R stores values under **names** using `<-`
@@ -642,3 +687,15 @@ functions each, always with a "New R this week" table at the top, but the founda
 does not change.
 
 **Next:** section 2, `2-Descriptive-Statistics/`, where the statistics begins.
+
+::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section before
+the next lecture.
+
+::: {.notes}
+Point them at the notebook rather than the slides for homework - the slides
+drop the longer explanations deliberately.
+:::
+:::

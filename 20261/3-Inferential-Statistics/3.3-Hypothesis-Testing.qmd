@@ -1,10 +1,43 @@
 ---
 title: "3.3 Hypothesis Testing"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: 3.3-Hypothesis-Testing-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 3.3 · Hypothesis Testing · University of Petra"
 ---
 
-## New R this week
+::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck:
+[**Open the slides →**](3.3-Hypothesis-Testing-slides.html)
 
+Arrow keys to move, **F** for full screen, **S** for the presenter view with
+speaker notes, **B** for the chalkboard, **Esc** for a grid of all slides.
+:::
+:::
+
+## New R this week {.smaller}
 | Function | What it does | When you reach for it |
 |---|---|---|
 | `t.test()` | Compares a mean to a value, or two means | "Do members spend more than non-members?" |
@@ -14,8 +47,7 @@ subtitle: "307102 Descriptive Statistics for Business | University of Petra"
 | `shapiro.test()`, `leveneTest()` | Check the assumptions before you trust the test | Always |
 | `cohens_d()`, `eta_squared()` | Effect size - is the difference big enough to care? | Always |
 
-## Objectives
-
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - State a null and alternative hypothesis for a business question
@@ -52,6 +84,14 @@ The reasoning is deliberately backwards, and that is what makes it hard at first
 
 It is proof by contradiction with a probability attached. You never prove the
 alternative; you only show the null is an uncomfortable place to stand.
+
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Warn them explicitly that the logic runs backwards. Students expect a test to
+prove the interesting thing; it only ever makes the boring thing uncomfortable
+to keep believing.
+:::
+:::
 
 | Hypothesis | Symbol | What it says | Example |
 |---|---|---|---|
@@ -320,6 +360,14 @@ steadily towards zero.
 "statistically significant" and "practically important" are different questions, and
 that only one of them is answered by a p-value.
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+Run this live. Watching the p-value march toward zero while Cohen's d does not
+move is worth more than any amount of explaining. Then ask which column they
+would put in a report.
+:::
+:::
+
 Always report both.
 
 # 6. ANOVA - comparing three or more groups
@@ -528,8 +576,7 @@ The second is almost always better science.
 :::
 ::::
 
-# Your turn - full exercises
-
+# Your turn - full exercises {.smaller}
 **Exercise 1 - One-sample.**
 Management claims average customer satisfaction is 7.0 out of 10. Test this claim.
 State your hypotheses, run the test, and write a one-sentence conclusion in business
@@ -580,8 +627,7 @@ d. Do the six product lines generate different average gross income?
 
 Solutions are in `3.3-Hypothesis-Testing-SOLUTIONS.Rmd`.
 
-# Reference card
-
+# Reference card {.smaller}
 | Code | What it does |
 |---|---|
 | `t.test(x, mu = 300)` | One-sample t-test |
@@ -600,8 +646,7 @@ Solutions are in `3.3-Hypothesis-Testing-SOLUTIONS.Rmd`.
 | `eta_squared(aov_model)` | Effect size for ANOVA |
 | `p.adjust(pvals, method = "holm")` | Correct for multiple tests |
 
-# Summary
-
+# Summary {.smaller}
 - A hypothesis test assumes **nothing is going on**, then asks how surprising your data would be under that assumption.
 - A **p-value** is the probability of data this extreme *if the null were true*. It is not the probability the null is true, and not a measure of importance.
 - **Type I** error is a false alarm; **Type II** is a missed effect. Lowering one raises the other.
@@ -613,3 +658,15 @@ Solutions are in `3.3-Hypothesis-Testing-SOLUTIONS.Rmd`.
 
 **Next:** section 3.4, where instead of comparing groups you model a relationship and
 use it to predict.
+
+::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section before
+the next lecture.
+
+::: {.notes}
+Point them at the notebook rather than the slides for homework - the slides
+drop the longer explanations deliberately.
+:::
+:::

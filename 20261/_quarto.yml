@@ -63,6 +63,22 @@ format:
     link-external-newwindow: true
     smooth-scroll: true
 
+# NOTE on lecture slides.
+# The revealjs format is declared per teaching file, NOT here. A website project
+# expects one primary format per page; adding revealjs at project level makes
+# `quarto render` fail when it tries to move two outputs to the same path.
+# Each teaching .qmd therefore carries its own block:
+#
+#   format:
+#     html: default
+#     revealjs:
+#       output-file: <Name>-slides.html
+#       theme: [default, ../assets/petra-reveal.scss]
+#       ...
+#
+# Files without that block (SOLUTIONS, the install guide, the home page)
+# produce a web page only, which is what we want.
+
 execute:
   freeze: auto
   warning: false

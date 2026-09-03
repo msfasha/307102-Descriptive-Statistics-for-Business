@@ -1,10 +1,43 @@
 ---
 title: "3.2 Estimation and Confidence Intervals"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+
+# Two outputs from this one file: the notebook page, and the lecture deck.
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: 3.2-Estimation-and-Confidence-Intervals-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 3.2 · Estimation · University of Petra"
 ---
 
-## New R this week
+::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck:
+[**Open the slides →**](3.2-Estimation-and-Confidence-Intervals-slides.html)
 
+Arrow keys to move, **F** for full screen, **S** for the presenter view with
+speaker notes, **B** for the chalkboard, **Esc** for a grid of all slides.
+:::
+:::
+
+## New R this week {.smaller}
 | Function | What it does | Why a business needs it |
 |---|---|---|
 | `sample()` | Draws a random subset of rows or values | Simulating what a survey would have found |
@@ -13,8 +46,7 @@ subtitle: "307102 Descriptive Statistics for Business | University of Petra"
 | `t.test()` | Confidence interval for a mean, in one line | The everyday tool |
 | `prop.test()` | Confidence interval for a proportion | "What share of customers are members?" |
 
-## Objectives
-
+## Objectives {.smaller}
 By the end of this notebook you will be able to:
 
 - Explain the difference between a population and a sample, and between a parameter and a statistic
@@ -194,6 +226,14 @@ Notice the `sqrt(n)`. To halve your uncertainty you must **quadruple** your samp
 size. This is the single most important practical fact about sampling, and it is why
 surveys get expensive fast.
 
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+The practical version: a survey ten times bigger is only about three times more
+precise. Someone will one day ask you to approve that budget, and this is the
+slide that tells you what you are buying.
+:::
+:::
+
 ```{r se_by_n}
 tibble(
   sample_size    = c(10, 25, 50, 100, 400, 1600),
@@ -321,6 +361,14 @@ times, about 95 of your intervals would contain the true value and about 5 would
 miss.
 
 You do not know which kind yours is.
+:::
+
+::: {.content-visible when-format="revealjs"}
+::: {.notes}
+This is the single most examinable idea in the section and the one students get
+wrong most often. Run the coverage plot live and have them count the red
+intervals. Saying it is not enough - they have to see the method fail.
+:::
 :::
 
 ## Demonstrating it
@@ -463,8 +511,7 @@ the precision, and will be disappointed.
 :::
 ::::
 
-# Your turn - full exercises
-
+# Your turn - full exercises {.smaller}
 **Exercise 1 - Sampling distribution.**
 Draw 1,000 samples of size 25 from `Rating` and store their means. Report the mean and
 standard deviation of those sample means, compare the standard deviation with the
@@ -510,8 +557,7 @@ what is the budget - and what would it be for a margin of 0.2 instead?
 
 Solutions are in `3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.Rmd`.
 
-# Reference card
-
+# Reference card {.smaller}
 | Code | What it does |
 |---|---|
 | `sample(x, size = n)` | Draw a random sample |
@@ -526,8 +572,7 @@ Solutions are in `3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.Rmd`.
 | `prop.test(successes, trials)` | Confidence interval for a proportion |
 | `ceiling((1.96 * sd / E)^2)` | Sample size for margin of error E |
 
-# Summary
-
+# Summary {.smaller}
 - A **statistic** describes your sample; a **parameter** describes the population. You compute the first to estimate the second.
 - Sample means vary from sample to sample. That variation is the **sampling distribution**.
 - The **Central Limit Theorem** says the sampling distribution of the mean becomes normal as `n` grows, whatever the shape of the population.
@@ -538,3 +583,15 @@ Solutions are in `3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.Rmd`.
 
 **Next:** section 3.3, where you stop estimating a value and start testing a claim
 about it.
+
+::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section before
+the next lecture.
+
+::: {.notes}
+Point them at the notebook rather than the slides for homework - the slides
+drop the longer explanations deliberately.
+:::
+:::
