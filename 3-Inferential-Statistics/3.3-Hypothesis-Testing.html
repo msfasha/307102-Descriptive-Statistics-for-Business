@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a86099da60731089fb3e48d2ab02df10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -162,8 +165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Intro-to-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Fast Intro to R</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
@@ -316,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reference-card" id="toc-reference-card" class="nav-link" data-scroll-target="#reference-card">Reference card</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="3.3-Hypothesis-Testing-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -341,8 +347,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="new-r-this-week" class="level2">
-<h2 class="anchored" data-anchor-id="new-r-this-week">New R this week</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lecture slides">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lecture slides
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This same material is also available as a slide deck: <a href="3.3-Hypothesis-Testing-slides.html"><strong>Open the slides →</strong></a></p>
+<p>Arrow keys to move, <strong>F</strong> for full screen, <strong>S</strong> for the presenter view with speaker notes, <strong>B</strong> for the chalkboard, <strong>Esc</strong> for a grid of all slides.</p>
+</div>
+</div>
+<section id="new-r-this-week" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="new-r-this-week">New R this week</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -390,8 +410,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<section id="objectives" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="objectives">Objectives</h2>
 <p>By the end of this notebook you will be able to:</p>
 <ul>
 <li>State a null and alternative hypothesis for a business question</li>
@@ -1240,7 +1260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>A manager runs 20 separate tests looking for anything that differs between branches. One comes back with p = 0.04. He announces a finding. What is wrong?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1249,7 +1269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>With 20 tests at alpha = 0.05, the expected number of false positives <strong>when nothing is going on at all</strong> is exactly one.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span><span class="sc">^</span><span class="dv">20</span>   <span class="co"># about 0.64</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1262,8 +1282,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="your-turn---full-exercises" class="level1">
-<h1>Your turn - full exercises</h1>
+<section id="your-turn---full-exercises" class="level1 smaller">
+<h1 class="smaller">Your turn - full exercises</h1>
 <p><strong>Exercise 1 - One-sample.</strong> Management claims average customer satisfaction is 7.0 out of 10. Test this claim. State your hypotheses, run the test, and write a one-sentence conclusion in business language.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1292,8 +1312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Solutions are in <code>3.3-Hypothesis-Testing-SOLUTIONS.Rmd</code>.</p>
 </section>
-<section id="reference-card" class="level1">
-<h1>Reference card</h1>
+<section id="reference-card" class="level1 smaller">
+<h1 class="smaller">Reference card</h1>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1365,8 +1385,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
+<section id="summary" class="level1 smaller">
+<h1 class="smaller">Summary</h1>
 <ul>
 <li>A hypothesis test assumes <strong>nothing is going on</strong>, then asks how surprising your data would be under that assumption.</li>
 <li>A <strong>p-value</strong> is the probability of data this extreme <em>if the null were true</em>. It is not the probability the null is true, and not a measure of importance.</li>
@@ -1456,7 +1476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/msfasha\.github\.io\/307102-Descriptive-Statistics-for-Business\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

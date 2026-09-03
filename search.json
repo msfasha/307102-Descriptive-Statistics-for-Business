@@ -185,7 +185,7 @@
     "href": "1-Intro-to-R-Language/Install-Guide.html#option-a-posit-cloud-no-installation",
     "title": "Setting Up R",
     "section": "Option A — Posit Cloud (no installation)",
-    "text": "Option A — Posit Cloud (no installation)\nPosit Cloud runs R inside your web browser. Nothing is installed on your computer.\nStep 1. Go to https://posit.cloud and click Sign Up. The free plan is enough for this course.\nStep 2. Your instructor will share a link to the course workspace. Click it, then click Save a Permanent Copy. This gives you your own copy of all the notebooks and data that you can edit freely.\nStep 3. In the Files pane at the bottom right, open 1-Intro-to-R-Language and click setup.R. Then click the Source button at the top of the editor. Wait for it to finish — the first run takes a few minutes because it downloads packages.\nStep 4. When you see SETUP COMPLETE, you are ready. Open Fast-Intro-to-R.Rmd and begin.\n\n\n\n\n\n\nWarningFree-plan hours\n\n\n\nThe free plan gives you a limited number of compute hours per month. To avoid wasting them, click the small stop sign icon on your project when you finish a session rather than just closing the browser tab.",
+    "text": "Option A — Posit Cloud (no installation)\nPosit Cloud runs R inside your web browser. Nothing is installed on your computer.\nStep 1. Go to https://posit.cloud and click Sign Up. The free plan is enough for this course.\nStep 2. Your instructor will share a link to the course workspace. Click it, then click Save a Permanent Copy. This gives you your own copy of all the notebooks and data that you can edit freely.\nStep 3. In the Files pane at the bottom right, open 1-Intro-to-R-Language and click setup.R. Then click the Source button at the top of the editor. Wait for it to finish — the first run takes a few minutes because it downloads packages.\nStep 4. When you see SETUP COMPLETE, you are ready. Open Intro-to-R.qmd and begin.\n\n\n\n\n\n\nWarningFree-plan hours\n\n\n\nThe free plan gives you a limited number of compute hours per month. To avoid wasting them, click the small stop sign icon on your project when you finish a session rather than just closing the browser tab.",
     "crumbs": [
       "1 — Intro to R Language",
       "Install guide"
@@ -225,81 +225,401 @@
     ]
   },
   {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#objectives",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#objectives",
+    "title": "1. Fast Intro to R",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nRun R code and read what R prints back to you\nStore a value in an object and use it later\nExplain what a data frame is and why it matters\nLoad a spreadsheet into R\nPull a single column out of a dataset\nRead code written with the pipe operator\nUse five commands to filter, sort, summarise and reshape data"
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#how-to-use-this-notebook",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#how-to-use-this-notebook",
+    "title": "1. Fast Intro to R",
+    "section": "How to use this notebook",
+    "text": "How to use this notebook\nThis file is an R Notebook. It mixes explanation (like this paragraph) with code chunks (the grey boxes).\nTo run a chunk, click the small green triangle at its top-right corner, or click inside it and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac). The result appears directly beneath.\nRun every chunk as you come to it. Reading code without running it teaches you almost nothing."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#getting-your-bearings",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#getting-your-bearings",
+    "title": "1. Fast Intro to R",
+    "section": "Getting your bearings",
+    "text": "Getting your bearings\nBefore analysing any dataset, look at it. Three functions do this.\n\ndim(sales)\n\n#&gt; [1] 1000   17\n\n\ndim() gives the size: rows first, then columns. So 1,000 transactions, each with 17 pieces of information.\n\nnames(sales)\n\n#&gt;  [1] \"Invoice ID\"              \"Branch\"                 \n#&gt;  [3] \"City\"                    \"Customer type\"          \n#&gt;  [5] \"Gender\"                  \"Product line\"           \n#&gt;  [7] \"Unit price\"              \"Quantity\"               \n#&gt;  [9] \"Tax 5%\"                  \"Total\"                  \n#&gt; [11] \"Date\"                    \"Time\"                   \n#&gt; [13] \"Payment\"                 \"cogs\"                   \n#&gt; [15] \"gross margin percentage\" \"gross income\"           \n#&gt; [17] \"Rating\"\n\n\nnames() lists the column names. Notice that several contain spaces - Unit price, Product line, Customer type. That is common in real business data and it has a consequence you will meet in a moment.\n\nglimpse(sales)\n\n#&gt; Rows: 1,000\n#&gt; Columns: 17\n#&gt; $ `Invoice ID`              &lt;chr&gt; \"750-67-8428\", \"226-31-3081\", \"631-41-3108\",…\n#&gt; $ Branch                    &lt;chr&gt; \"A\", \"C\", \"A\", \"A\", \"A\", \"C\", \"A\", \"C\", \"A\",…\n#&gt; $ City                      &lt;chr&gt; \"Yangon\", \"Naypyitaw\", \"Yangon\", \"Yangon\", \"…\n#&gt; $ `Customer type`           &lt;chr&gt; \"Member\", \"Normal\", \"Normal\", \"Member\", \"Nor…\n#&gt; $ Gender                    &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", …\n#&gt; $ `Product line`            &lt;chr&gt; \"Health and beauty\", \"Electronic accessories…\n#&gt; $ `Unit price`              &lt;dbl&gt; 74.69, 15.28, 46.33, 58.22, 86.31, 85.39, 68…\n#&gt; $ Quantity                  &lt;dbl&gt; 7, 5, 7, 8, 7, 7, 6, 10, 2, 3, 4, 4, 5, 10, …\n#&gt; $ `Tax 5%`                  &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Total                     &lt;dbl&gt; 548.9715, 80.2200, 340.5255, 489.0480, 634.3…\n#&gt; $ Date                      &lt;dttm&gt; 2019-01-05, 2019-03-08, 2019-03-03, 2019-01…\n#&gt; $ Time                      &lt;dttm&gt; 1899-12-31 13:08:00, 1899-12-31 10:29:00, 1…\n#&gt; $ Payment                   &lt;chr&gt; \"Ewallet\", \"Cash\", \"Credit card\", \"Ewallet\",…\n#&gt; $ cogs                      &lt;dbl&gt; 522.83, 76.40, 324.31, 465.76, 604.17, 597.7…\n#&gt; $ `gross margin percentage` &lt;dbl&gt; 4.761905, 4.761905, 4.761905, 4.761905, 4.76…\n#&gt; $ `gross income`            &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Rating                    &lt;dbl&gt; 9.1, 9.6, 7.4, 8.4, 5.3, 4.1, 5.8, 8.0, 7.2,…\n\n\nglimpse() is the most useful of the three. Each line is one column, showing its name, its type, and the first few values.\nThose types matter:\n\n\n\n\n\n\n\n\nWhat you see\nWhat it means\nExample column\n\n\n\n\n&lt;chr&gt;\nCharacter - text\nBranch, Gender\n\n\n&lt;dbl&gt;\nDouble - a number that can have decimals\nTotal, Rating\n\n\n&lt;int&gt;\nInteger - a whole number\nQuantity\n\n\n&lt;dttm&gt;\nDate and time\nDate\n\n\n\nR will refuse to average a &lt;chr&gt; column, and it is right to. The average of “Male” and “Female” is not a meaningful quantity.\nBut R will not protect you from averaging something numeric that should not be averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would happily report a mean of 2.03. Only you can know that number is meaningless."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#filter---choosing-rows",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#filter---choosing-rows",
+    "title": "1. Fast Intro to R",
+    "section": "filter() - choosing rows",
+    "text": "filter() - choosing rows\n\nsales |&gt;\n  filter(Branch == \"A\")\n\n#&gt; # A tibble: 340 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 750-67-8428  A      Yangon Member          Female Health and be…         74.7\n#&gt;  2 631-41-3108  A      Yangon Normal          Male   Home and life…         46.3\n#&gt;  3 123-19-1176  A      Yangon Member          Male   Health and be…         58.2\n#&gt;  4 373-73-7910  A      Yangon Normal          Male   Sports and tr…         86.3\n#&gt;  5 355-53-5943  A      Yangon Member          Female Electronic ac…         68.8\n#&gt;  6 665-32-9167  A      Yangon Member          Female Health and be…         36.3\n#&gt;  7 365-64-0515  A      Yangon Normal          Female Electronic ac…         47.0\n#&gt;  8 252-56-2699  A      Yangon Normal          Male   Food and beve…         43.2\n#&gt;  9 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt; 10 656-95-9349  A      Yangon Member          Female Health and be…         68.9\n#&gt; # ℹ 330 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nNote the double equals sign. A single = means “set this to”; == means “is this equal to”. Using = where you meant == is another very common early error.\n\nsales |&gt;\n  filter(Total &gt; 900)\n\n#&gt; # A tibble: 26 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 393-65-2792  C      Naypy… Normal          Male   Food and beve…         89.5\n#&gt;  2 766-85-7061  B      Manda… Normal          Male   Health and be…         87.9\n#&gt;  3 704-48-3927  A      Yangon Member          Male   Electronic ac…         88.7\n#&gt;  4 219-22-9386  B      Manda… Member          Male   Sports and tr…        100.0\n#&gt;  5 731-81-9469  C      Naypy… Member          Female Sports and tr…         89.8\n#&gt;  6 280-17-4359  C      Naypy… Member          Male   Health and be…         90.5\n#&gt;  7 743-04-1105  B      Manda… Member          Male   Health and be…         97.2\n#&gt;  8 234-65-2137  C      Naypy… Normal          Male   Home and life…         95.6\n#&gt;  9 687-47-8271  A      Yangon Normal          Male   Fashion acces…         99.0\n#&gt; 10 817-69-8206  B      Manda… Normal          Female Electronic ac…         99.7\n#&gt; # ℹ 16 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nConditions can be combined. A comma means “and”:\n\nsales |&gt;\n  filter(Branch == \"A\", Payment == \"Cash\")\n\n#&gt; # A tibble: 110 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt;  2 848-62-7243  A      Yangon Normal          Male   Health and be…         24.9\n#&gt;  3 162-48-8011  A      Yangon Member          Female Food and beve…         44.6\n#&gt;  4 106-35-6779  A      Yangon Member          Male   Home and life…         44.3\n#&gt;  5 817-48-8732  A      Yangon Member          Female Home and life…         72.4\n#&gt;  6 877-22-3308  A      Yangon Member          Male   Health and be…         15.9\n#&gt;  7 232-11-3025  A      Yangon Normal          Male   Sports and tr…         78.8\n#&gt;  8 382-03-4532  A      Yangon Member          Female Health and be…         18.3\n#&gt;  9 504-35-8843  A      Yangon Normal          Male   Sports and tr…         42.5\n#&gt; 10 212-62-1842  A      Yangon Normal          Male   Food and beve…         58.3\n#&gt; # ℹ 100 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;"
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#select---choosing-columns",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#select---choosing-columns",
+    "title": "1. Fast Intro to R",
+    "section": "select() - choosing columns",
+    "text": "select() - choosing columns\n\nsales |&gt;\n  select(Branch, `Product line`, Total, Rating)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    Branch `Product line`         Total Rating\n#&gt;    &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 A      Health and beauty      549.     9.1\n#&gt;  2 C      Electronic accessories  80.2    9.6\n#&gt;  3 A      Home and lifestyle     341.     7.4\n#&gt;  4 A      Health and beauty      489.     8.4\n#&gt;  5 A      Sports and travel      634.     5.3\n#&gt;  6 C      Electronic accessories 628.     4.1\n#&gt;  7 A      Electronic accessories 434.     5.8\n#&gt;  8 C      Home and lifestyle     772.     8  \n#&gt;  9 A      Health and beauty       76.1    7.2\n#&gt; 10 B      Food and beverages     173.     5.9\n#&gt; # ℹ 990 more rows\n\n\nUseful when a dataset has 17 columns and you care about four."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#arrange---sorting",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#arrange---sorting",
+    "title": "1. Fast Intro to R",
+    "section": "arrange() - sorting",
+    "text": "arrange() - sorting\n\nsales |&gt;\n  arrange(desc(Total)) |&gt;\n  select(`Invoice ID`, Branch, `Product line`, Total)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Branch `Product line`      Total\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;\n#&gt;  1 860-79-0874  C      Fashion accessories 1043.\n#&gt;  2 687-47-8271  A      Fashion accessories 1039.\n#&gt;  3 283-26-5248  C      Food and beverages  1034.\n#&gt;  4 751-41-9720  C      Home and lifestyle  1024.\n#&gt;  5 303-96-2227  B      Home and lifestyle  1022.\n#&gt;  6 744-16-7898  B      Home and lifestyle  1022.\n#&gt;  7 271-88-8734  C      Fashion accessories 1021.\n#&gt;  8 234-65-2137  C      Home and lifestyle  1004.\n#&gt;  9 554-42-2417  C      Sports and travel   1002.\n#&gt; 10 325-77-6186  A      Home and lifestyle   952.\n#&gt; # ℹ 990 more rows\n\n\narrange() sorts smallest-first by default. Wrapping the column in desc() sorts largest-first, which is usually what you want when looking for top performers.\nNotice this chain has two steps: sort, then narrow the columns so the result is readable. That is the pipe earning its keep."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#mutate---adding-a-column",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#mutate---adding-a-column",
+    "title": "1. Fast Intro to R",
+    "section": "mutate() - adding a column",
+    "text": "mutate() - adding a column\n\nsales |&gt;\n  mutate(margin_pct = (`gross income` / Total) * 100) |&gt;\n  select(`Invoice ID`, Total, `gross income`, margin_pct)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Total `gross income` margin_pct\n#&gt;    &lt;chr&gt;        &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;\n#&gt;  1 750-67-8428  549.           26.1        4.76\n#&gt;  2 226-31-3081   80.2           3.82       4.76\n#&gt;  3 631-41-3108  341.           16.2        4.76\n#&gt;  4 123-19-1176  489.           23.3        4.76\n#&gt;  5 373-73-7910  634.           30.2        4.76\n#&gt;  6 699-14-3026  628.           29.9        4.76\n#&gt;  7 355-53-5943  434.           20.7        4.76\n#&gt;  8 315-22-5665  772.           36.8        4.76\n#&gt;  9 665-32-9167   76.1           3.63       4.76\n#&gt; 10 692-92-5582  173.            8.23       4.76\n#&gt; # ℹ 990 more rows\n\n\nmutate() calculates a new column from existing ones, row by row. This is the direct equivalent of typing a formula in a new spreadsheet column and dragging it down - except that it cannot silently fail to cover the last twenty rows."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#summarise---collapsing-to-one-number",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#summarise---collapsing-to-one-number",
+    "title": "1. Fast Intro to R",
+    "section": "summarise() - collapsing to one number",
+    "text": "summarise() - collapsing to one number\n\nsales |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total),\n    avg_rating    = mean(Rating)\n  )\n\n#&gt; # A tibble: 1 × 4\n#&gt;   transactions avg_sale total_revenue avg_rating\n#&gt;          &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1         1000     323.       322967.       6.97\n\n\nn() is a helper that counts rows. It only works inside summarise()."
+  },
+  {
+    "objectID": "1-Intro-to-R-Language/Intro-to-R-slides.html#group_by---the-one-that-makes-summarise-powerful",
+    "href": "1-Intro-to-R-Language/Intro-to-R-slides.html#group_by---the-one-that-makes-summarise-powerful",
+    "title": "1. Fast Intro to R",
+    "section": "group_by() - the one that makes summarise powerful",
+    "text": "group_by() - the one that makes summarise powerful\nA single average across all 1,000 transactions is rarely the interesting number. What you usually want is the average for each branch, or for each product line.\n\nsales |&gt;\n  group_by(Branch) |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total)\n  )\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch transactions avg_sale total_revenue\n#&gt;   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;\n#&gt; 1 A               340     312.       106200.\n#&gt; 2 B               332     320.       106198.\n#&gt; 3 C               328     337.       110569.\n\n\nOne row per branch instead of one row overall. group_by() changes nothing about the data - it only tells the next command to work separately within each group.\nThis is the R equivalent of a PivotTable, and it is the single most useful thing in this notebook.\nYou can group by more than one column:\n\nsales |&gt;\n  group_by(Branch, `Customer type`) |&gt;\n  summarise(\n    transactions = n(),\n    avg_sale     = mean(Total),\n    .groups      = \"drop\"\n  )\n\n#&gt; # A tibble: 6 × 4\n#&gt;   Branch `Customer type` transactions avg_sale\n#&gt;   &lt;chr&gt;  &lt;chr&gt;                  &lt;int&gt;    &lt;dbl&gt;\n#&gt; 1 A      Member                   167     321.\n#&gt; 2 A      Normal                   173     304.\n#&gt; 3 B      Member                   165     325.\n#&gt; 4 B      Normal                   167     314.\n#&gt; 5 C      Member                   169     337.\n#&gt; 6 C      Normal                   159     338.\n\n\n\n\n\n\n\n\n\nSelf-check 3\n\n\nWhich product line earns the most total gross income? Write a pipeline using group_by(), summarise() and arrange().\n\n\n\n\n\n\n\nShow the answer\n\n\nsales |&gt;\n  group_by(`Product line`) |&gt;\n  summarise(total_income = sum(`gross income`)) |&gt;\n  arrange(desc(total_income))\nThe order matters. You must group and summarise before you can sort, because the column you are sorting by (total_income) does not exist until summarise() creates it.\nA follow-up worth thinking about: the product line with the highest total income is not necessarily the most profitable per sale. Adding mean() of the same column would let you check whether the leader is winning on margin or simply on volume. That distinction is exactly what descriptive statistics exists to expose, and you will meet it again in section 2 of the course."
+  },
+  {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html",
     "href": "1-Intro-to-R-Language/Intro-to-R.html",
     "title": "1. Fast Intro to R",
     "section": "",
-    "text": "This is the only part of the course that is about R rather than about statistics. It exists so that everything afterwards can be about statistics.\nThere are eight things to learn here. That is the whole list. You will not be asked to write loops, define your own functions, or do anything a programmer would recognise as programming. You are learning to operate a tool, not to build one.\nExpect this to take about ninety minutes. Do not skip it - every later notebook assumes you have done it."
+    "text": "This is the only part of the course that is about R rather than about statistics. It exists so that everything afterwards can be about statistics.\nThere are eight things to learn here. That is the whole list. You will not be asked to write loops, define your own functions, or do anything a programmer would recognise as programming. You are learning to operate a tool, not to build one.\nExpect this to take about ninety minutes. Do not skip it - every later notebook assumes you have done it.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#objectives",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#objectives",
     "title": "1. Fast Intro to R",
     "section": "Objectives",
-    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nRun R code and read what R prints back to you\nStore a value in an object and use it later\nExplain what a data frame is and why it matters\nLoad a spreadsheet into R\nPull a single column out of a dataset\nRead code written with the pipe operator\nUse five commands to filter, sort, summarise and reshape data"
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nRun R code and read what R prints back to you\nStore a value in an object and use it later\nExplain what a data frame is and why it matters\nLoad a spreadsheet into R\nPull a single column out of a dataset\nRead code written with the pipe operator\nUse five commands to filter, sort, summarise and reshape data",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#how-to-use-this-notebook",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#how-to-use-this-notebook",
     "title": "1. Fast Intro to R",
     "section": "How to use this notebook",
-    "text": "How to use this notebook\nThis file is an R Notebook. It mixes explanation (like this paragraph) with code chunks (the grey boxes).\nTo run a chunk, click the small green triangle at its top-right corner, or click inside it and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac). The result appears directly beneath.\nRun every chunk as you come to it. Reading code without running it teaches you almost nothing."
+    "text": "How to use this notebook\nThis file is an R Notebook. It mixes explanation (like this paragraph) with code chunks (the grey boxes).\nTo run a chunk, click the small green triangle at its top-right corner, or click inside it and press Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac). The result appears directly beneath.\nRun every chunk as you come to it. Reading code without running it teaches you almost nothing.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#getting-your-bearings",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#getting-your-bearings",
     "title": "1. Fast Intro to R",
     "section": "Getting your bearings",
-    "text": "Getting your bearings\nBefore analysing any dataset, look at it. Three functions do this.\n\ndim(sales)\n\n#&gt; [1] 1000   17\n\n\ndim() gives the size: rows first, then columns. So 1,000 transactions, each with 17 pieces of information.\n\nnames(sales)\n\n#&gt;  [1] \"Invoice ID\"              \"Branch\"                 \n#&gt;  [3] \"City\"                    \"Customer type\"          \n#&gt;  [5] \"Gender\"                  \"Product line\"           \n#&gt;  [7] \"Unit price\"              \"Quantity\"               \n#&gt;  [9] \"Tax 5%\"                  \"Total\"                  \n#&gt; [11] \"Date\"                    \"Time\"                   \n#&gt; [13] \"Payment\"                 \"cogs\"                   \n#&gt; [15] \"gross margin percentage\" \"gross income\"           \n#&gt; [17] \"Rating\"\n\n\nnames() lists the column names. Notice that several contain spaces - Unit price, Product line, Customer type. That is common in real business data and it has a consequence you will meet in a moment.\n\nglimpse(sales)\n\n#&gt; Rows: 1,000\n#&gt; Columns: 17\n#&gt; $ `Invoice ID`              &lt;chr&gt; \"750-67-8428\", \"226-31-3081\", \"631-41-3108\",…\n#&gt; $ Branch                    &lt;chr&gt; \"A\", \"C\", \"A\", \"A\", \"A\", \"C\", \"A\", \"C\", \"A\",…\n#&gt; $ City                      &lt;chr&gt; \"Yangon\", \"Naypyitaw\", \"Yangon\", \"Yangon\", \"…\n#&gt; $ `Customer type`           &lt;chr&gt; \"Member\", \"Normal\", \"Normal\", \"Member\", \"Nor…\n#&gt; $ Gender                    &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", …\n#&gt; $ `Product line`            &lt;chr&gt; \"Health and beauty\", \"Electronic accessories…\n#&gt; $ `Unit price`              &lt;dbl&gt; 74.69, 15.28, 46.33, 58.22, 86.31, 85.39, 68…\n#&gt; $ Quantity                  &lt;dbl&gt; 7, 5, 7, 8, 7, 7, 6, 10, 2, 3, 4, 4, 5, 10, …\n#&gt; $ `Tax 5%`                  &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Total                     &lt;dbl&gt; 548.9715, 80.2200, 340.5255, 489.0480, 634.3…\n#&gt; $ Date                      &lt;dttm&gt; 2019-01-05, 2019-03-08, 2019-03-03, 2019-01…\n#&gt; $ Time                      &lt;dttm&gt; 1899-12-31 13:08:00, 1899-12-31 10:29:00, 1…\n#&gt; $ Payment                   &lt;chr&gt; \"Ewallet\", \"Cash\", \"Credit card\", \"Ewallet\",…\n#&gt; $ cogs                      &lt;dbl&gt; 522.83, 76.40, 324.31, 465.76, 604.17, 597.7…\n#&gt; $ `gross margin percentage` &lt;dbl&gt; 4.761905, 4.761905, 4.761905, 4.761905, 4.76…\n#&gt; $ `gross income`            &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Rating                    &lt;dbl&gt; 9.1, 9.6, 7.4, 8.4, 5.3, 4.1, 5.8, 8.0, 7.2,…\n\n\nglimpse() is the most useful of the three. Each line is one column, showing its name, its type, and the first few values.\nThose types matter:\n\n\n\n\n\n\n\n\nWhat you see\nWhat it means\nExample column\n\n\n\n\n&lt;chr&gt;\nCharacter - text\nBranch, Gender\n\n\n&lt;dbl&gt;\nDouble - a number that can have decimals\nTotal, Rating\n\n\n&lt;int&gt;\nInteger - a whole number\nQuantity\n\n\n&lt;dttm&gt;\nDate and time\nDate\n\n\n\nR will refuse to average a &lt;chr&gt; column, and it is right to. The average of “Male” and “Female” is not a meaningful quantity.\nBut R will not protect you from averaging something numeric that should not be averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would happily report a mean of 2.03. Only you can know that number is meaningless."
+    "text": "Getting your bearings\nBefore analysing any dataset, look at it. Three functions do this.\n\ndim(sales)\n\n#&gt; [1] 1000   17\n\n\ndim() gives the size: rows first, then columns. So 1,000 transactions, each with 17 pieces of information.\n\nnames(sales)\n\n#&gt;  [1] \"Invoice ID\"              \"Branch\"                 \n#&gt;  [3] \"City\"                    \"Customer type\"          \n#&gt;  [5] \"Gender\"                  \"Product line\"           \n#&gt;  [7] \"Unit price\"              \"Quantity\"               \n#&gt;  [9] \"Tax 5%\"                  \"Total\"                  \n#&gt; [11] \"Date\"                    \"Time\"                   \n#&gt; [13] \"Payment\"                 \"cogs\"                   \n#&gt; [15] \"gross margin percentage\" \"gross income\"           \n#&gt; [17] \"Rating\"\n\n\nnames() lists the column names. Notice that several contain spaces - Unit price, Product line, Customer type. That is common in real business data and it has a consequence you will meet in a moment.\n\nglimpse(sales)\n\n#&gt; Rows: 1,000\n#&gt; Columns: 17\n#&gt; $ `Invoice ID`              &lt;chr&gt; \"750-67-8428\", \"226-31-3081\", \"631-41-3108\",…\n#&gt; $ Branch                    &lt;chr&gt; \"A\", \"C\", \"A\", \"A\", \"A\", \"C\", \"A\", \"C\", \"A\",…\n#&gt; $ City                      &lt;chr&gt; \"Yangon\", \"Naypyitaw\", \"Yangon\", \"Yangon\", \"…\n#&gt; $ `Customer type`           &lt;chr&gt; \"Member\", \"Normal\", \"Normal\", \"Member\", \"Nor…\n#&gt; $ Gender                    &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", …\n#&gt; $ `Product line`            &lt;chr&gt; \"Health and beauty\", \"Electronic accessories…\n#&gt; $ `Unit price`              &lt;dbl&gt; 74.69, 15.28, 46.33, 58.22, 86.31, 85.39, 68…\n#&gt; $ Quantity                  &lt;dbl&gt; 7, 5, 7, 8, 7, 7, 6, 10, 2, 3, 4, 4, 5, 10, …\n#&gt; $ `Tax 5%`                  &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Total                     &lt;dbl&gt; 548.9715, 80.2200, 340.5255, 489.0480, 634.3…\n#&gt; $ Date                      &lt;dttm&gt; 2019-01-05, 2019-03-08, 2019-03-03, 2019-01…\n#&gt; $ Time                      &lt;dttm&gt; 1899-12-31 13:08:00, 1899-12-31 10:29:00, 1…\n#&gt; $ Payment                   &lt;chr&gt; \"Ewallet\", \"Cash\", \"Credit card\", \"Ewallet\",…\n#&gt; $ cogs                      &lt;dbl&gt; 522.83, 76.40, 324.31, 465.76, 604.17, 597.7…\n#&gt; $ `gross margin percentage` &lt;dbl&gt; 4.761905, 4.761905, 4.761905, 4.761905, 4.76…\n#&gt; $ `gross income`            &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Rating                    &lt;dbl&gt; 9.1, 9.6, 7.4, 8.4, 5.3, 4.1, 5.8, 8.0, 7.2,…\n\n\nglimpse() is the most useful of the three. Each line is one column, showing its name, its type, and the first few values.\nThose types matter:\n\n\n\n\n\n\n\n\nWhat you see\nWhat it means\nExample column\n\n\n\n\n&lt;chr&gt;\nCharacter - text\nBranch, Gender\n\n\n&lt;dbl&gt;\nDouble - a number that can have decimals\nTotal, Rating\n\n\n&lt;int&gt;\nInteger - a whole number\nQuantity\n\n\n&lt;dttm&gt;\nDate and time\nDate\n\n\n\nR will refuse to average a &lt;chr&gt; column, and it is right to. The average of “Male” and “Female” is not a meaningful quantity.\nBut R will not protect you from averaging something numeric that should not be averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would happily report a mean of 2.03. Only you can know that number is meaningless.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#filter---choosing-rows",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#filter---choosing-rows",
     "title": "1. Fast Intro to R",
     "section": "filter() - choosing rows",
-    "text": "filter() - choosing rows\n\nsales |&gt;\n  filter(Branch == \"A\")\n\n#&gt; # A tibble: 340 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 750-67-8428  A      Yangon Member          Female Health and be…         74.7\n#&gt;  2 631-41-3108  A      Yangon Normal          Male   Home and life…         46.3\n#&gt;  3 123-19-1176  A      Yangon Member          Male   Health and be…         58.2\n#&gt;  4 373-73-7910  A      Yangon Normal          Male   Sports and tr…         86.3\n#&gt;  5 355-53-5943  A      Yangon Member          Female Electronic ac…         68.8\n#&gt;  6 665-32-9167  A      Yangon Member          Female Health and be…         36.3\n#&gt;  7 365-64-0515  A      Yangon Normal          Female Electronic ac…         47.0\n#&gt;  8 252-56-2699  A      Yangon Normal          Male   Food and beve…         43.2\n#&gt;  9 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt; 10 656-95-9349  A      Yangon Member          Female Health and be…         68.9\n#&gt; # ℹ 330 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nNote the double equals sign. A single = means “set this to”; == means “is this equal to”. Using = where you meant == is another very common early error.\n\nsales |&gt;\n  filter(Total &gt; 900)\n\n#&gt; # A tibble: 26 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 393-65-2792  C      Naypy… Normal          Male   Food and beve…         89.5\n#&gt;  2 766-85-7061  B      Manda… Normal          Male   Health and be…         87.9\n#&gt;  3 704-48-3927  A      Yangon Member          Male   Electronic ac…         88.7\n#&gt;  4 219-22-9386  B      Manda… Member          Male   Sports and tr…        100.0\n#&gt;  5 731-81-9469  C      Naypy… Member          Female Sports and tr…         89.8\n#&gt;  6 280-17-4359  C      Naypy… Member          Male   Health and be…         90.5\n#&gt;  7 743-04-1105  B      Manda… Member          Male   Health and be…         97.2\n#&gt;  8 234-65-2137  C      Naypy… Normal          Male   Home and life…         95.6\n#&gt;  9 687-47-8271  A      Yangon Normal          Male   Fashion acces…         99.0\n#&gt; 10 817-69-8206  B      Manda… Normal          Female Electronic ac…         99.7\n#&gt; # ℹ 16 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nConditions can be combined. A comma means “and”:\n\nsales |&gt;\n  filter(Branch == \"A\", Payment == \"Cash\")\n\n#&gt; # A tibble: 110 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt;  2 848-62-7243  A      Yangon Normal          Male   Health and be…         24.9\n#&gt;  3 162-48-8011  A      Yangon Member          Female Food and beve…         44.6\n#&gt;  4 106-35-6779  A      Yangon Member          Male   Home and life…         44.3\n#&gt;  5 817-48-8732  A      Yangon Member          Female Home and life…         72.4\n#&gt;  6 877-22-3308  A      Yangon Member          Male   Health and be…         15.9\n#&gt;  7 232-11-3025  A      Yangon Normal          Male   Sports and tr…         78.8\n#&gt;  8 382-03-4532  A      Yangon Member          Female Health and be…         18.3\n#&gt;  9 504-35-8843  A      Yangon Normal          Male   Sports and tr…         42.5\n#&gt; 10 212-62-1842  A      Yangon Normal          Male   Food and beve…         58.3\n#&gt; # ℹ 100 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;"
+    "text": "filter() - choosing rows\n\nsales |&gt;\n  filter(Branch == \"A\")\n\n#&gt; # A tibble: 340 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 750-67-8428  A      Yangon Member          Female Health and be…         74.7\n#&gt;  2 631-41-3108  A      Yangon Normal          Male   Home and life…         46.3\n#&gt;  3 123-19-1176  A      Yangon Member          Male   Health and be…         58.2\n#&gt;  4 373-73-7910  A      Yangon Normal          Male   Sports and tr…         86.3\n#&gt;  5 355-53-5943  A      Yangon Member          Female Electronic ac…         68.8\n#&gt;  6 665-32-9167  A      Yangon Member          Female Health and be…         36.3\n#&gt;  7 365-64-0515  A      Yangon Normal          Female Electronic ac…         47.0\n#&gt;  8 252-56-2699  A      Yangon Normal          Male   Food and beve…         43.2\n#&gt;  9 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt; 10 656-95-9349  A      Yangon Member          Female Health and be…         68.9\n#&gt; # ℹ 330 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nNote the double equals sign. A single = means “set this to”; == means “is this equal to”. Using = where you meant == is another very common early error.\n\nsales |&gt;\n  filter(Total &gt; 900)\n\n#&gt; # A tibble: 26 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 393-65-2792  C      Naypy… Normal          Male   Food and beve…         89.5\n#&gt;  2 766-85-7061  B      Manda… Normal          Male   Health and be…         87.9\n#&gt;  3 704-48-3927  A      Yangon Member          Male   Electronic ac…         88.7\n#&gt;  4 219-22-9386  B      Manda… Member          Male   Sports and tr…        100.0\n#&gt;  5 731-81-9469  C      Naypy… Member          Female Sports and tr…         89.8\n#&gt;  6 280-17-4359  C      Naypy… Member          Male   Health and be…         90.5\n#&gt;  7 743-04-1105  B      Manda… Member          Male   Health and be…         97.2\n#&gt;  8 234-65-2137  C      Naypy… Normal          Male   Home and life…         95.6\n#&gt;  9 687-47-8271  A      Yangon Normal          Male   Fashion acces…         99.0\n#&gt; 10 817-69-8206  B      Manda… Normal          Female Electronic ac…         99.7\n#&gt; # ℹ 16 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;\n\n\nConditions can be combined. A comma means “and”:\n\nsales |&gt;\n  filter(Branch == \"A\", Payment == \"Cash\")\n\n#&gt; # A tibble: 110 × 17\n#&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;                 &lt;dbl&gt;\n#&gt;  1 829-34-3910  A      Yangon Normal          Female Health and be…         71.4\n#&gt;  2 848-62-7243  A      Yangon Normal          Male   Health and be…         24.9\n#&gt;  3 162-48-8011  A      Yangon Member          Female Food and beve…         44.6\n#&gt;  4 106-35-6779  A      Yangon Member          Male   Home and life…         44.3\n#&gt;  5 817-48-8732  A      Yangon Member          Female Home and life…         72.4\n#&gt;  6 877-22-3308  A      Yangon Member          Male   Health and be…         15.9\n#&gt;  7 232-11-3025  A      Yangon Normal          Male   Sports and tr…         78.8\n#&gt;  8 382-03-4532  A      Yangon Member          Female Health and be…         18.3\n#&gt;  9 504-35-8843  A      Yangon Normal          Male   Sports and tr…         42.5\n#&gt; 10 212-62-1842  A      Yangon Normal          Male   Food and beve…         58.3\n#&gt; # ℹ 100 more rows\n#&gt; # ℹ 10 more variables: Quantity &lt;dbl&gt;, `Tax 5%` &lt;dbl&gt;, Total &lt;dbl&gt;,\n#&gt; #   Date &lt;dttm&gt;, Time &lt;dttm&gt;, Payment &lt;chr&gt;, cogs &lt;dbl&gt;,\n#&gt; #   `gross margin percentage` &lt;dbl&gt;, `gross income` &lt;dbl&gt;, Rating &lt;dbl&gt;",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#select---choosing-columns",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#select---choosing-columns",
     "title": "1. Fast Intro to R",
     "section": "select() - choosing columns",
-    "text": "select() - choosing columns\n\nsales |&gt;\n  select(Branch, `Product line`, Total, Rating)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    Branch `Product line`         Total Rating\n#&gt;    &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 A      Health and beauty      549.     9.1\n#&gt;  2 C      Electronic accessories  80.2    9.6\n#&gt;  3 A      Home and lifestyle     341.     7.4\n#&gt;  4 A      Health and beauty      489.     8.4\n#&gt;  5 A      Sports and travel      634.     5.3\n#&gt;  6 C      Electronic accessories 628.     4.1\n#&gt;  7 A      Electronic accessories 434.     5.8\n#&gt;  8 C      Home and lifestyle     772.     8  \n#&gt;  9 A      Health and beauty       76.1    7.2\n#&gt; 10 B      Food and beverages     173.     5.9\n#&gt; # ℹ 990 more rows\n\n\nUseful when a dataset has 17 columns and you care about four."
+    "text": "select() - choosing columns\n\nsales |&gt;\n  select(Branch, `Product line`, Total, Rating)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    Branch `Product line`         Total Rating\n#&gt;    &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;\n#&gt;  1 A      Health and beauty      549.     9.1\n#&gt;  2 C      Electronic accessories  80.2    9.6\n#&gt;  3 A      Home and lifestyle     341.     7.4\n#&gt;  4 A      Health and beauty      489.     8.4\n#&gt;  5 A      Sports and travel      634.     5.3\n#&gt;  6 C      Electronic accessories 628.     4.1\n#&gt;  7 A      Electronic accessories 434.     5.8\n#&gt;  8 C      Home and lifestyle     772.     8  \n#&gt;  9 A      Health and beauty       76.1    7.2\n#&gt; 10 B      Food and beverages     173.     5.9\n#&gt; # ℹ 990 more rows\n\n\nUseful when a dataset has 17 columns and you care about four.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#arrange---sorting",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#arrange---sorting",
     "title": "1. Fast Intro to R",
     "section": "arrange() - sorting",
-    "text": "arrange() - sorting\n\nsales |&gt;\n  arrange(desc(Total)) |&gt;\n  select(`Invoice ID`, Branch, `Product line`, Total)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Branch `Product line`      Total\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;\n#&gt;  1 860-79-0874  C      Fashion accessories 1043.\n#&gt;  2 687-47-8271  A      Fashion accessories 1039.\n#&gt;  3 283-26-5248  C      Food and beverages  1034.\n#&gt;  4 751-41-9720  C      Home and lifestyle  1024.\n#&gt;  5 303-96-2227  B      Home and lifestyle  1022.\n#&gt;  6 744-16-7898  B      Home and lifestyle  1022.\n#&gt;  7 271-88-8734  C      Fashion accessories 1021.\n#&gt;  8 234-65-2137  C      Home and lifestyle  1004.\n#&gt;  9 554-42-2417  C      Sports and travel   1002.\n#&gt; 10 325-77-6186  A      Home and lifestyle   952.\n#&gt; # ℹ 990 more rows\n\n\narrange() sorts smallest-first by default. Wrapping the column in desc() sorts largest-first, which is usually what you want when looking for top performers.\nNotice this chain has two steps: sort, then narrow the columns so the result is readable. That is the pipe earning its keep."
+    "text": "arrange() - sorting\n\nsales |&gt;\n  arrange(desc(Total)) |&gt;\n  select(`Invoice ID`, Branch, `Product line`, Total)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Branch `Product line`      Total\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;\n#&gt;  1 860-79-0874  C      Fashion accessories 1043.\n#&gt;  2 687-47-8271  A      Fashion accessories 1039.\n#&gt;  3 283-26-5248  C      Food and beverages  1034.\n#&gt;  4 751-41-9720  C      Home and lifestyle  1024.\n#&gt;  5 303-96-2227  B      Home and lifestyle  1022.\n#&gt;  6 744-16-7898  B      Home and lifestyle  1022.\n#&gt;  7 271-88-8734  C      Fashion accessories 1021.\n#&gt;  8 234-65-2137  C      Home and lifestyle  1004.\n#&gt;  9 554-42-2417  C      Sports and travel   1002.\n#&gt; 10 325-77-6186  A      Home and lifestyle   952.\n#&gt; # ℹ 990 more rows\n\n\narrange() sorts smallest-first by default. Wrapping the column in desc() sorts largest-first, which is usually what you want when looking for top performers.\nNotice this chain has two steps: sort, then narrow the columns so the result is readable. That is the pipe earning its keep.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#mutate---adding-a-column",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#mutate---adding-a-column",
     "title": "1. Fast Intro to R",
     "section": "mutate() - adding a column",
-    "text": "mutate() - adding a column\n\nsales |&gt;\n  mutate(margin_pct = (`gross income` / Total) * 100) |&gt;\n  select(`Invoice ID`, Total, `gross income`, margin_pct)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Total `gross income` margin_pct\n#&gt;    &lt;chr&gt;        &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;\n#&gt;  1 750-67-8428  549.           26.1        4.76\n#&gt;  2 226-31-3081   80.2           3.82       4.76\n#&gt;  3 631-41-3108  341.           16.2        4.76\n#&gt;  4 123-19-1176  489.           23.3        4.76\n#&gt;  5 373-73-7910  634.           30.2        4.76\n#&gt;  6 699-14-3026  628.           29.9        4.76\n#&gt;  7 355-53-5943  434.           20.7        4.76\n#&gt;  8 315-22-5665  772.           36.8        4.76\n#&gt;  9 665-32-9167   76.1           3.63       4.76\n#&gt; 10 692-92-5582  173.            8.23       4.76\n#&gt; # ℹ 990 more rows\n\n\nmutate() calculates a new column from existing ones, row by row. This is the direct equivalent of typing a formula in a new spreadsheet column and dragging it down - except that it cannot silently fail to cover the last twenty rows."
+    "text": "mutate() - adding a column\n\nsales |&gt;\n  mutate(margin_pct = (`gross income` / Total) * 100) |&gt;\n  select(`Invoice ID`, Total, `gross income`, margin_pct)\n\n#&gt; # A tibble: 1,000 × 4\n#&gt;    `Invoice ID` Total `gross income` margin_pct\n#&gt;    &lt;chr&gt;        &lt;dbl&gt;          &lt;dbl&gt;      &lt;dbl&gt;\n#&gt;  1 750-67-8428  549.           26.1        4.76\n#&gt;  2 226-31-3081   80.2           3.82       4.76\n#&gt;  3 631-41-3108  341.           16.2        4.76\n#&gt;  4 123-19-1176  489.           23.3        4.76\n#&gt;  5 373-73-7910  634.           30.2        4.76\n#&gt;  6 699-14-3026  628.           29.9        4.76\n#&gt;  7 355-53-5943  434.           20.7        4.76\n#&gt;  8 315-22-5665  772.           36.8        4.76\n#&gt;  9 665-32-9167   76.1           3.63       4.76\n#&gt; 10 692-92-5582  173.            8.23       4.76\n#&gt; # ℹ 990 more rows\n\n\nmutate() calculates a new column from existing ones, row by row. This is the direct equivalent of typing a formula in a new spreadsheet column and dragging it down - except that it cannot silently fail to cover the last twenty rows.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#summarise---collapsing-to-one-number",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#summarise---collapsing-to-one-number",
     "title": "1. Fast Intro to R",
     "section": "summarise() - collapsing to one number",
-    "text": "summarise() - collapsing to one number\n\nsales |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total),\n    avg_rating    = mean(Rating)\n  )\n\n#&gt; # A tibble: 1 × 4\n#&gt;   transactions avg_sale total_revenue avg_rating\n#&gt;          &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1         1000     323.       322967.       6.97\n\n\nn() is a helper that counts rows. It only works inside summarise()."
+    "text": "summarise() - collapsing to one number\n\nsales |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total),\n    avg_rating    = mean(Rating)\n  )\n\n#&gt; # A tibble: 1 × 4\n#&gt;   transactions avg_sale total_revenue avg_rating\n#&gt;          &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1         1000     323.       322967.       6.97\n\n\nn() is a helper that counts rows. It only works inside summarise().",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
   },
   {
     "objectID": "1-Intro-to-R-Language/Intro-to-R.html#group_by---the-one-that-makes-summarise-powerful",
     "href": "1-Intro-to-R-Language/Intro-to-R.html#group_by---the-one-that-makes-summarise-powerful",
     "title": "1. Fast Intro to R",
     "section": "group_by() - the one that makes summarise powerful",
-    "text": "group_by() - the one that makes summarise powerful\nA single average across all 1,000 transactions is rarely the interesting number. What you usually want is the average for each branch, or for each product line.\n\nsales |&gt;\n  group_by(Branch) |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total)\n  )\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch transactions avg_sale total_revenue\n#&gt;   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;\n#&gt; 1 A               340     312.       106200.\n#&gt; 2 B               332     320.       106198.\n#&gt; 3 C               328     337.       110569.\n\n\nOne row per branch instead of one row overall. group_by() changes nothing about the data - it only tells the next command to work separately within each group.\nThis is the R equivalent of a PivotTable, and it is the single most useful thing in this notebook.\nYou can group by more than one column:\n\nsales |&gt;\n  group_by(Branch, `Customer type`) |&gt;\n  summarise(\n    transactions = n(),\n    avg_sale     = mean(Total),\n    .groups      = \"drop\"\n  )\n\n#&gt; # A tibble: 6 × 4\n#&gt;   Branch `Customer type` transactions avg_sale\n#&gt;   &lt;chr&gt;  &lt;chr&gt;                  &lt;int&gt;    &lt;dbl&gt;\n#&gt; 1 A      Member                   167     321.\n#&gt; 2 A      Normal                   173     304.\n#&gt; 3 B      Member                   165     325.\n#&gt; 4 B      Normal                   167     314.\n#&gt; 5 C      Member                   169     337.\n#&gt; 6 C      Normal                   159     338.\n\n\n\n\n\n\n\n\nNoteSelf-check 3\n\n\n\nWhich product line earns the most total gross income? Write a pipeline using group_by(), summarise() and arrange().\n\n\n\n\n\n\nNoteShow the answer\n\n\n\n\n\nsales |&gt;\n  group_by(`Product line`) |&gt;\n  summarise(total_income = sum(`gross income`)) |&gt;\n  arrange(desc(total_income))\nThe order matters. You must group and summarise before you can sort, because the column you are sorting by (total_income) does not exist until summarise() creates it.\nA follow-up worth thinking about: the product line with the highest total income is not necessarily the most profitable per sale. Adding mean() of the same column would let you check whether the leader is winning on margin or simply on volume. That distinction is exactly what descriptive statistics exists to expose, and you will meet it again in section 2 of the course."
+    "text": "group_by() - the one that makes summarise powerful\nA single average across all 1,000 transactions is rarely the interesting number. What you usually want is the average for each branch, or for each product line.\n\nsales |&gt;\n  group_by(Branch) |&gt;\n  summarise(\n    transactions  = n(),\n    avg_sale      = mean(Total),\n    total_revenue = sum(Total)\n  )\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch transactions avg_sale total_revenue\n#&gt;   &lt;chr&gt;         &lt;int&gt;    &lt;dbl&gt;         &lt;dbl&gt;\n#&gt; 1 A               340     312.       106200.\n#&gt; 2 B               332     320.       106198.\n#&gt; 3 C               328     337.       110569.\n\n\nOne row per branch instead of one row overall. group_by() changes nothing about the data - it only tells the next command to work separately within each group.\nThis is the R equivalent of a PivotTable, and it is the single most useful thing in this notebook.\nYou can group by more than one column:\n\nsales |&gt;\n  group_by(Branch, `Customer type`) |&gt;\n  summarise(\n    transactions = n(),\n    avg_sale     = mean(Total),\n    .groups      = \"drop\"\n  )\n\n#&gt; # A tibble: 6 × 4\n#&gt;   Branch `Customer type` transactions avg_sale\n#&gt;   &lt;chr&gt;  &lt;chr&gt;                  &lt;int&gt;    &lt;dbl&gt;\n#&gt; 1 A      Member                   167     321.\n#&gt; 2 A      Normal                   173     304.\n#&gt; 3 B      Member                   165     325.\n#&gt; 4 B      Normal                   167     314.\n#&gt; 5 C      Member                   169     337.\n#&gt; 6 C      Normal                   159     338.\n\n\n\n\n\n\n\n\nNoteSelf-check 3\n\n\n\nWhich product line earns the most total gross income? Write a pipeline using group_by(), summarise() and arrange().\n\n\n\n\n\n\nNoteShow the answer\n\n\n\n\n\nsales |&gt;\n  group_by(`Product line`) |&gt;\n  summarise(total_income = sum(`gross income`)) |&gt;\n  arrange(desc(total_income))\nThe order matters. You must group and summarise before you can sort, because the column you are sorting by (total_income) does not exist until summarise() creates it.\nA follow-up worth thinking about: the product line with the highest total income is not necessarily the most profitable per sale. Adding mean() of the same column would let you check whether the leader is winning on margin or simply on volume. That distinction is exactly what descriptive statistics exists to expose, and you will meet it again in section 2 of the course.",
+    "crumbs": [
+      "1 — Intro to R Language",
+      "1. Fast Intro to R"
+    ]
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#new-r-this-week",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#new-r-this-week",
+    "title": "2. Descriptive Statistics",
+    "section": "New R this week",
+    "text": "New R this week\nFive new functions. That is all you need to add to section 1.\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\ncount()\nCounts rows in each category\nHow many sales came from each branch\n\n\nggplot()\nDraws a graph\nTurning numbers into something a manager will look at\n\n\nsd(), var()\nStandard deviation and variance\nHow unpredictable are our daily takings\n\n\nquantile()\nPercentiles and quartiles\nWhat a typical and a top-10-percent customer spend\n\n\ncor()\nCorrelation between two columns\nDoes a bigger basket mean a happier customer"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#objectives",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#objectives",
+    "title": "2. Descriptive Statistics",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nIdentify the measurement level of a variable and say which statistics are legitimate for it\nBuild frequency tables and read what they tell you\nDraw and interpret bar charts, histograms, boxplots and scatterplots\nCalculate and choose between mean, median and mode\nMeasure spread with range, variance, standard deviation and the coefficient of variation\nUse quartiles and the IQR rule to identify outliers\nDescribe distribution shape using skewness, kurtosis and Q-Q plots\nMeasure association between two variables, and explain why that is not causation"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#setup",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#setup",
+    "title": "2. Descriptive Statistics",
+    "section": "Setup",
+    "text": "Setup\nRun this chunk first, every time you open this notebook.\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(moments)\n\nsales &lt;- read_excel(\"../data/supermarket_sales.xlsx\")\n\nglimpse(sales)\n\n#&gt; Rows: 1,000\n#&gt; Columns: 17\n#&gt; $ `Invoice ID`              &lt;chr&gt; \"750-67-8428\", \"226-31-3081\", \"631-41-3108\",…\n#&gt; $ Branch                    &lt;chr&gt; \"A\", \"C\", \"A\", \"A\", \"A\", \"C\", \"A\", \"C\", \"A\",…\n#&gt; $ City                      &lt;chr&gt; \"Yangon\", \"Naypyitaw\", \"Yangon\", \"Yangon\", \"…\n#&gt; $ `Customer type`           &lt;chr&gt; \"Member\", \"Normal\", \"Normal\", \"Member\", \"Nor…\n#&gt; $ Gender                    &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", …\n#&gt; $ `Product line`            &lt;chr&gt; \"Health and beauty\", \"Electronic accessories…\n#&gt; $ `Unit price`              &lt;dbl&gt; 74.69, 15.28, 46.33, 58.22, 86.31, 85.39, 68…\n#&gt; $ Quantity                  &lt;dbl&gt; 7, 5, 7, 8, 7, 7, 6, 10, 2, 3, 4, 4, 5, 10, …\n#&gt; $ `Tax 5%`                  &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Total                     &lt;dbl&gt; 548.9715, 80.2200, 340.5255, 489.0480, 634.3…\n#&gt; $ Date                      &lt;dttm&gt; 2019-01-05, 2019-03-08, 2019-03-03, 2019-01…\n#&gt; $ Time                      &lt;dttm&gt; 1899-12-31 13:08:00, 1899-12-31 10:29:00, 1…\n#&gt; $ Payment                   &lt;chr&gt; \"Ewallet\", \"Cash\", \"Credit card\", \"Ewallet\",…\n#&gt; $ cogs                      &lt;dbl&gt; 522.83, 76.40, 324.31, 465.76, 604.17, 597.7…\n#&gt; $ `gross margin percentage` &lt;dbl&gt; 4.761905, 4.761905, 4.761905, 4.761905, 4.76…\n#&gt; $ `gross income`            &lt;dbl&gt; 26.1415, 3.8200, 16.2155, 23.2880, 30.2085, …\n#&gt; $ Rating                    &lt;dbl&gt; 9.1, 9.6, 7.4, 8.4, 5.3, 4.1, 5.8, 8.0, 7.2,…\n\n\n\nA supermarket chain, three branches\n1,000 rows, one per transaction\nWhat was bought, by whom, for how much, and the rating left afterwards\n\n\nThroughout, keep asking what a manager would ask: so what?\n\nAsk the room for the “so what” on the first two or three results today. Students will happily compute a number and stop; the habit of asking what decision it changes has to be built deliberately."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#interval-or-ratio",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#interval-or-ratio",
+    "title": "2. Descriptive Statistics",
+    "section": "Interval or ratio?",
+    "text": "Interval or ratio?\nThe test: does zero mean “none of it”?\n\n\n\n\n\n\n\n\n\nZero means\nSo you can say\n\n\n\n\nTotal = 0\nNo money changed hands\nOne sale is twice another\n\n\nRating = 0\nBottom of an invented scale\nAn 8 is not twice a 4\n\n\n\n\nThis is the distinction students most often get wrong in the exam. The rating example is the one that lands - nobody defends “twice as satisfied” once they hear it out loud.\n\nR enforces some of this for you:\n\nmean(sales$Branch)\n\n#&gt; Warning in mean.default(sales$Branch): argument is not numeric or logical:\n#&gt; returning NA\n\n\n#&gt; [1] NA\n\n\nR returns NA and warns that the argument is not numeric. That warning is R protecting you: the average of “A”, “B” and “C” does not exist.\n\n\n\n\n\n\n\nThe computer checks types; you check sense\n\n\nR will not protect you from averaging something numeric that should not be averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would happily report a mean of 2.03.\nThat number is meaningless, and only you can know it.\n\n\n\n\n\n\n\n\n\n\n\nSelf-check 1\n\n\nA colleague reports that “average customer type is 1.6” after coding Member as 1 and Normal as 2. What has gone wrong, and what should they have reported instead?\n\n\n\n\n\n\n\nShow the answer\n\n\nCustomer type is nominal. The numbers 1 and 2 are labels, not quantities - the choice of which group gets 1 was arbitrary, and reversing it would change the “average” to 1.4 without changing anything about the customers.\nThe correct summary is a count or a percentage: “60 percent of transactions were from Normal customers”. That statement survives relabelling; the average does not.\nThis mistake is common with survey data, where everything arrives as numbers regardless of what it actually measures."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#cross-tabulation",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#cross-tabulation",
+    "title": "2. Descriptive Statistics",
+    "section": "Cross-tabulation",
+    "text": "Cross-tabulation\nTwo nominal variables at once. This is where frequency tables earn their keep, because it lets you ask whether one thing depends on another:\n\nsales |&gt;\n  count(Branch, Payment) |&gt;\n  pivot_wider(names_from = Payment, values_from = n)\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch  Cash `Credit card` Ewallet\n#&gt;   &lt;chr&gt;  &lt;int&gt;         &lt;int&gt;   &lt;int&gt;\n#&gt; 1 A        110           104     126\n#&gt; 2 B        110           109     113\n#&gt; 3 C        124            98     106\n\n\npivot_wider() reshapes the long list into a grid, which is far easier to read.\nDo the three branches have noticeably different payment habits? Eyeballing a difference is a fine first step. In section 3.3 you will learn the chi-square test, which tells you whether a difference this size could plausibly be chance."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#grouping-a-numeric-variable-into-classes",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#grouping-a-numeric-variable-into-classes",
+    "title": "2. Descriptive Statistics",
+    "section": "Grouping a numeric variable into classes",
+    "text": "Grouping a numeric variable into classes\nFrequency tables also work on numeric data once you cut it into bands.\n\nsales |&gt;\n  mutate(spend_band = cut(Total,\n                          breaks = c(0, 100, 250, 500, 750, 1100),\n                          labels = c(\"Under 100\", \"100-250\", \"250-500\",\n                                     \"500-750\", \"Over 750\"))) |&gt;\n  count(spend_band) |&gt;\n  mutate(percent = round(n / sum(n) * 100, 1))\n\n#&gt; # A tibble: 5 × 3\n#&gt;   spend_band     n percent\n#&gt;   &lt;fct&gt;      &lt;int&gt;   &lt;dbl&gt;\n#&gt; 1 Under 100    208    20.8\n#&gt; 2 100-250      282    28.2\n#&gt; 3 250-500      283    28.3\n#&gt; 4 500-750      147    14.7\n#&gt; 5 Over 750      80     8\n\n\nNotice how much information this throws away - 1,000 distinct values become five bands. It also introduces a choice: those boundaries were a judgement, and different boundaries would tell a slightly different story. Frequency tables for numeric data are a summary for presentation, not a basis for analysis.\n\n\n\n\n\n\n\nYour turn\n\n\nBuild a frequency table of Customer type with percentages.\n\nsales |&gt;\n  count(`______`) |&gt;\n  mutate(percent = round(n / sum(n) * 100, 1))"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#bar-chart---for-categories",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#bar-chart---for-categories",
+    "title": "2. Descriptive Statistics",
+    "section": "Bar chart - for categories",
+    "text": "Bar chart - for categories\n\nggplot(sales, aes(x = `Product line`)) +\n  geom_bar(fill = \"#A83296\") +\n  labs(title = \"Transactions by product line\",\n       x = NULL, y = \"Number of transactions\") +\n  coord_flip() +\n  theme_minimal()\n\n\ncoord_flip() turns the bars sideways. With long category names this is almost always right - rotated vertical labels are hard to read and look amateurish."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#histogram---for-numeric-data",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#histogram---for-numeric-data",
+    "title": "2. Descriptive Statistics",
+    "section": "Histogram - for numeric data",
+    "text": "Histogram - for numeric data\n\nggplot(sales, aes(x = Total)) +\n  geom_histogram(bins = 30, fill = \"#A83296\", colour = \"white\") +\n  labs(title = \"Distribution of transaction values\",\n       x = \"Transaction total\", y = \"Number of transactions\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nThe bin count is a real choice, not a detail. Change it and the story changes:\n\nggplot(sales, aes(x = Total)) +\n  geom_histogram(bins = 5, fill = \"#A83296\", colour = \"white\") +\n  labs(title = \"The same data with only 5 bins\",\n       x = \"Transaction total\", y = \"Number of transactions\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nWith 5 bins the distribution looks smooth and unremarkable. With 60 it would look spiky. Neither is wrong, but neither is neutral. Always look at your data with two or three bin settings before deciding what it “looks like” - and be suspicious when someone shows you a histogram without saying how they binned it."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#boxplot---for-comparing-groups",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#boxplot---for-comparing-groups",
+    "title": "2. Descriptive Statistics",
+    "section": "Boxplot - for comparing groups",
+    "text": "Boxplot - for comparing groups\n\nggplot(sales, aes(x = Branch, y = Total)) +\n  geom_boxplot(fill = \"#A83296\", alpha = 0.7) +\n  labs(title = \"Transaction values by branch\",\n       x = \"Branch\", y = \"Transaction total\") +\n  theme_minimal()\n\n\nA boxplot compresses a whole distribution into five numbers:\n\nThe thick line is the median - half the sales are above it\nThe box spans the middle 50 percent, from the 25th to the 75th percentile\nThe whiskers reach the most extreme values within 1.5 box-lengths of the box\nAny dots beyond the whiskers are flagged as potential outliers\n\nBoxplots are the fastest way to compare several groups at once. Look at whether the boxes overlap: heavily overlapping boxes mean the branches are more similar than different, whatever the exact averages say."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#scatterplot---for-two-numeric-variables",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#scatterplot---for-two-numeric-variables",
+    "title": "2. Descriptive Statistics",
+    "section": "Scatterplot - for two numeric variables",
+    "text": "Scatterplot - for two numeric variables\n\nggplot(sales, aes(x = Quantity, y = Total)) +\n  geom_point(colour = \"#A83296\", alpha = 0.4) +\n  labs(title = \"Basket size against transaction value\",\n       x = \"Items purchased\", y = \"Transaction total\") +\n  theme_minimal()\n\n\nalpha = 0.4 makes each point semi-transparent, so where many points overlap the colour builds up. With 1,000 points this reveals density that solid dots hide."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#adding-a-third-variable-with-colour",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#adding-a-third-variable-with-colour",
+    "title": "2. Descriptive Statistics",
+    "section": "Adding a third variable with colour",
+    "text": "Adding a third variable with colour\n\nggplot(sales, aes(x = Quantity, y = Total, colour = Branch)) +\n  geom_point(alpha = 0.5) +\n  labs(title = \"Basket size against value, by branch\",\n       x = \"Items purchased\", y = \"Transaction total\") +\n  scale_colour_manual(values = c(\"#A83296\", \"#D070D0\", \"#5C1A54\")) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nYour turn\n\n\nDraw a histogram of Rating with 20 bins.\n\nggplot(sales, aes(x = ______)) +\n  geom_histogram(bins = ____, fill = \"#A83296\", colour = \"white\") +\n  labs(title = \"Distribution of customer ratings\",\n       x = \"Rating\", y = \"Number of customers\") +\n  theme_minimal()\n\nLook at the result. Does it have the bell shape you might have expected, or something else? Hold that thought - section 7 comes back to it."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#mean",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#mean",
+    "title": "2. Descriptive Statistics",
+    "section": "Mean",
+    "text": "Mean\n\nmean(sales$Total)\n\n#&gt; [1] 322.9667\n\n\nThe arithmetic average. It uses every value, which is its strength, and it is dragged by extreme values, which is its weakness."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#median",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#median",
+    "title": "2. Descriptive Statistics",
+    "section": "Median",
+    "text": "Median\n\nmedian(sales$Total)\n\n#&gt; [1] 253.848\n\n\nThe middle value when everything is lined up in order. Half the transactions are above it and half below. It ignores how far away the extremes are, which makes it robust - resistant to outliers."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#mode",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#mode",
+    "title": "2. Descriptive Statistics",
+    "section": "Mode",
+    "text": "Mode\n\n\n\n\n\n\n\nThere is no mode() function for this\n\n\nR does have a function called mode(), but it reports what type an object is - a completely different thing, and a genuine source of confusion.\n\n\n\n\nFor a categorical variable, the mode is the top row of a sorted count:\n\nsales |&gt;\n  count(`Product line`, sort = TRUE) |&gt;\n  slice(1)\n\n#&gt; # A tibble: 1 × 2\n#&gt;   `Product line`          n\n#&gt;   &lt;chr&gt;               &lt;int&gt;\n#&gt; 1 Fashion accessories   178\n\n\nFor a continuous variable like Total, the mode is not useful - with 1,000 transactions recorded to two decimal places, almost every value appears once. The mode earns its place with categorical data and with discrete counts:\n\nsales |&gt;\n  count(Quantity, sort = TRUE) |&gt;\n  slice(1:3)\n\n#&gt; # A tibble: 3 × 2\n#&gt;   Quantity     n\n#&gt;      &lt;dbl&gt; &lt;int&gt;\n#&gt; 1       10   119\n#&gt; 2        1   112\n#&gt; 3        4   109"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#why-the-choice-matters",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#why-the-choice-matters",
+    "title": "2. Descriptive Statistics",
+    "section": "Why the choice matters",
+    "text": "Why the choice matters\n\nsales |&gt;\n  summarise(\n    mean_total   = mean(Total),\n    median_total = median(Total),\n    difference   = mean(Total) - median(Total)\n  )\n\n#&gt; # A tibble: 1 × 3\n#&gt;   mean_total median_total difference\n#&gt;        &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1       323.         254.       69.1\n\n\nThe mean sits above the median.\n\n\nNot noise — a longer tail on the high side\nA few large baskets pull the average up; the median stays put\n\n\n\nWhy a manager should care: report the mean as your “average transaction” and performance looks better than the typical customer experience actually is.\n\nWorth asking before revealing: which number would you put in the annual report, and which would you use to decide what a normal shopping trip looks like? They are different questions and the answer is different.\n\n\ntotals_with_error &lt;- c(sales$Total, 500000)   # one data entry error\n\ntibble(\n  statistic = c(\"Mean\", \"Median\"),\n  original  = c(mean(sales$Total), median(sales$Total)),\n  with_typo = c(mean(totals_with_error), median(totals_with_error))\n)\n\n#&gt; # A tibble: 2 × 3\n#&gt;   statistic original with_typo\n#&gt;   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;\n#&gt; 1 Mean          323.      822.\n#&gt; 2 Median        254.      254.\n\n\nOne mistyped figure moves the mean noticeably. The median barely notices. When you suspect your data has errors - and real business data always does - the median is the safer summary.\n\n\n\n\n\n\n\nSelf-check 2\n\n\nA property firm reports that the mean house price in a neighbourhood is 480,000 and the median is 310,000. What does that gap tell you, and which figure should a first-time buyer pay attention to?\n\n\n\n\n\n\n\nShow the answer\n\n\nThe mean sitting far above the median means the distribution is right-skewed: a small number of very expensive properties are pulling the average up, while most houses cluster much lower.\nA first-time buyer should look at the median, and ideally the 25th percentile too. The median describes the house in the middle of the market. The mean describes a house that may not exist anywhere in the neighbourhood.\nThis is why property and income statistics are almost always reported as medians. Any time you see a mean quoted for something with a natural upper tail - salaries, house prices, insurance claims, transaction values - ask what the median is."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#comparing-groups",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#comparing-groups",
+    "title": "2. Descriptive Statistics",
+    "section": "Comparing groups",
+    "text": "Comparing groups\n\nsales |&gt;\n  group_by(Branch) |&gt;\n  summarise(\n    transactions = n(),\n    mean_total   = round(mean(Total), 2),\n    median_total = round(median(Total), 2)\n  )\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch transactions mean_total median_total\n#&gt;   &lt;chr&gt;         &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;\n#&gt; 1 A               340       312.         241.\n#&gt; 2 B               332       320.         253.\n#&gt; 3 C               328       337.         271.\n\n\n\n\n\n\n\n\n\nYour turn\n\n\nFind the mean and median Rating for each product line, sorted from highest mean down.\n\nsales |&gt;\n  group_by(`______`) |&gt;\n  summarise(\n    mean_rating   = round(mean(______), 2),\n    median_rating = round(median(______), 2)\n  ) |&gt;\n  arrange(desc(______))"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#range",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#range",
+    "title": "2. Descriptive Statistics",
+    "section": "Range",
+    "text": "Range\n\nrange(sales$Total)\n\n#&gt; [1]   10.6785 1042.6500\n\nmax(sales$Total) - min(sales$Total)\n\n#&gt; [1] 1031.972\n\n\nSimple, and almost useless. It depends entirely on two values - the two most likely to be errors."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#variance-and-standard-deviation",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#variance-and-standard-deviation",
+    "title": "2. Descriptive Statistics",
+    "section": "Variance and standard deviation",
+    "text": "Variance and standard deviation\n\nvar(sales$Total)\n\n#&gt; [1] 60459.6\n\nsd(sales$Total)\n\n#&gt; [1] 245.8853\n\n\nThe variance is the average squared distance from the mean. Squaring makes it work mathematically, but it also means the variance is in squared currency units, which nobody can interpret.\nThe standard deviation is its square root, which puts it back into the original units. That is why you almost always report the standard deviation and almost never the variance - though the variance reappears in section 3.3, where the squaring becomes genuinely useful.\nRead the standard deviation as the typical distance a transaction sits from the average transaction."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#coefficient-of-variation",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#coefficient-of-variation",
+    "title": "2. Descriptive Statistics",
+    "section": "Coefficient of variation",
+    "text": "Coefficient of variation\nWhich varies more - transaction totals, or customer ratings?\nYou cannot compare their standard deviations directly. One is currency running into the hundreds; the other is a 1-to-10 scale. The coefficient of variation expresses the standard deviation as a percentage of the mean, cancelling the units:\n\nsales |&gt;\n  summarise(\n    cv_total    = round(sd(Total)   / mean(Total)    * 100, 1),\n    cv_rating   = round(sd(Rating)  / mean(Rating)   * 100, 1),\n    cv_quantity = round(sd(Quantity)/ mean(Quantity) * 100, 1)\n  )\n\n#&gt; # A tibble: 1 × 3\n#&gt;   cv_total cv_rating cv_quantity\n#&gt;      &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1     76.1      24.6        53.1\n\n\nNow the comparison is fair. A higher CV means more relative variability.\nThe result is intuitive once you see it: ratings are constrained to a narrow 1-to-10 band and cluster near the middle, so they vary little in relative terms. Transaction totals can be almost anything, so they vary a great deal.\n\n\n\n\n\n\n\nWhen the CV is meaningless\n\n\nThe CV only works for ratio variables with a true zero and a positive mean. Applying it to temperatures in Celsius, or to a scale that could sit anywhere on the number line, produces a number with no interpretation."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#comparing-consistency-between-groups",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#comparing-consistency-between-groups",
+    "title": "2. Descriptive Statistics",
+    "section": "Comparing consistency between groups",
+    "text": "Comparing consistency between groups\n\nsales |&gt;\n  group_by(Branch) |&gt;\n  summarise(\n    mean_total = round(mean(Total), 2),\n    sd_total   = round(sd(Total), 2),\n    cv_percent = round(sd(Total) / mean(Total) * 100, 1)\n  )\n\n#&gt; # A tibble: 3 × 4\n#&gt;   Branch mean_total sd_total cv_percent\n#&gt;   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1 A            312.     232.       74.2\n#&gt; 2 B            320.     242.       75.8\n#&gt; 3 C            337.     263.       78.1\n\n\nTwo branches with similar means but different standard deviations are running different businesses. The one with lower spread has more predictable revenue, which makes staffing and stock planning easier - a real operational advantage the average completely hides.\n\n\n\n\n\n\n\nSelf-check 3\n\n\nTwo investment funds both returned 8 percent on average over ten years. Fund A had a standard deviation of 3 percent; Fund B, 19 percent. What does that tell you, and is one straightforwardly better?\n\n\n\n\n\n\n\nShow the answer\n\n\nFund A’s returns clustered tightly around 8 percent every year. Fund B’s swung wildly - it likely had years of large gains and years of heavy losses that happened to average out.\nNeither is straightforwardly better, and that is the point. Fund B carries far more risk, which matters enormously if you might need the money at a bad moment, and matters less over a thirty-year horizon. An investor near retirement should strongly prefer A; a young investor might rationally accept B’s volatility.\nIn finance, the standard deviation of returns is the standard definition of risk. So this is not a case of the average being wrong - it is a case of the average answering only half the question."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#the-interquartile-range",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#the-interquartile-range",
+    "title": "2. Descriptive Statistics",
+    "section": "The interquartile range",
+    "text": "The interquartile range\n\nIQR(sales$Total)\n\n#&gt; [1] 346.9279\n\n\nThe IQR is the width of the middle 50 percent: Q3 minus Q1. Like the median it is robust - the extreme values that inflate the range and the standard deviation do not touch it."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#the-1.5-x-iqr-rule",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#the-1.5-x-iqr-rule",
+    "title": "2. Descriptive Statistics",
+    "section": "The 1.5 x IQR rule",
+    "text": "The 1.5 x IQR rule\n\nq1  &lt;- quantile(sales$Total, 0.25)\nq3  &lt;- quantile(sales$Total, 0.75)\niqr &lt;- IQR(sales$Total)\n\nlower_bound &lt;- q1 - 1.5 * iqr\nupper_bound &lt;- q3 + 1.5 * iqr\n\ntibble(q1, q3, iqr, lower_bound, upper_bound)\n\n#&gt; # A tibble: 1 × 5\n#&gt;      q1    q3   iqr lower_bound upper_bound\n#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1  124.  471.  347.       -396.        992.\n\n\n\noutliers &lt;- sales |&gt;\n  filter(Total &lt; lower_bound | Total &gt; upper_bound)\n\nnrow(outliers)\n\n#&gt; [1] 9\n\n\nThe | means or: keep a row if it is below the lower bound or above the upper bound.\n\noutliers |&gt;\n  select(`Invoice ID`, Branch, `Product line`, Quantity, Total) |&gt;\n  arrange(desc(Total))\n\n#&gt; # A tibble: 9 × 5\n#&gt;   `Invoice ID` Branch `Product line`      Quantity Total\n#&gt;   &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1 860-79-0874  C      Fashion accessories       10 1043.\n#&gt; 2 687-47-8271  A      Fashion accessories       10 1039.\n#&gt; 3 283-26-5248  C      Food and beverages        10 1034.\n#&gt; 4 751-41-9720  C      Home and lifestyle        10 1024.\n#&gt; 5 303-96-2227  B      Home and lifestyle        10 1022.\n#&gt; 6 744-16-7898  B      Home and lifestyle        10 1022.\n#&gt; 7 271-88-8734  C      Fashion accessories       10 1021.\n#&gt; 8 234-65-2137  C      Home and lifestyle        10 1004.\n#&gt; 9 554-42-2417  C      Sports and travel         10 1002."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#what-to-do-with-an-outlier",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#what-to-do-with-an-outlier",
+    "title": "2. Descriptive Statistics",
+    "section": "What to do with an outlier",
+    "text": "What to do with an outlier\n\n\n\n\n\n\n\nFlagging is not deleting\n\n\nThe 1.5 x IQR rule identifies unusual values. It does not identify wrong ones. Deleting points because a rule flagged them is one of the most common ways to quietly corrupt an analysis.\n\n\n\n\nWork through three questions:\n\nIs it possible? Total of -50, age of 210 → an error. Correct or remove.\nIs it a different thing? A 30,000 wholesale order among retail shoppers → analyse separately, do not delete.\nIs it just large? Rich customers exist. Removing real data because it is inconvenient is falsifying your results.\n\n\nOnly category 1 justifies deletion — and always write down what you did and why.\n\nPush on category 3. Students reach for delete because the outlier makes their chart ugly. Ask what they would say to an auditor who noticed the row was gone.\n\n\n\n\n\n\n\n\nYour turn\n\n\nApply the same IQR outlier check to Rating. Before running it, predict how many outliers you will find.\n\nr_q1  &lt;- quantile(sales$Rating, ____)\nr_q3  &lt;- quantile(sales$Rating, ____)\nr_iqr &lt;- IQR(sales$______)\n\nsales |&gt;\n  filter(Rating &lt; r_q1 - 1.5 * r_iqr | Rating &gt; r_q3 + 1.5 * r_iqr) |&gt;\n  nrow()\n\nWas your prediction right? If the answer surprised you, think about what the histogram of Rating looked like in section 3."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#skewness",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#skewness",
+    "title": "2. Descriptive Statistics",
+    "section": "Skewness",
+    "text": "Skewness\nSkewness measures lopsidedness.\n\nPositive (right) skew: a long tail to the high side. Mean above median.\nNegative (left) skew: a long tail to the low side. Mean below median.\nZero: symmetric.\n\n\nsales |&gt;\n  summarise(\n    skew_total    = round(skewness(Total), 3),\n    skew_rating   = round(skewness(Rating), 3),\n    skew_quantity = round(skewness(Quantity), 3)\n  )\n\n#&gt; # A tibble: 1 × 3\n#&gt;   skew_total skew_rating skew_quantity\n#&gt;        &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;\n#&gt; 1      0.891       0.009         0.013\n\n\nRough guide: below 0.5 in absolute value is fairly symmetric; 0.5 to 1 is moderately skewed; above 1 is strongly skewed.\nNow check the number agrees with the picture, which you should always do:\n\nggplot(sales, aes(x = Total)) +\n  geom_histogram(bins = 30, fill = \"#A83296\", colour = \"white\") +\n  geom_vline(aes(xintercept = mean(Total)),\n             colour = \"#1A1A1A\", linewidth = 1) +\n  geom_vline(aes(xintercept = median(Total)),\n             colour = \"#1A1A1A\", linewidth = 1, linetype = \"dashed\") +\n  labs(title = \"Transaction totals, with mean (solid) and median (dashed)\",\n       x = \"Transaction total\", y = \"Number of transactions\") +\n  theme_minimal()\n\n\nThe solid mean line sitting to the right of the dashed median line is the visual signature of right skew."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#kurtosis",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#kurtosis",
+    "title": "2. Descriptive Statistics",
+    "section": "Kurtosis",
+    "text": "Kurtosis\nKurtosis measures how much of the distribution lives in the tails - how prone it is to extreme values.\n\nsales |&gt;\n  summarise(\n    kurt_total  = round(kurtosis(Total), 3),\n    kurt_rating = round(kurtosis(Rating), 3)\n  )\n\n#&gt; # A tibble: 1 × 2\n#&gt;   kurt_total kurt_rating\n#&gt;        &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1       2.91        1.85\n\n\n\n\n\n\n\n\n\nImportant if you have used Excel\n\n\nmoments::kurtosis() returns raw kurtosis, where a perfect normal distribution scores 3. Excel’s KURT() returns excess kurtosis, where a normal distribution scores 0 - it has already subtracted the 3.\nTo compare with an Excel result, subtract 3: kurtosis(sales$Total) - 3\nExcel and moments also use slightly different sample corrections for skewness, so those figures differ in the second or third decimal place. The interpretation is unaffected, but do not be alarmed by a small discrepancy when checking your Excel work against your R work."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#q-q-plots---a-better-test-of-normality",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#q-q-plots---a-better-test-of-normality",
+    "title": "2. Descriptive Statistics",
+    "section": "Q-Q plots - a better test of normality",
+    "text": "Q-Q plots - a better test of normality\nSkewness and kurtosis compress the whole shape into two numbers. A Q-Q plot shows the entire comparison at once, plotting your data against what a perfect normal distribution would produce. If the data were normal, the points would sit on the diagonal line.\n\nggplot(sales, aes(sample = Rating)) +\n  stat_qq(colour = \"#A83296\", alpha = 0.5) +\n  stat_qq_line(colour = \"#1A1A1A\") +\n  labs(title = \"Q-Q plot: Rating\",\n       x = \"Theoretical normal quantiles\", y = \"Observed ratings\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nggplot(sales, aes(sample = Total)) +\n  stat_qq(colour = \"#A83296\", alpha = 0.5) +\n  stat_qq_line(colour = \"#1A1A1A\") +\n  labs(title = \"Q-Q plot: Total\",\n       x = \"Theoretical normal quantiles\", y = \"Observed totals\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\nReading a Q-Q plot:\n\nPoints on the line - close to normal\nPoints curving up at the right end - a heavy right tail, so right skew\nPoints curving away at both ends - heavier tails than normal\nA distinct S-shape - lighter tails than normal\n\n\n\n\n\n\n\n\nWhy this matters beyond section 2\n\n\nSeveral tests in section 3.3 assume the data is roughly normal, and a Q-Q plot is the quickest honest way to check that before you rely on it.\nLearning to read one now will save you from a confidently-reported wrong answer later.\n\n\n\n\n\n\n\n\n\n\n\nSelf-check 4\n\n\nWhy might a distribution of customer ratings on a 1-to-10 scale fail a normality check even when nothing is wrong with the data?\n\n\n\n\n\n\n\nShow the answer\n\n\nBecause it is bounded and discrete. A normal distribution runs from minus infinity to plus infinity and takes any value in between. A rating scale stops hard at its endpoints and only lands on a limited set of values.\nThat produces two visible effects on a Q-Q plot: a staircase pattern from the discreteness, and the ends bending away from the line because the data cannot run off to infinity the way the normal distribution expects.\nThe wider lesson: “not normal” is not the same as “bad data”. Ratings, counts, waiting times and proportions are all routinely non-normal for perfectly good structural reasons. The question is never “is this normal?” but “is this close enough to normal for the method I want to use?” - and section 3.3 gives you the tools to answer that properly."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#covariance",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#covariance",
+    "title": "2. Descriptive Statistics",
+    "section": "Covariance",
+    "text": "Covariance\n\ncov(sales$Quantity, sales$Total)\n\n#&gt; [1] 507.141\n\n\nPositive means they tend to rise together. But the size is uninterpretable - it depends on the units of both variables. Measure the total in fils instead of dinars and the covariance changes by a factor of a thousand while the relationship is identical."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation",
+    "title": "2. Descriptive Statistics",
+    "section": "Correlation",
+    "text": "Correlation\nCorrelation fixes this by standardising covariance onto a fixed scale from -1 to +1:\n\ncor(sales$Quantity, sales$Total)\n\n#&gt; [1] 0.7055102\n\n\n\n\n\nValue\nMeaning\n\n\n\n\n+1\nPerfect positive relationship\n\n\n+0.7 to +0.9\nStrong positive\n\n\n+0.4 to +0.6\nModerate positive\n\n\n0\nNo linear relationship\n\n\n-0.4 to -0.6\nModerate negative\n\n\n-1\nPerfect negative"
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#a-correlation-matrix",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#a-correlation-matrix",
+    "title": "2. Descriptive Statistics",
+    "section": "A correlation matrix",
+    "text": "A correlation matrix\n\nsales |&gt;\n  select(`Unit price`, Quantity, Total, `gross income`, Rating) |&gt;\n  cor() |&gt;\n  round(3)\n\n#&gt;              Unit price Quantity  Total gross income Rating\n#&gt; Unit price        1.000    0.011  0.634        0.634 -0.009\n#&gt; Quantity          0.011    1.000  0.706        0.706 -0.016\n#&gt; Total             0.634    0.706  1.000        1.000 -0.036\n#&gt; gross income      0.634    0.706  1.000        1.000 -0.036\n#&gt; Rating           -0.009   -0.016 -0.036       -0.036  1.000\n\n\nRead across a row and down a column to find the correlation between any pair. The diagonal is 1 because every variable correlates perfectly with itself.\nTwo things here are worth noticing.\nSome correlations are near-perfect by construction, not by discovery. Total and gross income are both calculated from the same underlying sale, so of course they move together. A correlation of 1.0 between two variables usually means one is a rescaled version of the other - arithmetic rather than insight.\nOthers are close to zero. Whatever drives customer satisfaction, basket size is not obviously it - itself a useful finding, and one a manager assuming “big spenders are happy customers” would want to know."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation-is-not-causation",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation-is-not-causation",
+    "title": "2. Descriptive Statistics",
+    "section": "Correlation is not causation",
+    "text": "Correlation is not causation\nA strong correlation permits three explanations — and the coefficient cannot tell you which.\n\nA causes B\nB causes A — the direction can run either way\nSomething else causes both — the confounding variable\n\n\nIce cream sales correlate with drowning deaths. Hot weather causes both.\n\n\nAnd a fourth, easy to forget: coincidence.\n\nAsk for the mechanism before accepting any causal story. If a student cannot describe how A would produce B, the correlation is not evidence that it does."
+  },
+  {
+    "objectID": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation-only-sees-straight-lines",
+    "href": "2-Descriptive-Statistics/Descriptive-Statistics-slides.html#correlation-only-sees-straight-lines",
+    "title": "2. Descriptive Statistics",
+    "section": "Correlation only sees straight lines",
+    "text": "Correlation only sees straight lines\ncor() measures linear association. A correlation near zero does not mean “no relationship” - it means “no straight-line relationship”.\n\ndemo &lt;- tibble(\n  x = seq(-10, 10, length.out = 200),\n  y = x^2\n)\n\ncor(demo$x, demo$y)\n\n#&gt; [1] 1.692728e-16\n\n\n\nggplot(demo, aes(x = x, y = y)) +\n  geom_point(colour = \"#A83296\") +\n  labs(title = \"Correlation is about zero, but y is completely determined by x\",\n       x = \"x\", y = \"y\") +\n  theme_minimal()\n\n\nThe correlation is essentially zero. Yet y is perfectly predictable from x - you could not ask for a stronger relationship.\n\n\n\n\n\n\n\nThe rule\n\n\nAlways plot the data before trusting a correlation coefficient. A single number cannot tell you the shape of a relationship, and it will not warn you when it has missed one.\n\n\n\n\n\n\n\n\n\n\n\nYour turn\n\n\nFind the correlation between Unit price and Rating, then plot it to check the number is telling the truth.\n\ncor(sales$`______`, sales$______)\n\nggplot(sales, aes(x = `______`, y = ______)) +\n  geom_point(colour = \"#A83296\", alpha = 0.4) +\n  labs(title = \"Unit price against customer rating\") +\n  theme_minimal()"
   },
   {
     "objectID": "2-Descriptive-Statistics/Descriptive-Statistics.html",
     "href": "2-Descriptive-Statistics/Descriptive-Statistics.html",
     "title": "2. Descriptive Statistics",
     "section": "",
-    "text": "Five new functions. That is all you need to add to section 1.\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\ncount()\nCounts rows in each category\nHow many sales came from each branch\n\n\nggplot()\nDraws a graph\nTurning numbers into something a manager will look at\n\n\nsd(), var()\nStandard deviation and variance\nHow unpredictable are our daily takings\n\n\nquantile()\nPercentiles and quartiles\nWhat a typical and a top-10-percent customer spend\n\n\ncor()\nCorrelation between two columns\nDoes a bigger basket mean a happier customer",
+    "text": "TipLecture slides\n\n\n\nThis same material is also available as a slide deck: Open the slides →\nArrow keys to move, F for full screen, S for the presenter view with speaker notes, B for the chalkboard, Esc for a grid of all slides.",
     "crumbs": [
       "2 — Descriptive Statistics",
       "2. Descriptive Statistics"
@@ -309,8 +629,8 @@
     "objectID": "2-Descriptive-Statistics/Descriptive-Statistics.html#new-r-this-week",
     "href": "2-Descriptive-Statistics/Descriptive-Statistics.html#new-r-this-week",
     "title": "2. Descriptive Statistics",
-    "section": "",
-    "text": "Five new functions. That is all you need to add to section 1.\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\ncount()\nCounts rows in each category\nHow many sales came from each branch\n\n\nggplot()\nDraws a graph\nTurning numbers into something a manager will look at\n\n\nsd(), var()\nStandard deviation and variance\nHow unpredictable are our daily takings\n\n\nquantile()\nPercentiles and quartiles\nWhat a typical and a top-10-percent customer spend\n\n\ncor()\nCorrelation between two columns\nDoes a bigger basket mean a happier customer",
+    "section": "New R this week",
+    "text": "New R this week\nFive new functions. That is all you need to add to section 1.\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\ncount()\nCounts rows in each category\nHow many sales came from each branch\n\n\nggplot()\nDraws a graph\nTurning numbers into something a manager will look at\n\n\nsd(), var()\nStandard deviation and variance\nHow unpredictable are our daily takings\n\n\nquantile()\nPercentiles and quartiles\nWhat a typical and a top-10-percent customer spend\n\n\ncor()\nCorrelation between two columns\nDoes a bigger basket mean a happier customer",
     "crumbs": [
       "2 — Descriptive Statistics",
       "2. Descriptive Statistics"
@@ -636,11 +956,95 @@
     ]
   },
   {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#new-r-this-week",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#new-r-this-week",
+    "title": "3.1 Probability Distributions",
+    "section": "New R this week",
+    "text": "New R this week\nR uses a single naming system for every distribution. Learn it once and you know all of them.\n\n\n\n\n\n\n\n\nPrefix\nQuestion it answers\nExample\n\n\n\n\nd\nWhat is the probability of exactly this value?\ndbinom(3, 10, 0.2)\n\n\np\nWhat is the probability of this or less?\npnorm(500, 323, 245)\n\n\nq\nWhich value sits at this probability?\nqnorm(0.95, 323, 245)\n\n\nr\nGive me random draws from this distribution\nrnorm(100, 323, 245)\n\n\n\nAttach a prefix to a distribution name: binom, pois, norm, unif, t. So pbinom, rpois, qnorm and so on. That is 20 functions from one table."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#objectives",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#objectives",
+    "title": "3.1 Probability Distributions",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nExplain what a random variable is, and the difference between discrete and continuous\nUse the binomial distribution to model counts of successes in a fixed number of trials\nUse the Poisson distribution to model counts of events in an interval\nUse the normal distribution to model continuous measurements\nConvert any value to a z-score and interpret it\nRead the d/p/q/r function family fluently\nChoose the right distribution for a business situation"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#setup",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#setup",
+    "title": "3.1 Probability Distributions",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)\nlibrary(readxl)\n\nsales &lt;- read_excel(\"../data/supermarket_sales.xlsx\")"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#a-business-question",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#a-business-question",
+    "title": "3.1 Probability Distributions",
+    "section": "A business question",
+    "text": "A business question\nAbout half of the chain’s customers are members. If 20 customers walk in, what is the chance that exactly 12 of them are members?\n\n# First, the actual member rate in our data\np_member &lt;- mean(sales$`Customer type` == \"Member\")\np_member\n\n#&gt; [1] 0.501\n\n\nThat line is worth reading carefully. sales$\\Customer type` == “Member”produces a column ofTRUE/FALSE. R treatsTRUEas 1 andFALSEas 0, so taking the mean of that column gives the **proportion** that areTRUE`. This is a very common R idiom and you will use it constantly.\n\n# Probability of exactly 12 members out of 20 customers\ndbinom(12, size = 20, prob = p_member)\n\n#&gt; [1] 0.1210944\n\n\nAbout a 12 percent chance. Now some more useful questions:\n\n# 12 or fewer members\npbinom(12, size = 20, prob = p_member)\n\n#&gt; [1] 0.8664802\n\n# More than 12 members (note: 1 minus \"12 or fewer\")\n1 - pbinom(12, size = 20, prob = p_member)\n\n#&gt; [1] 0.1335198\n\n\n\n\n\n\n\n\n\nThe off-by-one trap\n\n\npbinom(12, ...) means “12 or fewer”, including 12.\nSo “more than 12” is 1 - pbinom(12, ...), not 1 - pbinom(13, ...). Getting this wrong by one is the most common error with discrete distributions. When in doubt, write out the values you want to include."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#seeing-the-whole-distribution",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#seeing-the-whole-distribution",
+    "title": "3.1 Probability Distributions",
+    "section": "Seeing the whole distribution",
+    "text": "Seeing the whole distribution\n\nbinom_dist &lt;- tibble(\n  members     = 0:20,\n  probability = dbinom(0:20, size = 20, prob = p_member)\n)\n\nggplot(binom_dist, aes(x = members, y = probability)) +\n  geom_col(fill = \"#A83296\") +\n  labs(title = \"Members among 20 random customers\",\n       subtitle = paste0(\"Binomial, n = 20, p = \", round(p_member, 3)),\n       x = \"Number of members\", y = \"Probability\") +\n  theme_minimal()\n\n\nThe distribution peaks at 10, which is what you would expect when half of all customers are members. Its mean is n times p, and its spread is sqrt(n * p * (1 - p)):\n\nn &lt;- 20\ntibble(\n  mean = n * p_member,\n  sd   = sqrt(n * p_member * (1 - p_member))\n)\n\n#&gt; # A tibble: 1 × 2\n#&gt;    mean    sd\n#&gt;   &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1  10.0  2.24\n\n\n\n\n\n\n\n\n\nYour turn\n\n\nAbout one third of transactions are paid by Ewallet. Out of 15 customers, what is the probability that fewer than 4 pay by Ewallet?\n\np_ewallet &lt;- mean(sales$Payment == \"______\")\n\n# \"Fewer than 4\" means 3 or fewer\npbinom(____, size = ____, prob = p_ewallet)\n\n\n\n\n\n\n\n\nShow the answer\n\n\np_ewallet &lt;- mean(sales$Payment == \"Ewallet\")\npbinom(3, size = 15, prob = p_ewallet)\nThe key step is translating “fewer than 4” into “3 or fewer”. pbinom always includes the value you give it, so you must subtract one from a strict inequality."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#a-business-question-1",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#a-business-question-1",
+    "title": "3.1 Probability Distributions",
+    "section": "A business question",
+    "text": "A business question\nThe three branches together handled 1,000 transactions over about 90 days. Suppose a branch averages 4 transactions per hour. Staffing needs to cope with busy hours.\n\nlambda &lt;- 4\n\n# Exactly 6 transactions in an hour\ndpois(6, lambda = lambda)\n\n#&gt; [1] 0.1041956\n\n# 6 or fewer\nppois(6, lambda = lambda)\n\n#&gt; [1] 0.889326\n\n# More than 8 - a genuinely busy hour\n1 - ppois(8, lambda = lambda)\n\n#&gt; [1] 0.02136343\n\n\n\npois_dist &lt;- tibble(\n  transactions = 0:15,\n  probability  = dpois(0:15, lambda = lambda)\n)\n\nggplot(pois_dist, aes(x = transactions, y = probability)) +\n  geom_col(fill = \"#A83296\") +\n  labs(title = \"Transactions per hour\",\n       subtitle = \"Poisson, lambda = 4\",\n       x = \"Transactions in one hour\", y = \"Probability\") +\n  theme_minimal()\n\n\nNotice the shape is right-skewed. There is a hard floor at zero - you cannot have negative transactions - but no ceiling, so the tail runs to the right. This is why count data so often fails a normality check, as you saw in section 2.\n\n\n\n\n\n\n\nA useful oddity of the Poisson\n\n\nFor a Poisson distribution the mean and the variance are both lambda.\nThat gives you a free diagnostic. If you have count data whose variance is much larger than its mean, a Poisson model is probably wrong - the events are not occurring independently, perhaps because they arrive in clusters."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#why-the-shape-matters-for-staffing",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#why-the-shape-matters-for-staffing",
+    "title": "3.1 Probability Distributions",
+    "section": "Why the shape matters for staffing",
+    "text": "Why the shape matters for staffing\n\ntibble(\n  capacity          = 4:10,\n  prob_overwhelmed  = round(1 - ppois(4:10, lambda = 4), 4)\n)\n\n#&gt; # A tibble: 7 × 2\n#&gt;   capacity prob_overwhelmed\n#&gt;      &lt;int&gt;            &lt;dbl&gt;\n#&gt; 1        4           0.371 \n#&gt; 2        5           0.215 \n#&gt; 3        6           0.111 \n#&gt; 4        7           0.0511\n#&gt; 5        8           0.0214\n#&gt; 6        9           0.0081\n#&gt; 7       10           0.0028\n\n\nRead that table as a manager. If you staff for the average of 4 transactions an hour, you are overwhelmed about 37 percent of the time. Staffing for 8 drops that to around 2 percent.\nThis is the entire point of probability distributions in business: planning for the average guarantees you fail about half the time. You have to plan for the tail.\n\nAsk the room to guess the overflow probability at capacity 4 before revealing the table. Most say 10 or 20 percent. The real figure of roughly 37 percent is the moment the idea lands.\n\n\n\n\n\n\n\n\nYour turn\n\n\nA branch receives an average of 2.5 customer complaints per week. What is the probability of a week with no complaints at all?\n\ndpois(____, lambda = ____)\n\n\n\n\n\n\n\n\nShow the answer\n\n\ndpois(0, lambda = 2.5)\nAbout 8 percent. A complaint-free week is uncommon but not remarkable - which is worth knowing before anyone declares a quality initiative a success on one good week’s evidence."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#the-empirical-rule",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#the-empirical-rule",
+    "title": "3.1 Probability Distributions",
+    "section": "The empirical rule",
+    "text": "The empirical rule\nFor any normal distribution:\n\n\n\nWithin\nContains about\n\n\n\n\n1 standard deviation of the mean\n68 percent of values\n\n\n2 standard deviations\n95 percent\n\n\n3 standard deviations\n99.7 percent\n\n\n\nVerify it in R rather than taking it on trust:\n\ntibble(\n  within_sd = 1:3,\n  proportion = round(pnorm(1:3) - pnorm(-(1:3)), 4)\n)\n\n#&gt; # A tibble: 3 × 2\n#&gt;   within_sd proportion\n#&gt;       &lt;int&gt;      &lt;dbl&gt;\n#&gt; 1         1      0.683\n#&gt; 2         2      0.954\n#&gt; 3         3      0.997\n\n\npnorm(1) - pnorm(-1) is “the area below +1 minus the area below -1”, which is the area between them. That is the 68 percent."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#applying-it-to-the-ratings-data",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#applying-it-to-the-ratings-data",
+    "title": "3.1 Probability Distributions",
+    "section": "Applying it to the ratings data",
+    "text": "Applying it to the ratings data\nRating is not perfectly normal - you saw that in section 2 - but it is symmetric enough to illustrate the method.\n\nr_mean &lt;- mean(sales$Rating)\nr_sd   &lt;- sd(sales$Rating)\n\ntibble(mean = round(r_mean, 3), sd = round(r_sd, 3))\n\n#&gt; # A tibble: 1 × 2\n#&gt;    mean    sd\n#&gt;   &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1  6.97  1.72\n\n\n\n# What proportion of customers should rate us below 5, if ratings were normal?\npnorm(5, mean = r_mean, sd = r_sd)\n\n#&gt; [1] 0.1255119\n\n# What proportion actually did?\nmean(sales$Rating &lt; 5)\n\n#&gt; [1] 0.153\n\n\nThe model’s prediction and the reality differ. That gap is the model being imperfect, and noticing it is more valuable than the calculation itself. A model is a simplification you adopt deliberately, not a truth you discover."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#going-the-other-way-with-qnorm",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#going-the-other-way-with-qnorm",
+    "title": "3.1 Probability Distributions",
+    "section": "Going the other way with qnorm",
+    "text": "Going the other way with qnorm\npnorm takes a value and returns a probability. qnorm does the reverse.\n\n# Which rating do the bottom 10 percent of customers fall below?\nqnorm(0.10, mean = r_mean, sd = r_sd)\n\n#&gt; [1] 4.770251\n\n# Which rating marks the top 5 percent?\nqnorm(0.95, mean = r_mean, sd = r_sd)\n\n#&gt; [1] 9.799513\n\n\nThis is how you set thresholds. “Flag any customer rating in the bottom 10 percent for follow-up” becomes an actual number you can put in a report."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#standardising-a-whole-column",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#standardising-a-whole-column",
+    "title": "3.1 Probability Distributions",
+    "section": "Standardising a whole column",
+    "text": "Standardising a whole column\n\nsales_z &lt;- sales |&gt;\n  mutate(\n    total_z  = (Total - mean(Total)) / sd(Total),\n    rating_z = (Rating - mean(Rating)) / sd(Rating)\n  )\n\nsales_z |&gt;\n  select(`Invoice ID`, Total, total_z, Rating, rating_z) |&gt;\n  arrange(desc(total_z)) |&gt;\n  head(5)\n\n#&gt; # A tibble: 5 × 5\n#&gt;   `Invoice ID` Total total_z Rating rating_z\n#&gt;   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;\n#&gt; 1 860-79-0874  1043.    2.93    6.6   -0.217\n#&gt; 2 687-47-8271  1039.    2.91    8.7    1.01 \n#&gt; 3 283-26-5248  1034.    2.89    4.5   -1.44 \n#&gt; 4 751-41-9720  1024.    2.85    8      0.598\n#&gt; 5 303-96-2227  1022.    2.84    4.4   -1.50\n\n\nR has a built-in shortcut, scale(), though it returns a matrix rather than a plain column, so the explicit version above is clearer while you are learning.\n\n# A standardised column always has mean 0 and sd 1\ntibble(\n  mean_z = round(mean(sales_z$total_z), 10),\n  sd_z   = sd(sales_z$total_z)\n)\n\n#&gt; # A tibble: 1 × 2\n#&gt;   mean_z  sd_z\n#&gt;    &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1      0     1\n\n\n\n\n\n\n\n\n\nStandardising does not make data normal\n\n\nConverting to z-scores shifts and rescales a distribution. It does not change its shape.\nTotal was right-skewed in section 2, and total_z is exactly as right-skewed. Students frequently assume standardising fixes non-normality. It does not, and no amount of z-scoring will make a skewed variable bell-shaped."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#using-z-scores-to-find-unusual-transactions",
+    "href": "3-Inferential-Statistics/3.1-Probability-Distributions-slides.html#using-z-scores-to-find-unusual-transactions",
+    "title": "3.1 Probability Distributions",
+    "section": "Using z-scores to find unusual transactions",
+    "text": "Using z-scores to find unusual transactions\n\nsales_z |&gt;\n  filter(abs(total_z) &gt; 2.5) |&gt;\n  select(`Invoice ID`, Branch, `Product line`, Total, total_z) |&gt;\n  arrange(desc(total_z))\n\n#&gt; # A tibble: 17 × 5\n#&gt;    `Invoice ID` Branch `Product line`         Total total_z\n#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 860-79-0874  C      Fashion accessories    1043.    2.93\n#&gt;  2 687-47-8271  A      Fashion accessories    1039.    2.91\n#&gt;  3 283-26-5248  C      Food and beverages     1034.    2.89\n#&gt;  4 751-41-9720  C      Home and lifestyle     1024.    2.85\n#&gt;  5 303-96-2227  B      Home and lifestyle     1022.    2.84\n#&gt;  6 744-16-7898  B      Home and lifestyle     1022.    2.84\n#&gt;  7 271-88-8734  C      Fashion accessories    1021.    2.84\n#&gt;  8 234-65-2137  C      Home and lifestyle     1004.    2.77\n#&gt;  9 554-42-2417  C      Sports and travel      1002.    2.76\n#&gt; 10 325-77-6186  A      Home and lifestyle      952.    2.56\n#&gt; 11 280-17-4359  C      Health and beauty       950.    2.55\n#&gt; 12 219-22-9386  B      Sports and travel       945.    2.53\n#&gt; 13 702-83-5291  C      Fashion accessories     943.    2.52\n#&gt; 14 731-81-9469  C      Sports and travel       943.    2.52\n#&gt; 15 817-69-8206  B      Electronic accessories  942.    2.52\n#&gt; 16 393-65-2792  C      Food and beverages      940.    2.51\n#&gt; 17 751-69-0068  C      Sports and travel       938.    2.50\n\n\nabs() takes the absolute value, so this catches unusually large and unusually small values in one condition.\nThis is a second outlier rule to sit alongside the 1.5 x IQR rule from section 2. They disagree sometimes, and neither is authoritative - the z-score rule is pulled around by the very outliers it is trying to find, because extreme values inflate the standard deviation used to compute it."
+  },
+  {
     "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions.html",
     "href": "3-Inferential-Statistics/3.1-Probability-Distributions.html",
     "title": "3.1 Probability Distributions",
     "section": "",
-    "text": "R uses a single naming system for every distribution. Learn it once and you know all of them.\n\n\n\n\n\n\n\n\nPrefix\nQuestion it answers\nExample\n\n\n\n\nd\nWhat is the probability of exactly this value?\ndbinom(3, 10, 0.2)\n\n\np\nWhat is the probability of this or less?\npnorm(500, 323, 245)\n\n\nq\nWhich value sits at this probability?\nqnorm(0.95, 323, 245)\n\n\nr\nGive me random draws from this distribution\nrnorm(100, 323, 245)\n\n\n\nAttach a prefix to a distribution name: binom, pois, norm, unif, t. So pbinom, rpois, qnorm and so on. That is 20 functions from one table.",
+    "text": "TipLecture slides\n\n\n\nThis same material is also available as a slide deck: Open the slides →\nArrow keys to move, F for full screen, S for the presenter view with speaker notes, B for the chalkboard, Esc for a grid of all slides.",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.1 Probability Distributions"
@@ -650,8 +1054,8 @@
     "objectID": "3-Inferential-Statistics/3.1-Probability-Distributions.html#new-r-this-week",
     "href": "3-Inferential-Statistics/3.1-Probability-Distributions.html#new-r-this-week",
     "title": "3.1 Probability Distributions",
-    "section": "",
-    "text": "R uses a single naming system for every distribution. Learn it once and you know all of them.\n\n\n\n\n\n\n\n\nPrefix\nQuestion it answers\nExample\n\n\n\n\nd\nWhat is the probability of exactly this value?\ndbinom(3, 10, 0.2)\n\n\np\nWhat is the probability of this or less?\npnorm(500, 323, 245)\n\n\nq\nWhich value sits at this probability?\nqnorm(0.95, 323, 245)\n\n\nr\nGive me random draws from this distribution\nrnorm(100, 323, 245)\n\n\n\nAttach a prefix to a distribution name: binom, pois, norm, unif, t. So pbinom, rpois, qnorm and so on. That is 20 functions from one table.",
+    "section": "New R this week",
+    "text": "New R this week\nR uses a single naming system for every distribution. Learn it once and you know all of them.\n\n\n\n\n\n\n\n\nPrefix\nQuestion it answers\nExample\n\n\n\n\nd\nWhat is the probability of exactly this value?\ndbinom(3, 10, 0.2)\n\n\np\nWhat is the probability of this or less?\npnorm(500, 323, 245)\n\n\nq\nWhich value sits at this probability?\nqnorm(0.95, 323, 245)\n\n\nr\nGive me random draws from this distribution\nrnorm(100, 323, 245)\n\n\n\nAttach a prefix to a distribution name: binom, pois, norm, unif, t. So pbinom, rpois, qnorm and so on. That is 20 functions from one table.",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.1 Probability Distributions"
@@ -779,11 +1183,74 @@
     ]
   },
   {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#new-r-this-week",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#new-r-this-week",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\nsample()\nDraws a random subset of rows or values\nSimulating what a survey would have found\n\n\nreplicate()\nRepeats an expression many times\nBuilding a sampling distribution from scratch\n\n\nqt()\nCritical value from the t-distribution\nThe multiplier in a confidence interval\n\n\nt.test()\nConfidence interval for a mean, in one line\nThe everyday tool\n\n\nprop.test()\nConfidence interval for a proportion\n“What share of customers are members?”"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#objectives",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#objectives",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nExplain the difference between a population and a sample, and between a parameter and a statistic\nDescribe what a sampling distribution is, and demonstrate the Central Limit Theorem by simulation\nCalculate and interpret the standard error of the mean\nBuild a confidence interval for a mean by hand and with t.test()\nBuild a confidence interval for a proportion\nExplain what a 95 percent confidence interval does and does not mean\nWork out the sample size needed for a target margin of error"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#setup",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#setup",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)\nlibrary(readxl)\n\nset.seed(2024)\n\nsales &lt;- read_excel(\"../data/supermarket_sales.xlsx\")"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#watching-it-happen",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#watching-it-happen",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "Watching it happen",
+    "text": "Watching it happen\n\nsample_sizes &lt;- c(2, 5, 30, 100)\n\nclt_data &lt;- map_dfr(sample_sizes, function(size_n) {\n  tibble(\n    n           = paste(\"n =\", size_n),\n    sample_mean = replicate(2000, mean(sample(sales$Total, size = size_n)))\n  )\n}) |&gt;\n  mutate(n = factor(n, levels = paste(\"n =\", sample_sizes)))\n\nggplot(clt_data, aes(x = sample_mean)) +\n  geom_histogram(bins = 40, fill = \"#A83296\", colour = \"white\") +\n  facet_wrap(~ n, scales = \"free\") +\n  labs(title = \"The Central Limit Theorem in action\",\n       subtitle = \"Skewed at n = 2, unmistakably normal by n = 30\",\n       x = \"Sample mean\", y = \"Frequency\") +\n  theme_minimal()\n\n\nAt n = 2 the distribution still carries the right skew of the original data. By n = 30 it is convincingly bell-shaped. This is where the common rule of thumb “n of at least 30” comes from.\n\n\n\n\n\n\n\nn = 30 is a rule of thumb, not a law\n\n\nHow large a sample you need depends on how skewed the population is. Mildly skewed data is fine at n = 15. Severely skewed data - insurance claims, say, where one claim can dwarf a thousand others - may need several hundred.\nThe honest procedure is to check, not to recite 30."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-standard-error",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-standard-error",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "The standard error",
+    "text": "The standard error\n\nn &lt;- 50\n\ntibble(\n  formula_se  = round(true_sd / sqrt(n), 3),\n  simulated_se = round(sd(sample_means_50), 3)\n)\n\n#&gt; # A tibble: 1 × 2\n#&gt;   formula_se simulated_se\n#&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n#&gt; 1       34.8         33.3\n\n\nThe formula and the simulation agree. The standard error is the standard deviation of the sampling distribution: the typical distance between a sample mean and the truth.\nNotice the sqrt(n). To halve your uncertainty you must quadruple your sample size. This is the single most important practical fact about sampling, and it is why surveys get expensive fast.\n\nThe practical version: a survey ten times bigger is only about three times more precise. Someone will one day ask you to approve that budget, and this is the slide that tells you what you are buying.\n\n\ntibble(\n  sample_size    = c(10, 25, 50, 100, 400, 1600),\n  standard_error = round(true_sd / sqrt(c(10, 25, 50, 100, 400, 1600)), 2)\n)\n\n#&gt; # A tibble: 6 × 2\n#&gt;   sample_size standard_error\n#&gt;         &lt;dbl&gt;          &lt;dbl&gt;\n#&gt; 1          10          77.8 \n#&gt; 2          25          49.2 \n#&gt; 3          50          34.8 \n#&gt; 4         100          24.6 \n#&gt; 5         400          12.3 \n#&gt; 6        1600           6.15\n\n\nGoing from 100 to 400 costs four times as much and only halves the error. Going from 400 to 1600 costs four times again for another halving. There is a point where more data stops being worth the money, and this table is how you find it."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#building-one-by-hand",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#building-one-by-hand",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "Building one by hand",
+    "text": "Building one by hand\nThe recipe: take your estimate, and go out a certain number of standard errors either side.\n\\[\\bar{x} \\pm t^* \\times \\frac{s}{\\sqrt{n}}\\]\n\nmy_sample &lt;- sample(sales$Total, size = 50)\n\nx_bar &lt;- mean(my_sample)\ns     &lt;- sd(my_sample)\nn     &lt;- length(my_sample)\nse    &lt;- s / sqrt(n)\n\n# The multiplier for 95 percent confidence, with n - 1 degrees of freedom\nt_star &lt;- qt(0.975, df = n - 1)\n\ntibble(\n  x_bar  = round(x_bar, 2),\n  se     = round(se, 2),\n  t_star = round(t_star, 3),\n  lower  = round(x_bar - t_star * se, 2),\n  upper  = round(x_bar + t_star * se, 2)\n)\n\n#&gt; # A tibble: 1 × 5\n#&gt;   x_bar    se t_star lower upper\n#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1  299.  35.8   2.01  227.  371.\n\n\nThree things to notice about qt(0.975, df = n - 1).\nWhy 0.975 and not 0.95? For a 95 percent interval you leave 5 percent outside, split as 2.5 percent in each tail. So you want the value with 97.5 percent below it.\nWhy the t-distribution rather than the normal? Because you are using the sample standard deviation s in place of the unknown population sigma. That substitution adds uncertainty, and the t-distribution’s slightly fatter tails account for it.\nWhy n - 1? These are the degrees of freedom. Once you know the sample mean and n - 1 of the values, the last value is determined - so only n - 1 pieces of information are genuinely free.\n\ntibble(\n  sample_size = c(5, 10, 30, 100, 1000),\n  t_multiplier = round(qt(0.975, df = c(5, 10, 30, 100, 1000) - 1), 3),\n  z_multiplier = round(qnorm(0.975), 3)\n)\n\n#&gt; # A tibble: 5 × 3\n#&gt;   sample_size t_multiplier z_multiplier\n#&gt;         &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;\n#&gt; 1           5         2.78         1.96\n#&gt; 2          10         2.26         1.96\n#&gt; 3          30         2.04         1.96\n#&gt; 4         100         1.98         1.96\n#&gt; 5        1000         1.96         1.96\n\n\nThe t multiplier starts large and converges on 1.96 as the sample grows. With small samples you pay a real penalty in interval width; by n = 100 the difference is negligible."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-one-line-version",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-one-line-version",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "The one-line version",
+    "text": "The one-line version\n\nt.test(my_sample)\n\n#&gt; \n#&gt;  One Sample t-test\n#&gt; \n#&gt; data:  my_sample\n#&gt; t = 8.3692, df = 49, p-value = 5.237e-11\n#&gt; alternative hypothesis: true mean is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  227.4594 371.2098\n#&gt; sample estimates:\n#&gt; mean of x \n#&gt;  299.3346\n\n\nt.test() does everything above. Read the 95 percent confidence interval line. (The rest of that output is a hypothesis test, which is section 3.3 - ignore it for now.)\nTo extract just the interval:\n\nt.test(my_sample)$conf.int\n\n#&gt; [1] 227.4594 371.2098\n#&gt; attr(,\"conf.level\")\n#&gt; [1] 0.95\n\n\nDifferent confidence levels:\n\ntibble(\n  level = c(\"90%\", \"95%\", \"99%\"),\n  lower = c(t.test(my_sample, conf.level = 0.90)$conf.int[1],\n            t.test(my_sample, conf.level = 0.95)$conf.int[1],\n            t.test(my_sample, conf.level = 0.99)$conf.int[1]),\n  upper = c(t.test(my_sample, conf.level = 0.90)$conf.int[2],\n            t.test(my_sample, conf.level = 0.95)$conf.int[2],\n            t.test(my_sample, conf.level = 0.99)$conf.int[2])\n) |&gt;\n  mutate(width = round(upper - lower, 2),\n         lower = round(lower, 2),\n         upper = round(upper, 2))\n\n#&gt; # A tibble: 3 × 4\n#&gt;   level lower upper width\n#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1 90%    239.  359.  120.\n#&gt; 2 95%    227.  371.  144.\n#&gt; 3 99%    203.  395.  192.\n\n\nHigher confidence means a wider interval. There is no free lunch: the only way to be more certain of capturing the truth is to claim less about where it is. A 100 percent confidence interval would run from minus infinity to plus infinity - perfectly reliable and perfectly useless."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#demonstrating-it",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#demonstrating-it",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "Demonstrating it",
+    "text": "Demonstrating it\n\nset.seed(99)\n\nci_results &lt;- map_dfr(1:100, function(i) {\n  s  &lt;- sample(sales$Total, size = 50)\n  ci &lt;- t.test(s)$conf.int\n  tibble(\n    run      = i,\n    lower    = ci[1],\n    upper    = ci[2],\n    captured = ci[1] &lt;= true_mean & true_mean &lt;= ci[2]\n  )\n})\n\n# How many of the 100 intervals contained the true mean?\nsum(ci_results$captured)\n\n#&gt; [1] 96\n\n\n\nggplot(ci_results, aes(y = run, colour = captured)) +\n  geom_segment(aes(x = lower, xend = upper, yend = run), linewidth = 0.5) +\n  geom_vline(xintercept = true_mean, colour = \"#1A1A1A\", linewidth = 0.9) +\n  scale_colour_manual(values = c(\"TRUE\" = \"#A83296\", \"FALSE\" = \"#D64545\"),\n                      name = \"Captured the truth\") +\n  labs(title = \"100 confidence intervals from 100 different samples\",\n       subtitle = \"The vertical line is the true population mean\",\n       x = \"Transaction total\", y = \"Sample number\") +\n  theme_minimal()\n\n\nEach horizontal line is one 95 percent confidence interval from one sample. Most cross the true mean; a handful, shown in red, miss entirely.\nThose red intervals are not mistakes. Nothing was done wrong in producing them. They are the 5 percent the method is designed to get wrong, and there is no way to tell from the inside which of your intervals is one of them."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-margin-of-error",
+    "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-slides.html#the-margin-of-error",
+    "title": "3.2 Estimation and Confidence Intervals",
+    "section": "The margin of error",
+    "text": "The margin of error\n\np_hat &lt;- members / total\n\nmoe &lt;- 1.96 * sqrt(p_hat * (1 - p_hat) / total)\n\ntibble(\n  estimate       = round(p_hat, 4),\n  margin_of_error = round(moe, 4),\n  lower          = round(p_hat - moe, 4),\n  upper          = round(p_hat + moe, 4)\n)\n\n#&gt; # A tibble: 1 × 4\n#&gt;   estimate margin_of_error lower upper\n#&gt;      &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1    0.501           0.031  0.47 0.532\n\n\nThis is the “plus or minus 3 percentage points” you see quoted with opinion polls. Now you know exactly where that number comes from."
+  },
+  {
     "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html",
     "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html",
     "title": "3.2 Estimation and Confidence Intervals",
     "section": "",
-    "text": "Function\nWhat it does\nWhy a business needs it\n\n\n\n\nsample()\nDraws a random subset of rows or values\nSimulating what a survey would have found\n\n\nreplicate()\nRepeats an expression many times\nBuilding a sampling distribution from scratch\n\n\nqt()\nCritical value from the t-distribution\nThe multiplier in a confidence interval\n\n\nt.test()\nConfidence interval for a mean, in one line\nThe everyday tool\n\n\nprop.test()\nConfidence interval for a proportion\n“What share of customers are members?”",
+    "text": "TipLecture slides\n\n\n\nThis same material is also available as a slide deck: Open the slides →\nArrow keys to move, F for full screen, S for the presenter view with speaker notes, B for the chalkboard, Esc for a grid of all slides.",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.2 Estimation and Confidence Intervals"
@@ -793,8 +1260,8 @@
     "objectID": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html#new-r-this-week",
     "href": "3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html#new-r-this-week",
     "title": "3.2 Estimation and Confidence Intervals",
-    "section": "",
-    "text": "Function\nWhat it does\nWhy a business needs it\n\n\n\n\nsample()\nDraws a random subset of rows or values\nSimulating what a survey would have found\n\n\nreplicate()\nRepeats an expression many times\nBuilding a sampling distribution from scratch\n\n\nqt()\nCritical value from the t-distribution\nThe multiplier in a confidence interval\n\n\nt.test()\nConfidence interval for a mean, in one line\nThe everyday tool\n\n\nprop.test()\nConfidence interval for a proportion\n“What share of customers are members?”",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\nsample()\nDraws a random subset of rows or values\nSimulating what a survey would have found\n\n\nreplicate()\nRepeats an expression many times\nBuilding a sampling distribution from scratch\n\n\nqt()\nCritical value from the t-distribution\nThe multiplier in a confidence interval\n\n\nt.test()\nConfidence interval for a mean, in one line\nThe everyday tool\n\n\nprop.test()\nConfidence interval for a proportion\n“What share of customers are members?”",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.2 Estimation and Confidence Intervals"
@@ -889,11 +1356,116 @@
     ]
   },
   {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#new-r-this-week",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#new-r-this-week",
+    "title": "3.3 Hypothesis Testing",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhen you reach for it\n\n\n\n\nt.test()\nCompares a mean to a value, or two means\n“Do members spend more than non-members?”\n\n\naov()\nCompares three or more means\n“Do the six product lines differ in rating?”\n\n\nTukeyHSD()\nSays which groups differ, after aov()\n“Fine - but which two?”\n\n\nchisq.test()\nTests association between two categorical variables\n“Do branches differ in payment method?”\n\n\nshapiro.test(), leveneTest()\nCheck the assumptions before you trust the test\nAlways\n\n\ncohens_d(), eta_squared()\nEffect size - is the difference big enough to care?\nAlways"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#objectives",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#objectives",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nState a null and alternative hypothesis for a business question\nExplain what a p-value is, and what it is not\nRun and interpret one-sample, paired and independent t-tests\nRun a one-way ANOVA and follow it with a post-hoc test\nRun a chi-square test of independence\nCheck the assumptions each test requires\nReport an effect size alongside every p-value, and explain why that matters"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#setup",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#setup",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(car)\nlibrary(effectsize)\n\nsales &lt;- read_excel(\"../data/supermarket_sales.xlsx\")"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#the-p-value",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#the-p-value",
+    "title": "3.3 Hypothesis Testing",
+    "section": "The p-value",
+    "text": "The p-value\nThe p-value is the probability of getting data at least as extreme as yours, if the null hypothesis were true.\n\n\n\n\n\n\n\nWhat a p-value is NOT\n\n\nIt is not the probability the null hypothesis is true.\nIt is not the probability your result happened by chance.\nIt is not a measure of how large or important the effect is.\nA p-value is a statement about data given a hypothesis, never about a hypothesis given data. Reversing those two is the most common error in applied statistics, and it appears in published research constantly.\n\n\n\n\nBy convention, p &lt; 0.05 counts as evidence against the null. That threshold, called alpha, is arbitrary - it was a suggestion by Ronald Fisher in the 1920s, not a law of nature. A p-value of 0.049 and one of 0.051 mean essentially the same thing."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#two-ways-to-be-wrong",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#two-ways-to-be-wrong",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Two ways to be wrong",
+    "text": "Two ways to be wrong\n\n\n\n\nH0 is actually true\nH0 is actually false\n\n\n\n\nYou reject H0\nType I error (false alarm)\nCorrect\n\n\nYou fail to reject H0\nCorrect\nType II error (missed it)\n\n\n\nSetting alpha to 0.05 means accepting a 5 percent Type I error rate. Lowering it to 0.01 reduces false alarms but increases missed real effects. You cannot minimise both at once, so the right threshold depends on which mistake is more costly in context - a question statistics cannot answer for you."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#one-tailed-tests",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#one-tailed-tests",
+    "title": "3.3 Hypothesis Testing",
+    "section": "One-tailed tests",
+    "text": "One-tailed tests\nIf you only care about one direction, say so:\n\nt.test(sales$Total, mu = 300, alternative = \"greater\")\n\n#&gt; \n#&gt;  One Sample t-test\n#&gt; \n#&gt; data:  sales$Total\n#&gt; t = 2.9537, df = 999, p-value = 0.001607\n#&gt; alternative hypothesis: true mean is greater than 300\n#&gt; 95 percent confidence interval:\n#&gt;  310.1652      Inf\n#&gt; sample estimates:\n#&gt; mean of x \n#&gt;  322.9667\n\n\n\n\n\n\n\n\n\nDecide the direction before you look\n\n\nA one-tailed test has more power to detect an effect in the direction you specified - but you must choose that direction before seeing the data.\nRunning a two-tailed test, noticing the result points one way, and then switching to one-tailed to halve the p-value is a form of cheating with a name: p-hacking. It roughly doubles your false positive rate."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#paired-t-test",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#paired-t-test",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Paired t-test",
+    "text": "Paired t-test\nWhen the two measurements come from the same unit - before and after, left and right, same customer twice - the samples are not independent and you must say so.\n\nset.seed(2024)\n\n# 30 customers rated us before and after a service change\nbefore &lt;- rnorm(30, mean = 6.8, sd = 1.2)\nafter  &lt;- before + rnorm(30, mean = 0.4, sd = 0.8)\n\nt.test(before, after, paired = TRUE)\n\n#&gt; \n#&gt;  Paired t-test\n#&gt; \n#&gt; data:  before and after\n#&gt; t = -2.9035, df = 29, p-value = 0.006985\n#&gt; alternative hypothesis: true mean difference is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  -0.6429737 -0.1115148\n#&gt; sample estimates:\n#&gt; mean difference \n#&gt;      -0.3772443\n\n\n\n# The same data analysed WRONGLY as if independent\nt.test(before, after, paired = FALSE)\n\n#&gt; \n#&gt;  Welch Two Sample t-test\n#&gt; \n#&gt; data:  before and after\n#&gt; t = -1.0138, df = 57.51, p-value = 0.3149\n#&gt; alternative hypothesis: true difference in means is not equal to 0\n#&gt; 95 percent confidence interval:\n#&gt;  -1.1222407  0.3677521\n#&gt; sample estimates:\n#&gt; mean of x mean of y \n#&gt;  6.543534  6.920779\n\n\nCompare the two p-values. The paired test is far more sensitive, because it removes the variation between customers and looks only at the change within each one.\n\n\n\n\n\n\n\nThe pairing question\n\n\nAsk: could I shuffle one group without losing information?\nIf each value in group A is meaningfully tied to a specific value in group B, the test is paired. Getting this wrong throws away real statistical power - or invents power you do not have."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#normality",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#normality",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Normality",
+    "text": "Normality\n\nmember_spend &lt;- sales |&gt; filter(`Customer type` == \"Member\") |&gt; pull(Total)\n\nshapiro.test(member_spend)\n\n#&gt; \n#&gt;  Shapiro-Wilk normality test\n#&gt; \n#&gt; data:  member_spend\n#&gt; W = 0.91243, p-value &lt; 2.2e-16\n\n\nShapiro-Wilk tests H0: the data is normal. A small p-value means reject normality.\n\n\n\n\n\n\n\nThe paradox of normality tests\n\n\nWith a large sample, a normality test rejects almost everything. Real data is never exactly normal, and with 500 observations even trivial departures become “statistically significant”.\nSo a significant Shapiro-Wilk on a large sample tells you very little. Look at a Q-Q plot instead and ask whether the departure is big enough to matter.\n\n\n\n\n\nggplot(sales, aes(sample = Total)) +\n  stat_qq(colour = \"#A83296\", alpha = 0.4) +\n  stat_qq_line(colour = \"#1A1A1A\") +\n  facet_wrap(~ `Customer type`) +\n  labs(title = \"Q-Q plots of transaction total by customer type\",\n       x = \"Theoretical quantiles\", y = \"Observed\") +\n  theme_minimal()\n\n\nBoth groups curve upward at the right - the right skew you found in section 2. With roughly 500 observations per group, the Central Limit Theorem makes the t-test robust to this. The skew would be a genuine problem at n = 15."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#equal-variances",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#equal-variances",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Equal variances",
+    "text": "Equal variances\n\nleveneTest(Total ~ factor(`Customer type`), data = sales)\n\n#&gt; Levene's Test for Homogeneity of Variance (center = median)\n#&gt;        Df F value Pr(&gt;F)\n#&gt; group   1   0.338 0.5611\n#&gt;       998\n\n\nLevene’s test has H0: the variances are equal. A large p-value means no evidence against equality.\nSince we are using Welch’s test, which does not assume equal variances anyway, this is informational rather than decisive."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#the-sample-size-demonstration",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#the-sample-size-demonstration",
+    "title": "3.3 Hypothesis Testing",
+    "section": "The sample size demonstration",
+    "text": "The sample size demonstration\n\nset.seed(2024)\n\n# A deliberately trivial difference: 0.02 of a standard deviation\ndemo_test &lt;- function(n) {\n  a &lt;- rnorm(n, mean = 100, sd = 15)\n  b &lt;- rnorm(n, mean = 100.3, sd = 15)\n  tibble(\n    n       = n,\n    p_value = round(t.test(a, b)$p.value, 4),\n    cohens_d = round(as.numeric(cohens_d(a, b)$Cohens_d), 4)\n  )\n}\n\nmap_dfr(c(50, 500, 5000, 50000), demo_test)\n\n#&gt; # A tibble: 4 × 3\n#&gt;       n p_value cohens_d\n#&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;\n#&gt; 1    50   0.995  -0.0013\n#&gt; 2   500   0.196   0.0818\n#&gt; 3  5000   0.595   0.0106\n#&gt; 4 50000   0.151  -0.0091\n\n\nThe effect size stays trivially small at every sample size. The p-value marches steadily towards zero.\nThis is the single most important table in the notebook. It shows that “statistically significant” and “practically important” are different questions, and that only one of them is answered by a p-value.\n\nRun this live. Watching the p-value march toward zero while Cohen’s d does not move is worth more than any amount of explaining. Then ask which column they would put in a report.\n\nAlways report both."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#effect-size-for-anova",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#effect-size-for-anova",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Effect size for ANOVA",
+    "text": "Effect size for ANOVA\n\neta_squared(anova_model)\n\n#&gt; # Effect Size for ANOVA\n#&gt; \n#&gt; Parameter    |     Eta2 |       95% CI\n#&gt; --------------------------------------\n#&gt; product_line | 2.71e-03 | [0.00, 1.00]\n#&gt; \n#&gt; - One-sided CIs: upper bound fixed at [1.00].\n\n\nEta-squared is the proportion of variation in the outcome explained by the grouping. Read a value of 0.01 as “product line explains 1 percent of the variation in ratings”, which leaves 99 percent explained by something else."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#post-hoc-testing",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#post-hoc-testing",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Post-hoc testing",
+    "text": "Post-hoc testing\nANOVA says whether the groups differ, not which ones. For that you need a post-hoc test that corrects for multiple comparisons.\n\nTukeyHSD(anova_model)\n\n#&gt;   Tukey multiple comparisons of means\n#&gt;     95% family-wise confidence level\n#&gt; \n#&gt; Fit: aov(formula = Rating ~ product_line, data = sales_anova)\n#&gt; \n#&gt; $product_line\n#&gt;                                                    diff        lwr       upr\n#&gt; Fashion accessories-Electronic accessories  0.104507601 -0.4223276 0.6313428\n#&gt; Food and beverages-Electronic accessories   0.188512508 -0.3412726 0.7182976\n#&gt; Health and beauty-Electronic accessories    0.078583591 -0.4698213 0.6269885\n#&gt; Home and lifestyle-Electronic accessories  -0.087205882 -0.6283241 0.4539123\n#&gt; Sports and travel-Electronic accessories   -0.008440822 -0.5444976 0.5276159\n#&gt; Food and beverages-Fashion accessories      0.084004908 -0.4397237 0.6077336\n#&gt; Health and beauty-Fashion accessories      -0.025924009 -0.5684803 0.5166323\n#&gt; Home and lifestyle-Fashion accessories     -0.191713483 -0.7269035 0.3434765\n#&gt; Sports and travel-Fashion accessories      -0.112948423 -0.6430203 0.4171235\n#&gt; Health and beauty-Food and beverages       -0.109928917 -0.6553501 0.4354923\n#&gt; Home and lifestyle-Food and beverages      -0.275718391 -0.8138125 0.2623757\n#&gt; Sports and travel-Food and beverages       -0.196953331 -0.7299573 0.3360506\n#&gt; Home and lifestyle-Health and beauty       -0.165789474 -0.7222254 0.3906464\n#&gt; Sports and travel-Health and beauty        -0.087024413 -0.6385394 0.4644906\n#&gt; Sports and travel-Home and lifestyle        0.078765060 -0.4655049 0.6230350\n#&gt;                                                p adj\n#&gt; Fashion accessories-Electronic accessories 0.9931366\n#&gt; Food and beverages-Electronic accessories  0.9126782\n#&gt; Health and beauty-Electronic accessories   0.9985315\n#&gt; Home and lifestyle-Electronic accessories  0.9974214\n#&gt; Sports and travel-Electronic accessories   1.0000000\n#&gt; Food and beverages-Fashion accessories     0.9974789\n#&gt; Health and beauty-Fashion accessories      0.9999934\n#&gt; Home and lifestyle-Fashion accessories     0.9103561\n#&gt; Sports and travel-Fashion accessories      0.9904450\n#&gt; Health and beauty-Food and beverages       0.9926104\n#&gt; Home and lifestyle-Food and beverages      0.6879939\n#&gt; Sports and travel-Food and beverages       0.8988551\n#&gt; Home and lifestyle-Health and beauty       0.9577532\n#&gt; Sports and travel-Health and beauty        0.9976685\n#&gt; Sports and travel-Home and lifestyle       0.9984600\n\n\nTukey’s HSD compares every pair while holding the overall false positive rate at 5 percent. Read the p adj column - the adjusted p-value - and the confidence interval for each difference. Any interval containing zero means that pair is not distinguishable."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#anova-assumptions",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#anova-assumptions",
+    "title": "3.3 Hypothesis Testing",
+    "section": "ANOVA assumptions",
+    "text": "ANOVA assumptions\n\nleveneTest(Rating ~ product_line, data = sales_anova)\n\n#&gt; Levene's Test for Homogeneity of Variance (center = median)\n#&gt;        Df F value Pr(&gt;F)\n#&gt; group   5  0.3221 0.8999\n#&gt;       994\n\n\n\nggplot(tibble(residual = residuals(anova_model)), aes(sample = residual)) +\n  stat_qq(colour = \"#A83296\", alpha = 0.4) +\n  stat_qq_line(colour = \"#1A1A1A\") +\n  labs(title = \"Q-Q plot of ANOVA residuals\",\n       x = \"Theoretical quantiles\", y = \"Residual\") +\n  theme_minimal()\n\n\nANOVA assumes independent observations, roughly normal residuals, and roughly equal variances across groups. With group sizes over 150 it is fairly robust to moderate departures."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#what-the-test-is-actually-doing",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#what-the-test-is-actually-doing",
+    "title": "3.3 Hypothesis Testing",
+    "section": "What the test is actually doing",
+    "text": "What the test is actually doing\n\nchi_result &lt;- chisq.test(payment_table)\n\n# What we would expect if branch and payment were completely independent\nround(chi_result$expected, 1)\n\n#&gt;    \n#&gt;      Cash Credit card Ewallet\n#&gt;   A 117.0       105.7   117.3\n#&gt;   B 114.2       103.3   114.5\n#&gt;   C 112.8       102.0   113.2\n\n\n\n# Where the observed counts deviate most from expectation\nround(chi_result$residuals, 2)\n\n#&gt;    \n#&gt;      Cash Credit card Ewallet\n#&gt;   A -0.64       -0.17    0.80\n#&gt;   B -0.39        0.57   -0.14\n#&gt;   C  1.05       -0.40   -0.67\n\n\nThe residuals show which cells drive the result. Values beyond about +2 or -2 mark cells where the observed count differs notably from what independence predicts. This turns a single p-value into an actual finding you can describe.\n\n\n\n\n\n\n\nThe chi-square assumption\n\n\nChi-square needs expected counts of at least 5 in each cell - check chi_result$expected, not the observed table.\nIf some cells are too small, either combine categories or use fisher.test() instead."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#goodness-of-fit",
+    "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing-slides.html#goodness-of-fit",
+    "title": "3.3 Hypothesis Testing",
+    "section": "Goodness of fit",
+    "text": "Goodness of fit\nA different chi-square question: does one categorical variable match an expected distribution?\n\n# Are the three branches equally busy?\nchisq.test(table(sales$Branch))\n\n#&gt; \n#&gt;  Chi-squared test for given probabilities\n#&gt; \n#&gt; data:  table(sales$Branch)\n#&gt; X-squared = 0.224, df = 2, p-value = 0.894\n\n\nBy default this tests whether all categories are equally likely."
+  },
+  {
     "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing.html",
     "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing.html",
     "title": "3.3 Hypothesis Testing",
     "section": "",
-    "text": "Function\nWhat it does\nWhen you reach for it\n\n\n\n\nt.test()\nCompares a mean to a value, or two means\n“Do members spend more than non-members?”\n\n\naov()\nCompares three or more means\n“Do the six product lines differ in rating?”\n\n\nTukeyHSD()\nSays which groups differ, after aov()\n“Fine - but which two?”\n\n\nchisq.test()\nTests association between two categorical variables\n“Do branches differ in payment method?”\n\n\nshapiro.test(), leveneTest()\nCheck the assumptions before you trust the test\nAlways\n\n\ncohens_d(), eta_squared()\nEffect size - is the difference big enough to care?\nAlways",
+    "text": "TipLecture slides\n\n\n\nThis same material is also available as a slide deck: Open the slides →\nArrow keys to move, F for full screen, S for the presenter view with speaker notes, B for the chalkboard, Esc for a grid of all slides.",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.3 Hypothesis Testing"
@@ -903,8 +1475,8 @@
     "objectID": "3-Inferential-Statistics/3.3-Hypothesis-Testing.html#new-r-this-week",
     "href": "3-Inferential-Statistics/3.3-Hypothesis-Testing.html#new-r-this-week",
     "title": "3.3 Hypothesis Testing",
-    "section": "",
-    "text": "Function\nWhat it does\nWhen you reach for it\n\n\n\n\nt.test()\nCompares a mean to a value, or two means\n“Do members spend more than non-members?”\n\n\naov()\nCompares three or more means\n“Do the six product lines differ in rating?”\n\n\nTukeyHSD()\nSays which groups differ, after aov()\n“Fine - but which two?”\n\n\nchisq.test()\nTests association between two categorical variables\n“Do branches differ in payment method?”\n\n\nshapiro.test(), leveneTest()\nCheck the assumptions before you trust the test\nAlways\n\n\ncohens_d(), eta_squared()\nEffect size - is the difference big enough to care?\nAlways",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhen you reach for it\n\n\n\n\nt.test()\nCompares a mean to a value, or two means\n“Do members spend more than non-members?”\n\n\naov()\nCompares three or more means\n“Do the six product lines differ in rating?”\n\n\nTukeyHSD()\nSays which groups differ, after aov()\n“Fine - but which two?”\n\n\nchisq.test()\nTests association between two categorical variables\n“Do branches differ in payment method?”\n\n\nshapiro.test(), leveneTest()\nCheck the assumptions before you trust the test\nAlways\n\n\ncohens_d(), eta_squared()\nEffect size - is the difference big enough to care?\nAlways",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.3 Hypothesis Testing"
@@ -1065,11 +1637,102 @@
     ]
   },
   {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#new-r-this-week",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#new-r-this-week",
+    "title": "3.4 Linear Regression",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\nlm()\nFits a linear model\n“How much does each extra item add to the bill?”\n\n\nsummary()\nCoefficients, significance and R-squared\nReading the model\n\n\npredict()\nPredicts the outcome for new data\n“What would a basket of 7 items cost?”\n\n\naugment()\nAdds fitted values and residuals to the data\nDiagnostics\n\n\nplot(model)\nFour diagnostic plots in one call\nChecking the model is trustworthy"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#objectives",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#objectives",
+    "title": "3.4 Linear Regression",
+    "section": "Objectives",
+    "text": "Objectives\nBy the end of this notebook you will be able to:\n\nFit a simple linear regression and interpret its slope and intercept in business terms\nExplain what R-squared measures and what it does not\nFit a multiple regression and interpret a coefficient while holding others constant\nCheck the four assumptions of linear regression using residual plots\nMake predictions with appropriate uncertainty\nRecognise when a regression should not be trusted"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#setup",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#setup",
+    "title": "3.4 Linear Regression",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(broom)\n\nsales &lt;- read_excel(\"../data/supermarket_sales.xlsx\")"
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#reading-the-output",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#reading-the-output",
+    "title": "3.4 Linear Regression",
+    "section": "Reading the output",
+    "text": "Reading the output\nThe coefficients table is the heart of it.\n\ntidy(model1)\n\n#&gt; # A tibble: 2 × 5\n#&gt;   term        estimate std.error statistic   p.value\n#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n#&gt; 1 (Intercept)    -3.99     11.8     -0.339 7.34e-  1\n#&gt; 2 Quantity       59.3       1.89    31.4   2.06e-151\n\n\n\n\n\nColumn\nMeaning\n\n\n\n\nestimate\nThe coefficient itself\n\n\nstd.error\nIts uncertainty\n\n\nstatistic\nEstimate divided by standard error\n\n\np.value\nTests whether the true coefficient is zero\n\n\n\nInterpreting the slope. Each additional item is associated with an increase of about that many currency units in the transaction total. Since Quantity and Unit price are independent in this data, that slope is roughly the average unit price times the tax multiplier - a good sanity check that the model is doing something sensible.\nInterpreting the intercept. The predicted total when Quantity is zero. Here that is a transaction with no items, which cannot happen - so the intercept is a mathematical anchor for the line, not a meaningful business quantity.\n\n\n\n\n\n\n\nIntercepts are often meaningless\n\n\nThe intercept is only interpretable when x = 0 is a value that could actually occur and appears somewhere near your data.\nPredicting income at age zero, or revenue with zero customers, is extrapolating far outside the data. The number is still needed to position the line; it just should not be quoted as a finding."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#r-squared",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#r-squared",
+    "title": "3.4 Linear Regression",
+    "section": "R-squared",
+    "text": "R-squared\n\nglance(model1) |&gt;\n  select(r.squared, adj.r.squared, sigma, p.value, nobs)\n\n#&gt; # A tibble: 1 × 5\n#&gt;   r.squared adj.r.squared sigma   p.value  nobs\n#&gt;       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;\n#&gt; 1     0.498         0.497  174. 2.06e-151  1000\n\n\nR-squared is the proportion of variation in y explained by the model. An R-squared of 0.50 means the model accounts for half the variability in transaction totals, leaving half to everything else.\n\n\n\n\n\n\n\nR-squared does not mean the model is right\n\n\nA high R-squared means the line fits the points closely. It does not mean:\n\nthe relationship is causal\na straight line was the right shape\nthe model will predict well on new data\nthe assumptions hold\n\nA curved relationship forced through a straight line can still produce a respectable R-squared while being systematically wrong at both ends. Always look at the residual plots, which come in section 5.\n\n\n\n\nWhat counts as a good R-squared depends entirely on the field. In physics, 0.99 is routine. In predicting human behaviour, 0.30 can be excellent. Judge it against what is achievable for the question, never against an absolute standard.\n\nResist giving a threshold. Students want to know what counts as good, and any number you say will be quoted back at you out of context for the rest of the semester."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#adding-a-categorical-predictor",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#adding-a-categorical-predictor",
+    "title": "3.4 Linear Regression",
+    "section": "Adding a categorical predictor",
+    "text": "Adding a categorical predictor\n\nmodel3 &lt;- lm(Total ~ Quantity + `Unit price` + Branch, data = sales)\n\ntidy(model3)\n\n#&gt; # A tibble: 5 × 5\n#&gt;   term         estimate std.error statistic   p.value\n#&gt;   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n#&gt; 1 (Intercept)   -327.      8.42     -38.9   1.14e-201\n#&gt; 2 Quantity        58.8     0.883     66.5   0        \n#&gt; 3 `Unit price`     5.81    0.0975    59.6   0        \n#&gt; 4 BranchB          1.58    6.30       0.250 8.03e-  1\n#&gt; 5 BranchC          7.39    6.32       1.17  2.43e-  1\n\n\nR automatically converts Branch into dummy variables. With three branches you get two coefficients: BranchB and BranchC. Branch A is missing because it is the reference level - each coefficient is the difference from Branch A, holding everything else constant.\nIf those coefficients are small and non-significant, branch adds nothing once you know what was bought - which is a real finding, and one that would be hard to establish any other way."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#two-kinds-of-interval",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#two-kinds-of-interval",
+    "title": "3.4 Linear Regression",
+    "section": "Two kinds of interval",
+    "text": "Two kinds of interval\n\n# Confidence interval: where is the AVERAGE total for baskets like this?\npredict(model2, newdata = new_baskets, interval = \"confidence\") |&gt; round(2)\n\n#&gt;      fit    lwr    upr\n#&gt; 1  -2.87 -11.72   5.99\n#&gt; 2 377.56 371.77 383.35\n#&gt; 3 728.28 717.94 738.63\n\n\n\n# Prediction interval: where will an INDIVIDUAL transaction fall?\npredict(model2, newdata = new_baskets, interval = \"prediction\") |&gt; round(2)\n\n#&gt;      fit     lwr    upr\n#&gt; 1  -2.87 -163.22 157.49\n#&gt; 2 377.56  217.35 537.77\n#&gt; 3 728.28  567.84 888.73\n\n\nThe prediction interval is much wider, and the reason is worth understanding.\nA confidence interval captures uncertainty about the average - and averages are stable, so the interval is narrow. A prediction interval must also account for the fact that individual transactions scatter around that average, so it is necessarily wider.\nConfusing the two is a common and costly error. If you promise a client that their individual order will fall within the confidence interval, you will be wrong far more often than the stated confidence level suggests.\n\n\n\n\n\n\n\nNever extrapolate\n\n\nQuantity in this dataset runs from 1 to 10. Asking the model to predict a basket of 50 items produces a number, and R will not warn you.\nThat number is worthless. The linear relationship was only ever observed inside the range of the data, and there is no evidence it continues outside it."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#reading-each-plot",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#reading-each-plot",
+    "title": "3.4 Linear Regression",
+    "section": "Reading each plot",
+    "text": "Reading each plot\nResiduals vs Fitted (top left). You want a formless horizontal band around zero. A curve means the relationship is not linear and you have fitted the wrong shape.\nQ-Q Residuals (top right). Points on the diagonal mean the residuals are normal. This is the assumption regression is least sensitive to, especially with large samples.\nScale-Location (bottom left). You want a flat line. An upward fan means the errors grow with the fitted value - heteroscedasticity - which makes the standard errors, and therefore every p-value in the model, unreliable.\nResiduals vs Leverage (bottom right). Identifies points with disproportionate influence. Anything outside the dashed Cook’s distance lines is worth investigating - a single point should not be able to move your conclusions."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#doing-it-with-ggplot",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#doing-it-with-ggplot",
+    "title": "3.4 Linear Regression",
+    "section": "Doing it with ggplot",
+    "text": "Doing it with ggplot\n\naug &lt;- augment(model2)\n\nggplot(aug, aes(x = .fitted, y = .resid)) +\n  geom_point(colour = \"#A83296\", alpha = 0.35) +\n  geom_hline(yintercept = 0, colour = \"#1A1A1A\", linewidth = 0.8) +\n  geom_smooth(se = FALSE, colour = \"#D64545\") +\n  labs(title = \"Residuals against fitted values\",\n       subtitle = \"Look for a flat red line and an even band of points\",\n       x = \"Fitted value\", y = \"Residual\") +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nWhat a residual plot is really asking\n\n\nA residual is what the model got wrong. If the model has captured everything systematic, what remains should be pure noise - no pattern, no trend, no changing spread.\nAny visible pattern in the residuals is information the model failed to use. That is the single most useful sentence in this notebook.\n\n\n\n\n\nShow a clean residual plot and a badly violated one side by side. The contrast teaches this faster than any description of what to look for."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#correlation-is-still-not-causation",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#correlation-is-still-not-causation",
+    "title": "3.4 Linear Regression",
+    "section": "Correlation is still not causation",
+    "text": "Correlation is still not causation\nRegression finds associations. Nothing about fitting a line establishes that x causes y. A model showing that customers who buy more spend more has not shown that encouraging purchases causes spending - the arithmetic guaranteed the association before any data was collected."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#confounding",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#confounding",
+    "title": "3.4 Linear Regression",
+    "section": "Confounding",
+    "text": "Confounding\nA variable left out of the model can create or hide a relationship. If expensive product lines happen to be stocked at the busiest branch, a regression of spend on branch would attribute a product effect to location. The remedy is to include the confounder - which is exactly what multiple regression is for."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#multicollinearity",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#multicollinearity",
+    "title": "3.4 Linear Regression",
+    "section": "Multicollinearity",
+    "text": "Multicollinearity\nWhen two predictors are themselves strongly correlated, the model cannot separate their effects.\n\n# Total and gross income are perfectly proportional - a deliberate example\nmodel_bad &lt;- lm(Total ~ Quantity + `gross income`, data = sales)\n\nsummary(model_bad)\n\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = Total ~ Quantity + `gross income`, data = sales)\n#&gt; \n#&gt; Residuals:\n#&gt;        Min         1Q     Median         3Q        Max \n#&gt; -8.672e-13 -1.814e-14 -5.900e-16  1.748e-14  1.349e-12 \n#&gt; \n#&gt; Coefficients:\n#&gt;                  Estimate Std. Error    t value Pr(&gt;|t|)    \n#&gt; (Intercept)     5.095e-14  4.127e-15  1.235e+01   &lt;2e-16 ***\n#&gt; Quantity       -1.969e-14  9.336e-16 -2.109e+01   &lt;2e-16 ***\n#&gt; `gross income`  2.100e+01  2.331e-16  9.009e+16   &lt;2e-16 ***\n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 6.114e-14 on 997 degrees of freedom\n#&gt; Multiple R-squared:      1,  Adjusted R-squared:      1 \n#&gt; F-statistic: 8.08e+33 on 2 and 997 DF,  p-value: &lt; 2.2e-16\n\n\nThe R-squared is essentially 1 and the fit looks flawless. It is meaningless. gross income is a fixed 4.7619 percent of Total, so this model predicts the total from a rescaling of itself. A model that predicts a variable from a transformation of that same variable is circular, however good the diagnostics look.\nWatch for this in real work: it usually arrives disguised, as a variable derived from the outcome without anyone noticing."
+  },
+  {
+    "objectID": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#outliers-and-influence",
+    "href": "3-Inferential-Statistics/3.4-Linear-Regression-slides.html#outliers-and-influence",
+    "title": "3.4 Linear Regression",
+    "section": "Outliers and influence",
+    "text": "Outliers and influence\n\naug |&gt;\n  slice_max(.cooksd, n = 5) |&gt;\n  select(Total, Quantity, `Unit price`, .fitted, .resid, .cooksd)\n\n#&gt; # A tibble: 5 × 6\n#&gt;   Total Quantity `Unit price` .fitted .resid .cooksd\n#&gt;   &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;\n#&gt; 1  10.7        1         10.2   -207.   217.  0.0150\n#&gt; 2 115.        10         11.0    327.  -212.  0.0143\n#&gt; 3 105.         1         99.7    314.  -209.  0.0138\n#&gt; 4  12.7        1         12.1   -195.   208.  0.0133\n#&gt; 5 127.        10         12.1    334.  -206.  0.0132\n\n\nCook’s distance measures how much the fitted line would move if a point were deleted. High values are not errors, but they are worth understanding - a conclusion resting on one observation is a fragile conclusion."
+  },
+  {
     "objectID": "3-Inferential-Statistics/3.4-Linear-Regression.html",
     "href": "3-Inferential-Statistics/3.4-Linear-Regression.html",
     "title": "3.4 Linear Regression",
     "section": "",
-    "text": "Function\nWhat it does\nWhy a business needs it\n\n\n\n\nlm()\nFits a linear model\n“How much does each extra item add to the bill?”\n\n\nsummary()\nCoefficients, significance and R-squared\nReading the model\n\n\npredict()\nPredicts the outcome for new data\n“What would a basket of 7 items cost?”\n\n\naugment()\nAdds fitted values and residuals to the data\nDiagnostics\n\n\nplot(model)\nFour diagnostic plots in one call\nChecking the model is trustworthy",
+    "text": "TipLecture slides\n\n\n\nThis same material is also available as a slide deck: Open the slides →\nArrow keys to move, F for full screen, S for the presenter view with speaker notes, B for the chalkboard, Esc for a grid of all slides.",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.4 Linear Regression"
@@ -1079,8 +1742,8 @@
     "objectID": "3-Inferential-Statistics/3.4-Linear-Regression.html#new-r-this-week",
     "href": "3-Inferential-Statistics/3.4-Linear-Regression.html#new-r-this-week",
     "title": "3.4 Linear Regression",
-    "section": "",
-    "text": "Function\nWhat it does\nWhy a business needs it\n\n\n\n\nlm()\nFits a linear model\n“How much does each extra item add to the bill?”\n\n\nsummary()\nCoefficients, significance and R-squared\nReading the model\n\n\npredict()\nPredicts the outcome for new data\n“What would a basket of 7 items cost?”\n\n\naugment()\nAdds fitted values and residuals to the data\nDiagnostics\n\n\nplot(model)\nFour diagnostic plots in one call\nChecking the model is trustworthy",
+    "section": "New R this week",
+    "text": "New R this week\n\n\n\n\n\n\n\n\nFunction\nWhat it does\nWhy a business needs it\n\n\n\n\nlm()\nFits a linear model\n“How much does each extra item add to the bill?”\n\n\nsummary()\nCoefficients, significance and R-squared\nReading the model\n\n\npredict()\nPredicts the outcome for new data\n“What would a basket of 7 items cost?”\n\n\naugment()\nAdds fitted values and residuals to the data\nDiagnostics\n\n\nplot(model)\nFour diagnostic plots in one call\nChecking the model is trustworthy",
     "crumbs": [
       "3 — Inferential Statistics",
       "3.4 Linear Regression"

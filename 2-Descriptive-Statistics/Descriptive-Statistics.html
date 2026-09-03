@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a86099da60731089fb3e48d2ab02df10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -162,8 +165,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Intro-to-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Fast Intro to R</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
@@ -332,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reference-card" id="toc-reference-card" class="nav-link" data-scroll-target="#reference-card">Reference card</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Descriptive-Statistics-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -357,8 +363,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="new-r-this-week" class="level2">
-<h2 class="anchored" data-anchor-id="new-r-this-week">New R this week</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lecture slides">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lecture slides
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This same material is also available as a slide deck: <a href="Descriptive-Statistics-slides.html"><strong>Open the slides →</strong></a></p>
+<p>Arrow keys to move, <strong>F</strong> for full screen, <strong>S</strong> for the presenter view with speaker notes, <strong>B</strong> for the chalkboard, <strong>Esc</strong> for a grid of all slides.</p>
+</div>
+</div>
+<section id="new-r-this-week" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="new-r-this-week">New R this week</h2>
 <p>Five new functions. That is all you need to add to section 1.</p>
 <table class="caption-top table">
 <colgroup>
@@ -402,8 +422,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<section id="objectives" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="objectives">Objectives</h2>
 <p>By the end of this notebook you will be able to:</p>
 <ul>
 <li>Identify the measurement level of a variable and say which statistics are legitimate for it</li>
@@ -536,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>A colleague reports that “average customer type is 1.6” after coding Member as 1 and Normal as 2. What has gone wrong, and what should they have reported instead?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -545,7 +565,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><code>Customer type</code> is <strong>nominal</strong>. The numbers 1 and 2 are labels, not quantities - the choice of which group gets 1 was arbitrary, and reversing it would change the “average” to 1.4 without changing anything about the customers.</p>
 <p>The correct summary is a <strong>count or a percentage</strong>: “60 percent of transactions were from Normal customers”. That statement survives relabelling; the average does not.</p>
@@ -933,7 +953,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>A property firm reports that the mean house price in a neighbourhood is 480,000 and the median is 310,000. What does that gap tell you, and which figure should a first-time buyer pay attention to?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -942,7 +962,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The mean sitting far above the median means the distribution is <strong>right-skewed</strong>: a small number of very expensive properties are pulling the average up, while most houses cluster much lower.</p>
 <p>A first-time buyer should look at the <strong>median</strong>, and ideally the 25th percentile too. The median describes the house in the middle of the market. The mean describes a house that may not exist anywhere in the neighbourhood.</p>
@@ -1096,7 +1116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>Two investment funds both returned 8 percent on average over ten years. Fund A had a standard deviation of 3 percent; Fund B, 19 percent. What does that tell you, and is one straightforwardly better?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1105,7 +1125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Fund A’s returns clustered tightly around 8 percent every year. Fund B’s swung wildly - it likely had years of large gains and years of heavy losses that happened to average out.</p>
 <p><strong>Neither is straightforwardly better</strong>, and that is the point. Fund B carries far more <strong>risk</strong>, which matters enormously if you might need the money at a bad moment, and matters less over a thirty-year horizon. An investor near retirement should strongly prefer A; a young investor might rationally accept B’s volatility.</p>
@@ -1387,7 +1407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>Why might a distribution of customer ratings on a 1-to-10 scale fail a normality check even when nothing is wrong with the data?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1396,7 +1416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Because it is <strong>bounded and discrete</strong>. A normal distribution runs from minus infinity to plus infinity and takes any value in between. A rating scale stops hard at its endpoints and only lands on a limited set of values.</p>
 <p>That produces two visible effects on a Q-Q plot: a staircase pattern from the discreteness, and the ends bending away from the line because the data cannot run off to infinity the way the normal distribution expects.</p>
@@ -1603,8 +1623,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>It is <strong>bell-shaped</strong> - even though the transaction totals themselves were clearly right-skewed. That is not a coincidence and not specific to this dataset. It is the Central Limit Theorem, which you meet properly in section 3.2, and it is the reason most of inferential statistics works at all.</p>
 <p>You have just done statistical inference without a single formula. Section 3 shows you the formulas, and they will make more sense for having seen this first.</p>
 </section>
-<section id="your-turn---full-exercises" class="level1">
-<h1>Your turn - full exercises</h1>
+<section id="your-turn---full-exercises" class="level1 smaller">
+<h1 class="smaller">Your turn - full exercises</h1>
 <p>These have less scaffolding. Work them out from what is above.</p>
 <p><strong>Exercise 1 - Branch performance report.</strong> Produce one table showing, for each branch: number of transactions, total revenue, mean and median transaction value, standard deviation, and coefficient of variation. Sort by total revenue, highest first.</p>
 <div class="cell">
@@ -1638,8 +1658,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Solutions are in <code>Descriptive-Statistics-SOLUTIONS.Rmd</code>. Attempt every exercise before opening it - reading a solution feels like learning and mostly is not.</p>
 </section>
-<section id="reference-card" class="level1">
-<h1>Reference card</h1>
+<section id="reference-card" class="level1 smaller">
+<h1 class="smaller">Reference card</h1>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1735,8 +1755,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
+<section id="summary" class="level1 smaller">
+<h1 class="smaller">Summary</h1>
 <ul>
 <li><strong>Measurement level</strong> decides which statistics are legitimate. R checks types; only you can check sense.</li>
 <li><strong>Frequency tables</strong> are the complete analysis for nominal data, and are more informative as percentages.</li>
@@ -1827,7 +1847,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/msfasha\.github\.io\/307102-Descriptive-Statistics-for-Business\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a86099da60731089fb3e48d2ab02df10.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -110,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -191,8 +194,11 @@ window.Quarto = {
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Intro-to-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Fast Intro to R</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
@@ -335,7 +341,7 @@ window.Quarto = {
   <li><a href="#reference-card" id="toc-reference-card" class="nav-link" data-scroll-target="#reference-card">Reference card</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="3.1-Probability-Distributions-slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -359,8 +365,22 @@ window.Quarto = {
 </header>
 
 
-<section id="new-r-this-week" class="level2">
-<h2 class="anchored" data-anchor-id="new-r-this-week">New R this week</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lecture slides">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lecture slides
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This same material is also available as a slide deck: <a href="3.1-Probability-Distributions-slides.html"><strong>Open the slides →</strong></a></p>
+<p>Arrow keys to move, <strong>F</strong> for full screen, <strong>S</strong> for the presenter view with speaker notes, <strong>B</strong> for the chalkboard, <strong>Esc</strong> for a grid of all slides.</p>
+</div>
+</div>
+<section id="new-r-this-week" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="new-r-this-week">New R this week</h2>
 <p>R uses a single naming system for every distribution. Learn it once and you know all of them.</p>
 <table class="caption-top table">
 <colgroup>
@@ -400,8 +420,8 @@ window.Quarto = {
 </table>
 <p>Attach a prefix to a distribution name: <code>binom</code>, <code>pois</code>, <code>norm</code>, <code>unif</code>, <code>t</code>. So <code>pbinom</code>, <code>rpois</code>, <code>qnorm</code> and so on. That is 20 functions from one table.</p>
 </section>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<section id="objectives" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="objectives">Objectives</h2>
 <p>By the end of this notebook you will be able to:</p>
 <ul>
 <li>Explain what a random variable is, and the difference between discrete and continuous</li>
@@ -580,7 +600,7 @@ window.Quarto = {
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(____, <span class="at">size =</span> ____, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -589,7 +609,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -731,7 +751,7 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(____, <span class="at">lambda =</span> ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -740,7 +760,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">2.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>About 8 percent. A complaint-free week is uncommon but not remarkable - which is worth knowing before anyone declares a quality initiative a success on one good week’s evidence.</p>
@@ -1056,7 +1076,7 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>A call centre wants to model how many calls arrive between 9am and 10am. A colleague suggests using a binomial distribution “because each minute either has a call or does not”. What is wrong with that reasoning?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1065,7 +1085,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Two things.</p>
 <p>First, <strong>a minute can contain more than one call.</strong> The binomial requires each trial to be a clean success or failure, but “this minute had 3 calls” breaks that.</p>
@@ -1128,8 +1148,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="your-turn---full-exercises" class="level1">
-<h1>Your turn - full exercises</h1>
+<section id="your-turn---full-exercises" class="level1 smaller">
+<h1 class="smaller">Your turn - full exercises</h1>
 <p><strong>Exercise 1 - Binomial.</strong> Historically 30 percent of customers buy a product from the Health and beauty line. Out of the next 25 customers:</p>
 <ol type="a">
 <li>What is the probability that exactly 8 buy from that line?</li>
@@ -1173,8 +1193,8 @@ window.Quarto = {
 </div>
 <p>Solutions are in <code>3.1-Probability-Distributions-SOLUTIONS.Rmd</code>.</p>
 </section>
-<section id="reference-card" class="level1">
-<h1>Reference card</h1>
+<section id="reference-card" class="level1 smaller">
+<h1 class="smaller">Reference card</h1>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1242,8 +1262,8 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="summary" class="level1">
-<h1>Summary</h1>
+<section id="summary" class="level1 smaller">
+<h1 class="smaller">Summary</h1>
 <ul>
 <li>A <strong>random variable</strong> is a numerical outcome of an uncertain process; it is either <strong>discrete</strong> or <strong>continuous</strong>.</li>
 <li>The <strong>binomial</strong> counts successes in a fixed number of independent trials.</li>
@@ -1333,7 +1353,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/msfasha\.github\.io\/307102-Descriptive-Statistics-for-Business\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
