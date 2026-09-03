@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3.4 Linear Regression - Solutions – 307102 Statistics for Business</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../3-Inferential-Statistics/3.3-Hypothesis-Testing-SOLUTIONS.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions-SOLUTIONS.html">3 — Solutions (instructor)</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.4-Linear-Regression-SOLUTIONS.html">3.4 Linear Regression - Solutions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">307102 Statistics for Business</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">1 — Intro to R Language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+ <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install guide</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">2 — Descriptive Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions (instructor)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Inferential Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Probability Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Linear Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Solutions (instructor)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Probability Distributions - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression-SOLUTIONS.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3.4 Linear Regression - Solutions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exercise-1---simple-regression" id="toc-exercise-1---simple-regression" class="nav-link active" data-scroll-target="#exercise-1---simple-regression">Exercise 1 - Simple regression</a></li>
+  <li><a href="#exercise-2---multiple-regression" id="toc-exercise-2---multiple-regression" class="nav-link" data-scroll-target="#exercise-2---multiple-regression">Exercise 2 - Multiple regression</a></li>
+  <li><a href="#exercise-3---diagnostics" id="toc-exercise-3---diagnostics" class="nav-link" data-scroll-target="#exercise-3---diagnostics">Exercise 3 - Diagnostics</a></li>
+  <li><a href="#exercise-4---prediction" id="toc-exercise-4---prediction" class="nav-link" data-scroll-target="#exercise-4---prediction">Exercise 4 - Prediction</a></li>
+  <li><a href="#exercise-5---model-comparison-and-judgement" id="toc-exercise-5---model-comparison-and-judgement" class="nav-link" data-scroll-target="#exercise-5---model-comparison-and-judgement">Exercise 5 - Model comparison and judgement</a></li>
+  <li><a href="#teaching-notes" id="toc-teaching-notes" class="nav-link" data-scroll-target="#teaching-notes">Teaching notes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions-SOLUTIONS.html">3 — Solutions (instructor)</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.4-Linear-Regression-SOLUTIONS.html">3.4 Linear Regression - Solutions</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3.4 Linear Regression - Solutions</h1>
+<p class="subtitle lead">307102 Descriptive Statistics for Business | University of Petra</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-caution callout-titled" title="Instructor copy">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Instructor copy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every chunk runs.</p>
+<p><strong>A structural warning about this dataset.</strong> <code>Total</code> is an exact arithmetic function of <code>Quantity</code> and <code>Unit price</code> - specifically <code>Quantity * Unit price * 1.05</code>. Any regression of <code>Total</code> on both predictors will therefore have an R-squared very close to 1.</p>
+<p>This is a feature for teaching, not a bug. It gives students a model that fits essentially perfectly and <em>still</em> teaches them almost nothing about the business, which is the most valuable lesson in the section. Make that point explicitly rather than letting them believe they have built a triumph.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="exercise-1---simple-regression" class="level1">
+<h1>Exercise 1 - Simple regression</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="st">`</span><span class="at">gross income</span><span class="st">`</span> <span class="sc">~</span> Quantity, <span class="at">data =</span> sales)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = `gross income` ~ Quantity, data = sales)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -22.5867  -4.7340  -0.0195   4.7969  21.5833 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept) -0.19016    0.56038  -0.339    0.734    
+#&gt; Quantity     2.82569    0.08985  31.449   &lt;2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 8.302 on 998 degrees of freedom
+#&gt; Multiple R-squared:  0.4977, Adjusted R-squared:  0.4972 
+#&gt; F-statistic:   989 on 1 and 998 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 5
+#&gt;   term        estimate std.error statistic   p.value
+#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+#&gt; 1 (Intercept)   -0.190    0.560     -0.339 7.34e-  1
+#&gt; 2 Quantity       2.83     0.0898    31.4   2.06e-151</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(m1) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared, adj.r.squared, sigma, nobs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 4
+#&gt;   r.squared adj.r.squared sigma  nobs
+#&gt;       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+#&gt; 1     0.498         0.497  8.30  1000</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gross income against basket size"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Gross income"</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.4-Linear-Regression-SOLUTIONS_files/figure-html/sol_ex1_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Expected results.</strong> A slope of <strong>2.83</strong>, strongly significant. An intercept of <strong>-0.19</strong>, not significantly different from zero (p = 0.73). R-squared of <strong>0.498</strong>.</p>
+<p><strong>Model answer.</strong></p>
+<blockquote class="blockquote">
+<p>Each additional item in the basket is associated with about 2.83 more in gross income. The intercept of -0.19 is not significantly different from zero and is not meaningfully interpretable in any case, since a transaction with no items cannot occur - though it is reassuring that it lands near zero, which is where a sensible model should put it.</p>
+<p>The model explains about 50 percent of the variation in gross income, leaving the other half to something else - principally the unit price of what was bought, which this model ignores entirely.</p>
+<p>The model is useful as a rough guide but should not be relied on for individual predictions.</p>
+</blockquote>
+<p><strong>Marking guidance.</strong> Three things carry the marks:</p>
+<ol type="1">
+<li>The slope stated <strong>with units and direction</strong>, not just as a number.</li>
+<li>Explicit recognition that the intercept is not interpretable here.</li>
+<li>R-squared interpreted as <em>unexplained</em> variation as well as explained. Students who say “R-squared is 0.25” without saying what that leaves out have described the output rather than understood it.</li>
+</ol>
+<p><strong>Discussion prompt.</strong> Ask what the missing 50 percent is. The answer - unit price - is sitting in the dataset, which motivates Exercise 2 naturally.</p>
+</section>
+<section id="exercise-2---multiple-regression" class="level1">
+<h1>Exercise 2 - Multiple regression</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="sc">+</span> Rating, <span class="at">data =</span> sales)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = Total ~ Quantity + `Unit price` + Rating, data = sales)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -214.553  -45.078    1.291   44.659  214.059 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  -304.43730   13.07914 -23.277   &lt;2e-16 ***
+#&gt; Quantity       58.74523    0.88201  66.604   &lt;2e-16 ***
+#&gt; `Unit price`    5.81205    0.09731  59.725   &lt;2e-16 ***
+#&gt; Rating         -2.84702    1.50034  -1.898    0.058 .  
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 81.48 on 996 degrees of freedom
+#&gt; Multiple R-squared:  0.8905, Adjusted R-squared:  0.8902 
+#&gt; F-statistic:  2700 on 3 and 996 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 4 × 5
+#&gt;   term         estimate std.error statistic  p.value
+#&gt;   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 (Intercept)   -304.     13.1       -23.3  4.85e-96
+#&gt; 2 Quantity        58.7     0.882      66.6  0       
+#&gt; 3 `Unit price`     5.81    0.0973     59.7  0       
+#&gt; 4 Rating          -2.85    1.50       -1.90 5.80e- 2</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(m2) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared, adj.r.squared, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 3
+#&gt;   r.squared adj.r.squared sigma
+#&gt;       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     0.891         0.890  81.5</code></pre>
+</div>
+</div>
+<p><strong>Expected results.</strong> <code>Quantity</code> (58.7) and <code>Unit price</code> (5.81) are both overwhelmingly significant. R-squared is <strong>0.891</strong>.</p>
+<p><code>Rating</code> has a coefficient of <strong>-2.85 with p = 0.058</strong> - just above the conventional threshold, and negative.</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="This result is more useful than a clean null">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>This result is more useful than a clean null
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>Rating</code> at p = 0.058 is the single best teaching moment in the notebook, and it is worth planning the session around it.</p>
+<p>Ask the class: <em>is rating a significant predictor?</em> The honest answer is that the question is badly posed. At alpha = 0.05 you fail to reject; at alpha = 0.10 you reject. Nothing about the underlying reality changes between those two sentences, which is precisely why treating 0.05 as a bright line is indefensible.</p>
+<p>Then ask the better question: <strong>is the effect big enough to matter?</strong> A coefficient of -2.85 means that among baskets of the same size and price, a one-point higher rating is associated with about 2.85 <em>less</em> spent. Against a mean transaction of 323 and a standard deviation of 246, that is roughly one percent of a standard deviation per rating point. It is negligible whichever side of 0.05 it lands on.</p>
+<p>This is the effect-size lesson from section 3.3, arriving unprompted in a real model.</p>
+</div>
+</div>
+<p><strong>Model answer.</strong></p>
+<blockquote class="blockquote">
+<p>Quantity and unit price both strongly predict the transaction total, which is unsurprising since the total is calculated from them. Rating has a small negative coefficient of -2.85 with a p-value of 0.058 - marginally above the conventional 0.05 threshold.</p>
+<p>That coefficient means that <strong>among transactions with the same basket size and the same unit price</strong>, a one-point higher customer rating is associated with about 2.85 less spent. Given that transaction totals have a standard deviation of about 246, this effect is far too small to be of any practical interest, regardless of where its p-value sits relative to 0.05.</p>
+<p>In short: once you know what someone bought, knowing how satisfied they were tells you essentially nothing further about how much they spent.</p>
+</blockquote>
+<p><strong>Marking guidance.</strong> The Rating interpretation is the exercise, and it is where most students lose marks. Three things to look for:</p>
+<ol type="1">
+<li>The phrase <strong>“holding quantity and unit price constant”</strong> or an equivalent. A student who omits the conditioning has not understood multiple regression.</li>
+<li><strong>Not</strong> treating p = 0.058 as a clean null result. “Rating is not significant so it has no effect” overstates what a marginal p-value supports.</li>
+<li><strong>Not</strong> stating a causal claim. “Higher ratings do not lead to higher spending” asserts something the model cannot establish.</li>
+</ol>
+<p>The strongest answers note that the sign is <em>negative</em>, which is the opposite of the intuition most people bring, and then correctly decline to make anything of it because the effect is too small to distinguish from noise.</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="The point worth making about R-squared here">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>The point worth making about R-squared here
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>R-squared above 0.9 looks like a triumph. Ask the class what the model has actually taught them about the business.</p>
+<p>The answer is nothing. <code>Total</code> is <code>Quantity</code> times <code>Unit price</code> times 1.05, so the model has rediscovered a definition. A near-perfect fit obtained by predicting a variable from its own components is a warning sign, not an achievement.</p>
+<p>This connects directly to the multicollinearity example in section 6 of the student notebook, and it is the single most transferable idea in this section: <strong>always ask whether your predictors are logically prior to your outcome, or merely arithmetically related to it.</strong></p>
+</div>
+</div>
+</section>
+<section id="exercise-3---diagnostics" class="level1">
+<h1>Exercise 3 - Diagnostics</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.4-Linear-Regression-SOLUTIONS_files/figure-html/sol_ex3-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>aug2 <span class="ot">&lt;-</span> <span class="fu">augment</span>(m2)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(aug2, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#D64545"</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals against fitted values"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fitted value"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.4-Linear-Regression-SOLUTIONS_files/figure-html/sol_ex3_gg-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Expected pattern.</strong> The residuals are tiny relative to the fitted values, and they show a clear <strong>funnel shape</strong> - spread widening as the fitted value grows.</p>
+<p><strong>Model answer.</strong></p>
+<blockquote class="blockquote">
+<p><strong>Linearity:</strong> the residuals-versus-fitted plot shows no curvature, so a linear form is appropriate. This is expected, since the true relationship is exactly linear by construction.</p>
+<p><strong>Independence:</strong> each row is a separate transaction, so independence is reasonable on design grounds. Nothing in the data suggests otherwise.</p>
+<p><strong>Homoscedasticity:</strong> this assumption <strong>fails</strong>. The residuals fan out as fitted values increase, which the Scale-Location plot confirms with an upward slope. Larger transactions have larger errors.</p>
+<p><strong>Normality of residuals:</strong> the Q-Q plot shows departures in the tails, though with 1,000 observations the model is fairly robust to this.</p>
+<p>The heteroscedasticity is the finding that would make me cautious. It does not bias the coefficients, but it makes the standard errors - and therefore every p-value and confidence interval in the output - unreliable.</p>
+</blockquote>
+<p><strong>Marking guidance.</strong> Students must comment on <strong>all four</strong> assumptions and must identify the funnel shape. Simply printing the plots earns nothing.</p>
+<p>The distinction worth rewarding: heteroscedasticity affects the <strong>standard errors</strong>, not the <strong>coefficient estimates</strong>. A student who says “the model is wrong” has overstated it; a student who says “the coefficients are still fine but I would not trust the p-values” has understood it.</p>
+<p><strong>Why the funnel appears here.</strong> The total is a product of two quantities, so rounding and variation scale with the size of the transaction rather than staying constant. Multiplicative processes routinely produce this pattern, and the standard remedy - modelling <code>log(Total)</code> instead - is worth mentioning to stronger students even though it is beyond the syllabus.</p>
+</section>
+<section id="exercise-4---prediction" class="level1">
+<h1>Exercise 4 - Prediction</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>new_basket <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Quantity     =</span> <span class="dv">6</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">45</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Rating       =</span> <span class="dv">8</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m2, <span class="at">newdata =</span> new_basket, <span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;     fit    lwr    upr
+#&gt; 1 286.8 280.51 293.09</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m2, <span class="at">newdata =</span> new_basket, <span class="at">interval =</span> <span class="st">"prediction"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;     fit    lwr    upr
+#&gt; 1 286.8 126.78 446.82</code></pre>
+</div>
+</div>
+<p><strong>Expected results.</strong> A point prediction of <strong>286.80</strong>, with a confidence interval of roughly <strong>[280.5, 293.1]</strong> and a prediction interval of roughly <strong>[126.8, 446.8]</strong> - about 25 times wider.</p>
+<p>Note that the pure arithmetic answer would be 6 times 45 times 1.05, or 283.5. The model returns 286.80 because it also carries an intercept and the small negative <code>Rating</code> term. Students who notice that gap and can explain it are doing well.</p>
+<p><strong>Model answer.</strong></p>
+<blockquote class="blockquote">
+<p>The predicted total is about 287. The confidence interval is narrow because it describes the <em>average</em> total across all baskets matching this description, and averages are estimated precisely with 1,000 observations. The prediction interval is wider because it must also account for the scatter of individual transactions around that average.</p>
+<p>A shop manager forecasting the revenue of one particular customer should use the <strong>prediction interval</strong>. The confidence interval would be appropriate only for a question about the average across many such baskets - for example, budgeting for a thousand similar transactions.</p>
+</blockquote>
+<p><strong>Marking guidance.</strong> The choice between the intervals is the mark, and the justification must turn on <strong>individual versus average</strong>. This is a genuinely common professional error: quoting a confidence interval when a client asks about their own case understates the uncertainty substantially, and the promise will be broken far more often than the stated confidence level implies.</p>
+</section>
+<section id="exercise-5---model-comparison-and-judgement" class="level1">
+<h1>Exercise 5 - Model comparison and judgement</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mod_a <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity, <span class="at">data =</span> sales)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mod_b <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, <span class="at">data =</span> sales)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mod_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="sc">+</span> Rating <span class="sc">+</span> Branch <span class="sc">+</span> <span class="st">`</span><span class="at">Customer type</span><span class="st">`</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> sales)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>(mod_a) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"A: Quantity"</span>),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>(mod_b) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"B: + Unit price"</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>(mod_c) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"C: + Rating, Branch, Customer type"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, r.squared, adj.r.squared, sigma, df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 5
+#&gt;   model                              r.squared adj.r.squared sigma    df
+#&gt;   &lt;chr&gt;                                  &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 A: Quantity                            0.498         0.497 174.      1
+#&gt; 2 B: + Unit price                        0.890         0.890  81.6     2
+#&gt; 3 C: + Rating, Branch, Customer type     0.891         0.890  81.5     6</code></pre>
+</div>
+</div>
+<p><strong>Expected pattern.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>R-squared</th>
+<th>Adjusted R-squared</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A: Quantity</td>
+<td>0.4977</td>
+<td>0.4972</td>
+</tr>
+<tr class="even">
+<td>B: + Unit price</td>
+<td>0.8901</td>
+<td>0.8899</td>
+</tr>
+<tr class="odd">
+<td>C: + Rating, Branch, Customer type</td>
+<td>0.8907</td>
+<td>0.8901</td>
+</tr>
+</tbody>
+</table>
+<p>A large jump from A to B. From B to C, plain R-squared rises by 0.0006 while adjusted R-squared moves by almost nothing - the textbook signature of predictors that do not earn their place.</p>
+<p><strong>Model answer.</strong></p>
+<blockquote class="blockquote">
+<p>Adding unit price to the quantity-only model transforms the fit, taking R-squared from 0.498 to 0.890. Adding rating, branch and customer type produces essentially no further improvement: R-squared rises by 0.0006 and adjusted R-squared is unchanged to three decimal places, confirming those three predictors earn nothing.</p>
+<p>I would recommend <strong>Model B</strong> on parsimony grounds - it achieves the same explanatory power with three fewer predictors.</p>
+<p>However, no model here tells a manager anything actionable. <code>Total</code> is defined as quantity times unit price plus tax, so Model B has recovered an accounting identity rather than discovered a business relationship. The genuinely useful finding is the <strong>negative</strong> one: branch, customer type and satisfaction contribute nothing to explaining transaction value once you know what was in the basket.</p>
+<p>To model something a manager could act on, I would need a different outcome variable - repeat visit rate, or basket size itself - and predictors that are genuinely prior to it rather than components of it.</p>
+</blockquote>
+<p><strong>Marking guidance.</strong> This exercise separates students who can operate the software from students who can think.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Band</th>
+<th>What it looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Excellent</td>
+<td>Compares adjusted R-squared correctly, recommends a model on parsimony, <strong>and</strong> recognises the circularity of predicting Total from its own components. Proposes a better-posed question.</td>
+</tr>
+<tr class="even">
+<td>Good</td>
+<td>Correct comparison and a justified recommendation, but treats the high R-squared as a genuine success.</td>
+</tr>
+<tr class="odd">
+<td>Adequate</td>
+<td>Produces the table and picks the highest R-squared without discussing parsimony.</td>
+</tr>
+<tr class="even">
+<td>Weak</td>
+<td>Reports plain R-squared only, or recommends Model C because “it has the highest R-squared”.</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the trap the exercise is built around. A student who recommends Model C on plain R-squared has ignored the section’s explicit warning that R-squared never decreases when predictors are added.</p>
+</section>
+<section id="teaching-notes" class="level1">
+<h1>Teaching notes</h1>
+<p><strong>Where students get stuck.</strong></p>
+<ol type="1">
+<li><strong>Interpreting coefficients without the units.</strong> “The slope is 2.7” is not an interpretation. Insist on “each additional item is associated with about 2.7 more in gross income” every time.</li>
+<li><strong>Forgetting “holding the others constant”</strong> in multiple regression. This is the defining feature of the technique and the thing most likely to be missing from an exam answer.</li>
+<li><strong>Treating a high R-squared as proof.</strong> This dataset is the ideal cure, because the best-fitting model is also the emptiest.</li>
+<li><strong>Confusing confidence and prediction intervals.</strong> The individual-versus-average framing works better than any formula.</li>
+<li><strong>Reading diagnostic plots.</strong> Students see four plots and do not know what “good” looks like. Show a clean model and a badly violated one side by side - the contrast teaches faster than the description does.</li>
+</ol>
+<p><strong>Timing.</strong> Sections 1 to 4 fill one 90-minute session; sections 5 and 6 fill a second. Do not cut section 5 - a regression whose assumptions were never checked is not an analysis, and diagnostics are what separates this from a curve-fitting exercise.</p>
+<p><strong>A better dataset for the final project.</strong> Because <code>Total</code> is arithmetically determined here, the superstore dataset in <code>R-Version/data/</code> is a stronger choice for assessed regression work. <code>Profit</code> there is genuinely predictable-but-not-determined from <code>Sales</code>, <code>Discount</code> and <code>Quantity</code>, and the relationship with <code>Discount</code> is strongly negative and commercially interesting. It also contains real heteroscedasticity and influential outliers, so the diagnostics have something to find.</p>
+<p><strong>Connecting to the Excel track.</strong> Excel’s Analysis ToolPak regression produces coefficients, standard errors, t-statistics, p-values and R-squared - broadly the same table as <code>summary()</code>. It offers residual plots but no Cook’s distance, no leverage diagnostics, and no straightforward way to produce prediction intervals. For anything beyond a single fitted line, R is substantially less work.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing-SOLUTIONS.html" class="pagination-link" aria-label="3.3 Hypothesis Testing - Solutions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3.3 Hypothesis Testing - Solutions</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>307102 Descriptive Statistics for Business</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>University of Petra</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

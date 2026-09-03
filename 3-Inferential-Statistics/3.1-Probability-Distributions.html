@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3.1 Probability Distributions – 307102 Statistics for Business</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html" rel="next">
+<link href="../2-Descriptive-Statistics/Descriptive-Statistics-SOLUTIONS.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3 — Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3.1 Probability Distributions</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">307102 Statistics for Business</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">1 — Intro to R Language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+ <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install guide</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">2 — Descriptive Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions (instructor)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Inferential Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3.1 Probability Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Linear Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Solutions (instructor)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Probability Distributions - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Linear Regression - Solutions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#new-r-this-week" id="toc-new-r-this-week" class="nav-link active" data-scroll-target="#new-r-this-week">New R this week</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#from-describing-to-modelling" id="toc-from-describing-to-modelling" class="nav-link" data-scroll-target="#from-describing-to-modelling">1. From describing to modelling</a></li>
+  <li><a href="#the-binomial-distribution" id="toc-the-binomial-distribution" class="nav-link" data-scroll-target="#the-binomial-distribution">2. The binomial distribution</a>
+  <ul class="collapse">
+  <li><a href="#a-business-question" id="toc-a-business-question" class="nav-link" data-scroll-target="#a-business-question">A business question</a></li>
+  <li><a href="#seeing-the-whole-distribution" id="toc-seeing-the-whole-distribution" class="nav-link" data-scroll-target="#seeing-the-whole-distribution">Seeing the whole distribution</a></li>
+  </ul></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution">3. The Poisson distribution</a>
+  <ul class="collapse">
+  <li><a href="#a-business-question-1" id="toc-a-business-question-1" class="nav-link" data-scroll-target="#a-business-question-1">A business question</a></li>
+  <li><a href="#why-the-shape-matters-for-staffing" id="toc-why-the-shape-matters-for-staffing" class="nav-link" data-scroll-target="#why-the-shape-matters-for-staffing">Why the shape matters for staffing</a></li>
+  </ul></li>
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution">4. The normal distribution</a>
+  <ul class="collapse">
+  <li><a href="#the-empirical-rule" id="toc-the-empirical-rule" class="nav-link" data-scroll-target="#the-empirical-rule">The empirical rule</a></li>
+  <li><a href="#applying-it-to-the-ratings-data" id="toc-applying-it-to-the-ratings-data" class="nav-link" data-scroll-target="#applying-it-to-the-ratings-data">Applying it to the ratings data</a></li>
+  <li><a href="#going-the-other-way-with-qnorm" id="toc-going-the-other-way-with-qnorm" class="nav-link" data-scroll-target="#going-the-other-way-with-qnorm">Going the other way with qnorm</a></li>
+  </ul></li>
+  <li><a href="#z-scores-and-the-standard-normal" id="toc-z-scores-and-the-standard-normal" class="nav-link" data-scroll-target="#z-scores-and-the-standard-normal">5. Z-scores and the standard normal</a>
+  <ul class="collapse">
+  <li><a href="#standardising-a-whole-column" id="toc-standardising-a-whole-column" class="nav-link" data-scroll-target="#standardising-a-whole-column">Standardising a whole column</a></li>
+  <li><a href="#using-z-scores-to-find-unusual-transactions" id="toc-using-z-scores-to-find-unusual-transactions" class="nav-link" data-scroll-target="#using-z-scores-to-find-unusual-transactions">Using z-scores to find unusual transactions</a></li>
+  </ul></li>
+  <li><a href="#choosing-the-right-distribution" id="toc-choosing-the-right-distribution" class="nav-link" data-scroll-target="#choosing-the-right-distribution">6. Choosing the right distribution</a></li>
+  <li><a href="#simulation---checking-your-reasoning" id="toc-simulation---checking-your-reasoning" class="nav-link" data-scroll-target="#simulation---checking-your-reasoning">7. Simulation - checking your reasoning</a></li>
+  <li><a href="#your-turn---full-exercises" id="toc-your-turn---full-exercises" class="nav-link" data-scroll-target="#your-turn---full-exercises">Your turn - full exercises</a></li>
+  <li><a href="#reference-card" id="toc-reference-card" class="nav-link" data-scroll-target="#reference-card">Reference card</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3 — Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3.1 Probability Distributions</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3.1 Probability Distributions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="new-r-this-week" class="level2">
+<h2 class="anchored" data-anchor-id="new-r-this-week">New R this week</h2>
+<p>R uses a single naming system for every distribution. Learn it once and you know all of them.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Prefix</th>
+<th>Question it answers</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>d</code></td>
+<td>What is the probability of <strong>exactly</strong> this value?</td>
+<td><code>dbinom(3, 10, 0.2)</code></td>
+</tr>
+<tr class="even">
+<td><code>p</code></td>
+<td>What is the probability of <strong>this or less</strong>?</td>
+<td><code>pnorm(500, 323, 245)</code></td>
+</tr>
+<tr class="odd">
+<td><code>q</code></td>
+<td>Which <strong>value</strong> sits at this probability?</td>
+<td><code>qnorm(0.95, 323, 245)</code></td>
+</tr>
+<tr class="even">
+<td><code>r</code></td>
+<td>Give me <strong>random</strong> draws from this distribution</td>
+<td><code>rnorm(100, 323, 245)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Attach a prefix to a distribution name: <code>binom</code>, <code>pois</code>, <code>norm</code>, <code>unif</code>, <code>t</code>. So <code>pbinom</code>, <code>rpois</code>, <code>qnorm</code> and so on. That is 20 functions from one table.</p>
+</section>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>By the end of this notebook you will be able to:</p>
+<ul>
+<li>Explain what a random variable is, and the difference between discrete and continuous</li>
+<li>Use the binomial distribution to model counts of successes in a fixed number of trials</li>
+<li>Use the Poisson distribution to model counts of events in an interval</li>
+<li>Use the normal distribution to model continuous measurements</li>
+<li>Convert any value to a z-score and interpret it</li>
+<li>Read the <code>d</code>/<code>p</code>/<code>q</code>/<code>r</code> function family fluently</li>
+<li>Choose the right distribution for a business situation</li>
+</ul>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="from-describing-to-modelling" class="level1">
+<h1>1. From describing to modelling</h1>
+<p>Section 2 described the 1,000 transactions you have. This section does something different: it builds a <strong>model</strong> of the process that generates transactions, so you can reason about ones you have not seen yet.</p>
+<p>That shift is what makes statistics useful to a business. Describing last month’s sales is bookkeeping. Saying “there is a 5 percent chance we run out of stock next Tuesday” is planning.</p>
+<p>A <strong>random variable</strong> is a numerical outcome of a process whose result is not known in advance. Two kinds:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>What it can be</th>
+<th>Examples here</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Discrete</strong></td>
+<td>Separate, countable values</td>
+<td><code>Quantity</code> (1, 2, 3…), number of complaints</td>
+</tr>
+<tr class="even">
+<td><strong>Continuous</strong></td>
+<td>Any value in a range</td>
+<td><code>Total</code>, <code>Unit price</code>, time between customers</td>
+</tr>
+</tbody>
+</table>
+<p>The distinction matters because the two kinds need different mathematics. For discrete variables you can ask “what is the probability of exactly 5?” For continuous variables that question has no useful answer - the probability of a transaction being exactly 323.0000… is zero - so you ask “what is the probability of between 300 and 350?” instead.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="A probability distribution">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>A probability distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A probability distribution is a rule that assigns probability to each possible outcome of a random variable.</p>
+<p>Think of it as the shape a histogram would settle into if you could collect infinitely many observations.</p>
+</div>
+</div>
+</section>
+<section id="the-binomial-distribution" class="level1">
+<h1>2. The binomial distribution</h1>
+<p>Use the binomial when you count <strong>how many successes in a fixed number of independent attempts</strong>, each with the same probability of success.</p>
+<p>Four conditions must hold:</p>
+<ol type="1">
+<li>A <strong>fixed number</strong> of trials, called <code>n</code></li>
+<li>Each trial has only <strong>two outcomes</strong> - success or failure</li>
+<li>The probability of success, <code>p</code>, is the <strong>same every time</strong></li>
+<li>Trials are <strong>independent</strong> - one outcome does not affect another</li>
+</ol>
+<section id="a-business-question" class="level2">
+<h2 class="anchored" data-anchor-id="a-business-question">A business question</h2>
+<p>About half of the chain’s customers are members. If 20 customers walk in, what is the chance that exactly 12 of them are members?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, the actual member rate in our data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>p_member <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>p_member</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.501</code></pre>
+</div>
+</div>
+<p>That line is worth reading carefully. <code>sales$\</code>Customer type` == “Member”<code>produces a column of</code>TRUE<code>/</code>FALSE<code>. R treats</code>TRUE<code>as 1 and</code>FALSE<code>as 0, so taking the mean of that column gives the **proportion** that are</code>TRUE`. This is a very common R idiom and you will use it constantly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of exactly 12 members out of 20 customers</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1210944</code></pre>
+</div>
+</div>
+<p>About a 12 percent chance. Now some more useful questions:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 12 or fewer members</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.8664802</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than 12 members (note: 1 minus "12 or fewer")</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1335198</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="The off-by-one trap">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The off-by-one trap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>pbinom(12, ...)</code> means “12 <strong>or fewer</strong>”, including 12.</p>
+<p>So “more than 12” is <code>1 - pbinom(12, ...)</code>, <strong>not</strong> <code>1 - pbinom(13, ...)</code>. Getting this wrong by one is the most common error with discrete distributions. When in doubt, write out the values you want to include.</p>
+</div>
+</div>
+</section>
+<section id="seeing-the-whole-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="seeing-the-whole-distribution">Seeing the whole distribution</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>binom_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">members     =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability =</span> <span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(binom_dist, <span class="fu">aes</span>(<span class="at">x =</span> members, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Members among 20 random customers"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Binomial, n = 20, p = "</span>, <span class="fu">round</span>(p_member, <span class="dv">3</span>)),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of members"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.1-Probability-Distributions_files/figure-html/binom_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The distribution peaks at 10, which is what you would expect when half of all customers are members. Its <strong>mean is n times p</strong>, and its spread is <code>sqrt(n * p * (1 - p))</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> n <span class="sc">*</span> p_member,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd   =</span> <span class="fu">sqrt</span>(n <span class="sc">*</span> p_member <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_member))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 2
+#&gt;    mean    sd
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  10.0  2.24</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Your turn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>About one third of transactions are paid by Ewallet. Out of 15 customers, what is the probability that <strong>fewer than 4</strong> pay by Ewallet?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"______"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "Fewer than 4" means 3 or fewer</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(____, <span class="at">size =</span> ____, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The key step is translating “fewer than 4” into “3 or fewer”. <code>pbinom</code> always includes the value you give it, so you must subtract one from a strict inequality.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-poisson-distribution" class="level1">
+<h1>3. The Poisson distribution</h1>
+<p>Use the Poisson when you count <strong>how many events occur in a fixed interval</strong> of time or space, and there is no natural upper limit.</p>
+<p>The binomial asks “how many of these 20?” The Poisson asks “how many will happen at all?”</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Of 20 customers, how many are members?</td>
+<td>Binomial (there is a maximum of 20)</td>
+</tr>
+<tr class="even">
+<td>How many customers arrive in the next hour?</td>
+<td>Poisson (no fixed maximum)</td>
+</tr>
+<tr class="odd">
+<td>Of 50 items shipped, how many are damaged?</td>
+<td>Binomial</td>
+</tr>
+<tr class="even">
+<td>How many complaints arrive this week?</td>
+<td>Poisson</td>
+</tr>
+</tbody>
+</table>
+<p>The Poisson needs only one number: <strong>lambda</strong>, the average rate of events per interval.</p>
+<section id="a-business-question-1" class="level2">
+<h2 class="anchored" data-anchor-id="a-business-question-1">A business question</h2>
+<p>The three branches together handled 1,000 transactions over about 90 days. Suppose a branch averages 4 transactions per hour. Staffing needs to cope with busy hours.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Exactly 6 transactions in an hour</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1041956</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 or fewer</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ppois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.889326</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More than 8 - a genuinely busy hour</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">8</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.02136343</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pois_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">transactions =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">probability  =</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">lambda =</span> lambda)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pois_dist, <span class="fu">aes</span>(<span class="at">x =</span> transactions, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transactions per hour"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Poisson, lambda = 4"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Transactions in one hour"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.1-Probability-Distributions_files/figure-html/pois_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice the shape is <strong>right-skewed</strong>. There is a hard floor at zero - you cannot have negative transactions - but no ceiling, so the tail runs to the right. This is why count data so often fails a normality check, as you saw in section 2.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="A useful oddity of the Poisson">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>A useful oddity of the Poisson
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a Poisson distribution the <strong>mean and the variance are both lambda</strong>.</p>
+<p>That gives you a free diagnostic. If you have count data whose variance is much larger than its mean, a Poisson model is probably wrong - the events are not occurring independently, perhaps because they arrive in clusters.</p>
+</div>
+</div>
+</section>
+<section id="why-the-shape-matters-for-staffing" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-shape-matters-for-staffing">Why the shape matters for staffing</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">capacity          =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">prob_overwhelmed  =</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">lambda =</span> <span class="dv">4</span>), <span class="dv">4</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 7 × 2
+#&gt;   capacity prob_overwhelmed
+#&gt;      &lt;int&gt;            &lt;dbl&gt;
+#&gt; 1        4           0.371 
+#&gt; 2        5           0.215 
+#&gt; 3        6           0.111 
+#&gt; 4        7           0.0511
+#&gt; 5        8           0.0214
+#&gt; 6        9           0.0081
+#&gt; 7       10           0.0028</code></pre>
+</div>
+</div>
+<p>Read that table as a manager. If you staff for the average of 4 transactions an hour, you are overwhelmed about 37 percent of the time. Staffing for 8 drops that to around 2 percent.</p>
+<p>This is the entire point of probability distributions in business: <strong>planning for the average guarantees you fail about half the time.</strong> You have to plan for the tail.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Your turn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A branch receives an average of 2.5 customer complaints per week. What is the probability of a week with <strong>no complaints at all</strong>?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(____, <span class="at">lambda =</span> ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">2.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>About 8 percent. A complaint-free week is uncommon but not remarkable - which is worth knowing before anyone declares a quality initiative a success on one good week’s evidence.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-normal-distribution" class="level1">
+<h1>4. The normal distribution</h1>
+<p>The most important continuous distribution. It is symmetric, bell-shaped, and defined by exactly two numbers: the <strong>mean</strong> (where the centre sits) and the <strong>standard deviation</strong> (how wide it is).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>norm_demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">SD = 1</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">SD = 2</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">SD = 0.5</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x, <span class="at">names_to =</span> <span class="st">"spread"</span>, <span class="at">values_to =</span> <span class="st">"density"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(norm_demo, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> density, <span class="at">colour =</span> spread)) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#A83296"</span>, <span class="st">"#D070D0"</span>, <span class="st">"#5C1A54"</span>)) <span class="sc">+</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Three normal distributions with the same mean"</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.1-Probability-Distributions_files/figure-html/norm_shapes-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>All three are centred at zero. The standard deviation alone controls how spread out they are.</p>
+<section id="the-empirical-rule" class="level2">
+<h2 class="anchored" data-anchor-id="the-empirical-rule">The empirical rule</h2>
+<p>For any normal distribution:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Within</th>
+<th>Contains about</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 standard deviation of the mean</td>
+<td>68 percent of values</td>
+</tr>
+<tr class="even">
+<td>2 standard deviations</td>
+<td>95 percent</td>
+</tr>
+<tr class="odd">
+<td>3 standard deviations</td>
+<td>99.7 percent</td>
+</tr>
+</tbody>
+</table>
+<p>Verify it in R rather than taking it on trust:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">within_sd =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">proportion =</span> <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="dv">4</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 2
+#&gt;   within_sd proportion
+#&gt;       &lt;int&gt;      &lt;dbl&gt;
+#&gt; 1         1      0.683
+#&gt; 2         2      0.954
+#&gt; 3         3      0.997</code></pre>
+</div>
+</div>
+<p><code>pnorm(1) - pnorm(-1)</code> is “the area below +1 minus the area below -1”, which is the area between them. That is the 68 percent.</p>
+</section>
+<section id="applying-it-to-the-ratings-data" class="level2">
+<h2 class="anchored" data-anchor-id="applying-it-to-the-ratings-data">Applying it to the ratings data</h2>
+<p><code>Rating</code> is not perfectly normal - you saw that in section 2 - but it is symmetric enough to illustrate the method.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>r_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Rating)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>r_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Rating)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">mean =</span> <span class="fu">round</span>(r_mean, <span class="dv">3</span>), <span class="at">sd =</span> <span class="fu">round</span>(r_sd, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 2
+#&gt;    mean    sd
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  6.97  1.72</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What proportion of customers should rate us below 5, if ratings were normal?</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1255119</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What proportion actually did?</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sales<span class="sc">$</span>Rating <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.153</code></pre>
+</div>
+</div>
+<p>The model’s prediction and the reality differ. That gap is the model being imperfect, and noticing it is more valuable than the calculation itself. A model is a simplification you adopt deliberately, not a truth you discover.</p>
+</section>
+<section id="going-the-other-way-with-qnorm" class="level2">
+<h2 class="anchored" data-anchor-id="going-the-other-way-with-qnorm">Going the other way with qnorm</h2>
+<p><code>pnorm</code> takes a value and returns a probability. <code>qnorm</code> does the reverse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which rating do the bottom 10 percent of customers fall below?</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.10</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 4.770251</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Which rating marks the top 5 percent?</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 9.799513</code></pre>
+</div>
+</div>
+<p>This is how you set thresholds. “Flag any customer rating in the bottom 10 percent for follow-up” becomes an actual number you can put in a report.</p>
+</section>
+</section>
+<section id="z-scores-and-the-standard-normal" class="level1">
+<h1>5. Z-scores and the standard normal</h1>
+<p>A <strong>z-score</strong> answers: how many standard deviations is this value from the mean?</p>
+<p><span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p>
+<p>It converts any normal distribution into the <strong>standard normal</strong> - mean 0, standard deviation 1 - which is what the printed z-tables in your course folder tabulate.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A customer who left a rating of 9. How unusual is that?</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (<span class="dv">9</span> <span class="sc">-</span> r_mean) <span class="sc">/</span> r_sd</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 1.179636</code></pre>
+</div>
+</div>
+<p>A z-score of about 1.2 means this rating sits 1.2 standard deviations above average.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What proportion of customers rate us 9 or lower?</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.8809276</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># So what proportion rate us above 9?</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1190724</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Why z-scores exist">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why z-scores exist
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>They make <strong>incomparable things comparable</strong>.</p>
+<p>A student scoring 78 on a maths exam and 84 on a history exam has done better in history - unless the maths exam was much harder. Convert both to z-scores and you can say which performance was more impressive <em>relative to everyone else who sat the same paper</em>.</p>
+<p>The same logic lets you compare a branch’s sales performance with its customer satisfaction performance, even though one is measured in currency and the other on a 1-to-10 scale.</p>
+</div>
+</div>
+<section id="standardising-a-whole-column" class="level2">
+<h2 class="anchored" data-anchor-id="standardising-a-whole-column">Standardising a whole column</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>sales_z <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_z  =</span> (Total <span class="sc">-</span> <span class="fu">mean</span>(Total)) <span class="sc">/</span> <span class="fu">sd</span>(Total),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rating_z =</span> (Rating <span class="sc">-</span> <span class="fu">mean</span>(Rating)) <span class="sc">/</span> <span class="fu">sd</span>(Rating)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>sales_z <span class="sc">|&gt;</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, total_z, Rating, rating_z) <span class="sc">|&gt;</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z)) <span class="sc">|&gt;</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 5 × 5
+#&gt;   `Invoice ID` Total total_z Rating rating_z
+#&gt;   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1 860-79-0874  1043.    2.93    6.6   -0.217
+#&gt; 2 687-47-8271  1039.    2.91    8.7    1.01 
+#&gt; 3 283-26-5248  1034.    2.89    4.5   -1.44 
+#&gt; 4 751-41-9720  1024.    2.85    8      0.598
+#&gt; 5 303-96-2227  1022.    2.84    4.4   -1.50</code></pre>
+</div>
+</div>
+<p>R has a built-in shortcut, <code>scale()</code>, though it returns a matrix rather than a plain column, so the explicit version above is clearer while you are learning.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A standardised column always has mean 0 and sd 1</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_z =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sales_z<span class="sc">$</span>total_z), <span class="dv">10</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd_z   =</span> <span class="fu">sd</span>(sales_z<span class="sc">$</span>total_z)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 2
+#&gt;   mean_z  sd_z
+#&gt;    &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1      0     1</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Standardising does not make data normal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Standardising does not make data normal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Converting to z-scores <strong>shifts and rescales</strong> a distribution. It does not change its shape.</p>
+<p><code>Total</code> was right-skewed in section 2, and <code>total_z</code> is exactly as right-skewed. Students frequently assume standardising fixes non-normality. It does not, and no amount of z-scoring will make a skewed variable bell-shaped.</p>
+</div>
+</div>
+</section>
+<section id="using-z-scores-to-find-unusual-transactions" class="level2">
+<h2 class="anchored" data-anchor-id="using-z-scores-to-find-unusual-transactions">Using z-scores to find unusual transactions</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>sales_z <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(total_z) <span class="sc">&gt;</span> <span class="fl">2.5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total, total_z) <span class="sc">|&gt;</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 17 × 5
+#&gt;    `Invoice ID` Branch `Product line`         Total total_z
+#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;                  &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1 860-79-0874  C      Fashion accessories    1043.    2.93
+#&gt;  2 687-47-8271  A      Fashion accessories    1039.    2.91
+#&gt;  3 283-26-5248  C      Food and beverages     1034.    2.89
+#&gt;  4 751-41-9720  C      Home and lifestyle     1024.    2.85
+#&gt;  5 303-96-2227  B      Home and lifestyle     1022.    2.84
+#&gt;  6 744-16-7898  B      Home and lifestyle     1022.    2.84
+#&gt;  7 271-88-8734  C      Fashion accessories    1021.    2.84
+#&gt;  8 234-65-2137  C      Home and lifestyle     1004.    2.77
+#&gt;  9 554-42-2417  C      Sports and travel      1002.    2.76
+#&gt; 10 325-77-6186  A      Home and lifestyle      952.    2.56
+#&gt; 11 280-17-4359  C      Health and beauty       950.    2.55
+#&gt; 12 219-22-9386  B      Sports and travel       945.    2.53
+#&gt; 13 702-83-5291  C      Fashion accessories     943.    2.52
+#&gt; 14 731-81-9469  C      Sports and travel       943.    2.52
+#&gt; 15 817-69-8206  B      Electronic accessories  942.    2.52
+#&gt; 16 393-65-2792  C      Food and beverages      940.    2.51
+#&gt; 17 751-69-0068  C      Sports and travel       938.    2.50</code></pre>
+</div>
+</div>
+<p><code>abs()</code> takes the absolute value, so this catches unusually large <em>and</em> unusually small values in one condition.</p>
+<p>This is a second outlier rule to sit alongside the 1.5 x IQR rule from section 2. They disagree sometimes, and neither is authoritative - the z-score rule is pulled around by the very outliers it is trying to find, because extreme values inflate the standard deviation used to compute it.</p>
+</section>
+</section>
+<section id="choosing-the-right-distribution" class="level1">
+<h1>6. Choosing the right distribution</h1>
+<p>This is the part that matters in practice, and the part exams test.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>If you are counting…</th>
+<th>And…</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Successes in a fixed number of trials</td>
+<td>Each trial is independent, same probability</td>
+<td><strong>Binomial</strong></td>
+</tr>
+<tr class="even">
+<td>Events in an interval of time or space</td>
+<td>No fixed maximum, constant average rate</td>
+<td><strong>Poisson</strong></td>
+</tr>
+<tr class="odd">
+<td>A continuous measurement</td>
+<td>Symmetric, most values near the centre</td>
+<td><strong>Normal</strong></td>
+</tr>
+<tr class="even">
+<td>Any outcome equally likely in a range</td>
+<td>No value preferred</td>
+<td><strong>Uniform</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Some worked judgements:</p>
+<ul>
+<li><em>Of 200 emails sent, how many are opened?</em> Fixed number, two outcomes, roughly constant probability. <strong>Binomial.</strong></li>
+<li><em>How many customers enter the shop between 2pm and 3pm?</em> Counting events in an interval, no maximum. <strong>Poisson.</strong></li>
+<li><em>What will tomorrow’s total revenue be?</em> A continuous amount built from many independent transactions. <strong>Normal</strong> is a reasonable first model.</li>
+<li><em>How many defective units in a batch of 500?</em> Fixed number of trials. <strong>Binomial.</strong></li>
+<li><em>How many machine breakdowns this month?</em> Events in an interval. <strong>Poisson.</strong></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Self-check">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Self-check
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A call centre wants to model how many calls arrive between 9am and 10am. A colleague suggests using a binomial distribution “because each minute either has a call or does not”. What is wrong with that reasoning?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Two things.</p>
+<p>First, <strong>a minute can contain more than one call.</strong> The binomial requires each trial to be a clean success or failure, but “this minute had 3 calls” breaks that.</p>
+<p>Second, and more fundamentally, <strong>there is no fixed number of trials.</strong> You could slice the hour into minutes, or seconds, or milliseconds, and the answer should not depend on how finely you chop up time. That the model changes when you change an arbitrary choice is a sign the model is wrong.</p>
+<p>The Poisson distribution is precisely the limit of the binomial as the trials get infinitely small and numerous, which is why it is the right tool for events in continuous time.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation---checking-your-reasoning" class="level1">
+<h1>7. Simulation - checking your reasoning</h1>
+<p>The <code>r</code> functions generate random draws. This lets you verify an answer you worked out with formulas, which is the single best habit you can build in this course.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 10,000 groups of 20 customers each</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>simulated <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co"># How often were exactly 12 members?</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(simulated <span class="sc">==</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.12</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with the exact formula</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1210944</code></pre>
+</div>
+</div>
+<p>The two agree to about two decimal places. If they had not, one of them would be wrong, and you would know to look again.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">members =</span> simulated) <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> members)) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"10,000 simulated groups of 20 customers"</span>,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of members in the group"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.1-Probability-Distributions_files/figure-html/sim_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="set.seed()">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>set.seed()
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Random numbers in R are <strong>reproducibly</strong> random. <code>set.seed(2024)</code> fixes the starting point, so you and your classmates get identical results from the same code.</p>
+<p>Always set a seed in work you will hand in. An analysis nobody can reproduce - not even you, tomorrow - is not an analysis.</p>
+</div>
+</div>
+</section>
+<section id="your-turn---full-exercises" class="level1">
+<h1>Your turn - full exercises</h1>
+<p><strong>Exercise 1 - Binomial.</strong> Historically 30 percent of customers buy a product from the Health and beauty line. Out of the next 25 customers:</p>
+<ol type="a">
+<li>What is the probability that exactly 8 buy from that line?</li>
+<li>What is the probability that 10 or more do?</li>
+<li>What is the expected number, and the standard deviation?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 2 - Poisson.</strong> A branch averages 3 refund requests per day.</p>
+<ol type="a">
+<li>What is the probability of a day with exactly 5 refund requests?</li>
+<li>What is the probability of a day with more than 6?</li>
+<li>Produce a table showing, for daily capacities of 3 through 9, the probability of being overwhelmed. What capacity would you recommend and why?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 3 - Normal.</strong> Using the actual mean and standard deviation of <code>Total</code>:</p>
+<ol type="a">
+<li>What proportion of transactions should exceed 800, if totals were normal?</li>
+<li>What proportion actually do?</li>
+<li>Explain the gap. Which section 2 finding predicts it?</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 4 - Z-scores.</strong> Find the transaction with the highest <code>Total</code>. Compute its z-score and state in one sentence how unusual it is. Then compute the z-score of the highest <code>Rating</code> and say which of the two is the more extreme observation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 5 - Choose and justify.</strong> For each situation, name the distribution and justify it in one sentence:</p>
+<ol type="a">
+<li>Number of items in a customer’s basket</li>
+<li>Number of customers who abandon a queue in an hour</li>
+<li>Total revenue on a randomly chosen day</li>
+<li>Number of the next 40 online orders that are returned</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE - and write your reasoning as comments</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Solutions are in <code>3.1-Probability-Distributions-SOLUTIONS.Rmd</code>.</p>
+</section>
+<section id="reference-card" class="level1">
+<h1>Reference card</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>dbinom(k, n, p)</code></td>
+<td>P(exactly k successes)</td>
+</tr>
+<tr class="even">
+<td><code>pbinom(k, n, p)</code></td>
+<td>P(k or fewer successes)</td>
+</tr>
+<tr class="odd">
+<td><code>1 - pbinom(k, n, p)</code></td>
+<td>P(more than k successes)</td>
+</tr>
+<tr class="even">
+<td><code>rbinom(N, n, p)</code></td>
+<td>N random binomial draws</td>
+</tr>
+<tr class="odd">
+<td><code>dpois(k, lambda)</code></td>
+<td>P(exactly k events)</td>
+</tr>
+<tr class="even">
+<td><code>ppois(k, lambda)</code></td>
+<td>P(k or fewer events)</td>
+</tr>
+<tr class="odd">
+<td><code>rpois(N, lambda)</code></td>
+<td>N random Poisson draws</td>
+</tr>
+<tr class="even">
+<td><code>dnorm(x, mean, sd)</code></td>
+<td>Height of the normal curve at x</td>
+</tr>
+<tr class="odd">
+<td><code>pnorm(x, mean, sd)</code></td>
+<td>P(value is x or less)</td>
+</tr>
+<tr class="even">
+<td><code>qnorm(p, mean, sd)</code></td>
+<td>The value below which p of the data falls</td>
+</tr>
+<tr class="odd">
+<td><code>rnorm(N, mean, sd)</code></td>
+<td>N random normal draws</td>
+</tr>
+<tr class="even">
+<td><code>(x - mean(x)) / sd(x)</code></td>
+<td>Convert to z-scores</td>
+</tr>
+<tr class="odd">
+<td><code>mean(vec == "A")</code></td>
+<td>Proportion of a column equal to “A”</td>
+</tr>
+<tr class="even">
+<td><code>set.seed(2024)</code></td>
+<td>Make random results reproducible</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<ul>
+<li>A <strong>random variable</strong> is a numerical outcome of an uncertain process; it is either <strong>discrete</strong> or <strong>continuous</strong>.</li>
+<li>The <strong>binomial</strong> counts successes in a fixed number of independent trials.</li>
+<li>The <strong>Poisson</strong> counts events in an interval with no fixed maximum; its mean equals its variance.</li>
+<li>The <strong>normal</strong> models continuous measurements and needs only a mean and a standard deviation.</li>
+<li>The <strong>empirical rule</strong> - 68, 95, 99.7 percent within 1, 2, 3 standard deviations - is worth memorising.</li>
+<li>A <strong>z-score</strong> expresses a value as a distance in standard deviations, making unlike things comparable. It does not change the shape of the distribution.</li>
+<li>R’s <code>d</code>/<code>p</code>/<code>q</code>/<code>r</code> prefixes work identically for every distribution.</li>
+<li><strong>Simulate to check your formulas.</strong> If the two disagree, one of them is wrong.</li>
+</ul>
+<p><strong>Next:</strong> section 3.2, where you use these distributions to put a margin of error around an estimate.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../2-Descriptive-Statistics/Descriptive-Statistics-SOLUTIONS.html" class="pagination-link" aria-label="Solutions (instructor)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Solutions (instructor)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html" class="pagination-link" aria-label="3.2 Estimation and Confidence Intervals">
+        <span class="nav-page-text">3.2 Estimation and Confidence Intervals</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>307102 Descriptive Statistics for Business</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>University of Petra</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

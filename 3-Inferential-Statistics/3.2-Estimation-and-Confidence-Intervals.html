@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3.2 Estimation and Confidence Intervals – 307102 Statistics for Business</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../3-Inferential-Statistics/3.3-Hypothesis-Testing.html" rel="next">
+<link href="../3-Inferential-Statistics/3.1-Probability-Distributions.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f57921e07c411c5e931a484653f377cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3 — Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html">3.2 Estimation and Confidence Intervals</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">307102 Statistics for Business</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">1 — Intro to R Language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+ <span class="menu-text">1-Intro-to-R-Language/Fast-Intro-to-R.qmd</span>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../1-Intro-to-R-Language/Install-Guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install guide</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">2 — Descriptive Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../2-Descriptive-Statistics/Descriptive-Statistics-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions (instructor)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Inferential Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Probability Distributions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Linear Regression</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">3 — Solutions (instructor)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.1-Probability-Distributions-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1 Probability Distributions - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2 Estimation and Confidence Intervals - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.3 Hypothesis Testing - Solutions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../3-Inferential-Statistics/3.4-Linear-Regression-SOLUTIONS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.4 Linear Regression - Solutions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#new-r-this-week" id="toc-new-r-this-week" class="nav-link active" data-scroll-target="#new-r-this-week">New R this week</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#population-sample-parameter-statistic" id="toc-population-sample-parameter-statistic" class="nav-link" data-scroll-target="#population-sample-parameter-statistic">1. Population, sample, parameter, statistic</a></li>
+  <li><a href="#sampling-variation" id="toc-sampling-variation" class="nav-link" data-scroll-target="#sampling-variation">2. Sampling variation</a></li>
+  <li><a href="#the-sampling-distribution" id="toc-the-sampling-distribution" class="nav-link" data-scroll-target="#the-sampling-distribution">3. The sampling distribution</a></li>
+  <li><a href="#the-central-limit-theorem" id="toc-the-central-limit-theorem" class="nav-link" data-scroll-target="#the-central-limit-theorem">4. The Central Limit Theorem</a>
+  <ul class="collapse">
+  <li><a href="#watching-it-happen" id="toc-watching-it-happen" class="nav-link" data-scroll-target="#watching-it-happen">Watching it happen</a></li>
+  <li><a href="#the-standard-error" id="toc-the-standard-error" class="nav-link" data-scroll-target="#the-standard-error">The standard error</a></li>
+  </ul></li>
+  <li><a href="#confidence-intervals-for-a-mean" id="toc-confidence-intervals-for-a-mean" class="nav-link" data-scroll-target="#confidence-intervals-for-a-mean">5. Confidence intervals for a mean</a>
+  <ul class="collapse">
+  <li><a href="#building-one-by-hand" id="toc-building-one-by-hand" class="nav-link" data-scroll-target="#building-one-by-hand">Building one by hand</a></li>
+  <li><a href="#the-one-line-version" id="toc-the-one-line-version" class="nav-link" data-scroll-target="#the-one-line-version">The one-line version</a></li>
+  </ul></li>
+  <li><a href="#what-a-confidence-interval-actually-means" id="toc-what-a-confidence-interval-actually-means" class="nav-link" data-scroll-target="#what-a-confidence-interval-actually-means">6. What a confidence interval actually means</a>
+  <ul class="collapse">
+  <li><a href="#demonstrating-it" id="toc-demonstrating-it" class="nav-link" data-scroll-target="#demonstrating-it">Demonstrating it</a></li>
+  </ul></li>
+  <li><a href="#confidence-intervals-for-a-proportion" id="toc-confidence-intervals-for-a-proportion" class="nav-link" data-scroll-target="#confidence-intervals-for-a-proportion">7. Confidence intervals for a proportion</a>
+  <ul class="collapse">
+  <li><a href="#the-margin-of-error" id="toc-the-margin-of-error" class="nav-link" data-scroll-target="#the-margin-of-error">The margin of error</a></li>
+  </ul></li>
+  <li><a href="#how-big-a-sample-do-i-need" id="toc-how-big-a-sample-do-i-need" class="nav-link" data-scroll-target="#how-big-a-sample-do-i-need">8. How big a sample do I need?</a></li>
+  <li><a href="#your-turn---full-exercises" id="toc-your-turn---full-exercises" class="nav-link" data-scroll-target="#your-turn---full-exercises">Your turn - full exercises</a></li>
+  <li><a href="#reference-card" id="toc-reference-card" class="nav-link" data-scroll-target="#reference-card">Reference card</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html">3 — Inferential Statistics</a></li><li class="breadcrumb-item"><a href="../3-Inferential-Statistics/3.2-Estimation-and-Confidence-Intervals.html">3.2 Estimation and Confidence Intervals</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3.2 Estimation and Confidence Intervals</h1>
+<p class="subtitle lead">307102 Descriptive Statistics for Business | University of Petra</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="new-r-this-week" class="level2">
+<h2 class="anchored" data-anchor-id="new-r-this-week">New R this week</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>What it does</th>
+<th>Why a business needs it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sample()</code></td>
+<td>Draws a random subset of rows or values</td>
+<td>Simulating what a survey would have found</td>
+</tr>
+<tr class="even">
+<td><code>replicate()</code></td>
+<td>Repeats an expression many times</td>
+<td>Building a sampling distribution from scratch</td>
+</tr>
+<tr class="odd">
+<td><code>qt()</code></td>
+<td>Critical value from the t-distribution</td>
+<td>The multiplier in a confidence interval</td>
+</tr>
+<tr class="even">
+<td><code>t.test()</code></td>
+<td>Confidence interval for a mean, in one line</td>
+<td>The everyday tool</td>
+</tr>
+<tr class="odd">
+<td><code>prop.test()</code></td>
+<td>Confidence interval for a proportion</td>
+<td>“What share of customers are members?”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>By the end of this notebook you will be able to:</p>
+<ul>
+<li>Explain the difference between a population and a sample, and between a parameter and a statistic</li>
+<li>Describe what a sampling distribution is, and demonstrate the Central Limit Theorem by simulation</li>
+<li>Calculate and interpret the standard error of the mean</li>
+<li>Build a confidence interval for a mean by hand and with <code>t.test()</code></li>
+<li>Build a confidence interval for a proportion</li>
+<li>Explain what a 95 percent confidence interval does and does not mean</li>
+<li>Work out the sample size needed for a target margin of error</li>
+</ul>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="population-sample-parameter-statistic" class="level1">
+<h1>1. Population, sample, parameter, statistic</h1>
+<p>Four words that get confused constantly. Getting them straight is most of the battle.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Meaning</th>
+<th>Notation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Population</strong></td>
+<td>Every member of the group you care about</td>
+<td>-</td>
+<td>All transactions the chain will ever process</td>
+</tr>
+<tr class="even">
+<td><strong>Sample</strong></td>
+<td>The subset you actually observed</td>
+<td>-</td>
+<td>Our 1,000 transactions</td>
+</tr>
+<tr class="odd">
+<td><strong>Parameter</strong></td>
+<td>A number describing the <strong>population</strong></td>
+<td>Greek: mu, sigma, p</td>
+<td>The true average transaction value</td>
+</tr>
+<tr class="even">
+<td><strong>Statistic</strong></td>
+<td>A number describing the <strong>sample</strong></td>
+<td>Latin: x-bar, s, p-hat</td>
+<td>Our sample mean of 323</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="The whole of inferential statistics in one sentence">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The whole of inferential statistics in one sentence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can calculate a <strong>statistic</strong>. You want to know a <strong>parameter</strong>. Statistics is the discipline of saying how close the first is likely to be to the second.</p>
+</div>
+</div>
+<p>For teaching purposes we are going to treat our 1,000 transactions as if they were the entire population, then draw samples from them. That lets us see the true answer and check whether our methods find it - something you can never do with real data, which is exactly why simulation is such a good teacher.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>true_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Total)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>true_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Total)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">true_mean =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>), <span class="at">true_sd =</span> <span class="fu">round</span>(true_sd, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 2
+#&gt;   true_mean true_sd
+#&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1      323.    246.</code></pre>
+</div>
+</div>
+</section>
+<section id="sampling-variation" class="level1">
+<h1>2. Sampling variation</h1>
+<p>Take a sample of 50 transactions and compute the mean. Then do it again.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sample_1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sample_2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sample_3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample =</span> <span class="fu">c</span>(<span class="st">"Sample 1"</span>, <span class="st">"Sample 2"</span>, <span class="st">"Sample 3"</span>, <span class="st">"TRUE POPULATION"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean   =</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="fu">mean</span>(sample_1), <span class="fu">mean</span>(sample_2), <span class="fu">mean</span>(sample_3), true_mean), <span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 4 × 2
+#&gt;   sample           mean
+#&gt;   &lt;chr&gt;           &lt;dbl&gt;
+#&gt; 1 Sample 1         352.
+#&gt; 2 Sample 2         312.
+#&gt; 3 Sample 3         337.
+#&gt; 4 TRUE POPULATION  323.</code></pre>
+</div>
+</div>
+<p>Three different samples, three different answers, none of them exactly the true value. <strong>This is not a mistake. It is the fundamental problem of statistics.</strong></p>
+<p>Your business has one sample. It got one of these numbers. The question is not “how do I avoid this?” - you cannot - but “how far off am I likely to be?”</p>
+</section>
+<section id="the-sampling-distribution" class="level1">
+<h1>3. The sampling distribution</h1>
+<p>If one sample mean is unreliable, what happens if we look at thousands of them?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sample_means_50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_of_the_means =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample_means_50), <span class="dv">2</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">true_mean         =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd_of_the_means   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">2</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 3
+#&gt;   mean_of_the_means true_mean sd_of_the_means
+#&gt;               &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+#&gt; 1              322.      323.            33.3</code></pre>
+</div>
+</div>
+<p>Two remarkable things.</p>
+<p><strong>The average of the sample means lands almost exactly on the true mean.</strong> Individual samples are unreliable, but they are unreliable <em>symmetrically</em> - they miss high as often as low. The sample mean is an <strong>unbiased</strong> estimator.</p>
+<p><strong>The sample means vary far less than individual transactions do.</strong> The transactions had a standard deviation of about 246; the sample means have one of about 35. Averaging cancels out noise.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">sample_mean =</span> sample_means_50) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2,000 sample means, each from a sample of 50"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"The solid line is the true population mean"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/sampling_dist_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-central-limit-theorem" class="level1">
+<h1>4. The Central Limit Theorem</h1>
+<p>Look at that histogram again. It is <strong>bell-shaped</strong> - even though individual transaction totals were clearly right-skewed in section 2.</p>
+<p>That is the Central Limit Theorem, and it is the single most important result in statistics.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="The Central Limit Theorem">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The Central Limit Theorem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As the sample size grows, the distribution of the <strong>sample mean</strong> approaches a normal distribution - <strong>regardless of the shape of the original population</strong>.</p>
+<p>Its centre is the population mean. Its standard deviation is <code>population sd / sqrt(n)</code>, which is called the <strong>standard error</strong>.</p>
+</div>
+</div>
+<p>This is why the normal distribution dominates statistics even though real business data is rarely normal. You are almost never modelling individual values. You are modelling an average, and averages become normal even when the things being averaged are not.</p>
+<section id="watching-it-happen" class="level2">
+<h2 class="anchored" data-anchor-id="watching-it-happen">Watching it happen</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">100</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>clt_data <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(sample_sizes, <span class="cf">function</span>(size_n) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n           =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, size_n),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_mean =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> size_n)))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">factor</span>(n, <span class="at">levels =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, sample_sizes)))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clt_data, <span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Central Limit Theorem in action"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Skewed at n = 2, unmistakably normal by n = 30"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/clt_demo-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>At <code>n = 2</code> the distribution still carries the right skew of the original data. By <code>n = 30</code> it is convincingly bell-shaped. This is where the common rule of thumb “n of at least 30” comes from.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="n = 30 is a rule of thumb, not a law">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>n = 30 is a rule of thumb, not a law
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How large a sample you need depends on <strong>how skewed the population is</strong>. Mildly skewed data is fine at n = 15. Severely skewed data - insurance claims, say, where one claim can dwarf a thousand others - may need several hundred.</p>
+<p>The honest procedure is to check, not to recite 30.</p>
+</div>
+</div>
+</section>
+<section id="the-standard-error" class="level2">
+<h2 class="anchored" data-anchor-id="the-standard-error">The standard error</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula_se  =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n), <span class="dv">3</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">simulated_se =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">3</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 2
+#&gt;   formula_se simulated_se
+#&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1       34.8         33.3</code></pre>
+</div>
+</div>
+<p>The formula and the simulation agree. The <strong>standard error</strong> is the standard deviation of the sampling distribution: the typical distance between a sample mean and the truth.</p>
+<p>Notice the <code>sqrt(n)</code>. To halve your uncertainty you must <strong>quadruple</strong> your sample size. This is the single most important practical fact about sampling, and it is why surveys get expensive fast.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size    =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">standard_error =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>)), <span class="dv">2</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 6 × 2
+#&gt;   sample_size standard_error
+#&gt;         &lt;dbl&gt;          &lt;dbl&gt;
+#&gt; 1          10          77.8 
+#&gt; 2          25          49.2 
+#&gt; 3          50          34.8 
+#&gt; 4         100          24.6 
+#&gt; 5         400          12.3 
+#&gt; 6        1600           6.15</code></pre>
+</div>
+</div>
+<p>Going from 100 to 400 costs four times as much and only halves the error. Going from 400 to 1600 costs four times again for another halving. There is a point where more data stops being worth the money, and this table is how you find it.</p>
+</section>
+</section>
+<section id="confidence-intervals-for-a-mean" class="level1">
+<h1>5. Confidence intervals for a mean</h1>
+<p>A single number - “the average transaction is 323” - hides all of this uncertainty. A <strong>confidence interval</strong> reports a range instead.</p>
+<section id="building-one-by-hand" class="level2">
+<h2 class="anchored" data-anchor-id="building-one-by-hand">Building one by hand</h2>
+<p>The recipe: take your estimate, and go out a certain number of standard errors either side.</p>
+<p><span class="math display">\[\bar{x} \pm t^* \times \frac{s}{\sqrt{n}}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(my_sample)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>s     <span class="ot">&lt;-</span> <span class="fu">sd</span>(my_sample)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>n     <span class="ot">&lt;-</span> <span class="fu">length</span>(my_sample)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>se    <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># The multiplier for 95 percent confidence, with n - 1 degrees of freedom</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_bar  =</span> <span class="fu">round</span>(x_bar, <span class="dv">2</span>),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">se     =</span> <span class="fu">round</span>(se, <span class="dv">2</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">t_star =</span> <span class="fu">round</span>(t_star, <span class="dv">3</span>),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower  =</span> <span class="fu">round</span>(x_bar <span class="sc">-</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>),</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper  =</span> <span class="fu">round</span>(x_bar <span class="sc">+</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 5
+#&gt;   x_bar    se t_star lower upper
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1  299.  35.8   2.01  227.  371.</code></pre>
+</div>
+</div>
+<p>Three things to notice about <code>qt(0.975, df = n - 1)</code>.</p>
+<p><strong>Why 0.975 and not 0.95?</strong> For a 95 percent interval you leave 5 percent outside, split as 2.5 percent in each tail. So you want the value with 97.5 percent below it.</p>
+<p><strong>Why the t-distribution rather than the normal?</strong> Because you are using the <em>sample</em> standard deviation <code>s</code> in place of the unknown population sigma. That substitution adds uncertainty, and the t-distribution’s slightly fatter tails account for it.</p>
+<p><strong>Why <code>n - 1</code>?</strong> These are the degrees of freedom. Once you know the sample mean and <code>n - 1</code> of the values, the last value is determined - so only <code>n - 1</code> pieces of information are genuinely free.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_size =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">t_multiplier =</span> <span class="fu">round</span>(<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>) <span class="sc">-</span> <span class="dv">1</span>), <span class="dv">3</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">z_multiplier =</span> <span class="fu">round</span>(<span class="fu">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">3</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 5 × 3
+#&gt;   sample_size t_multiplier z_multiplier
+#&gt;         &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1           5         2.78         1.96
+#&gt; 2          10         2.26         1.96
+#&gt; 3          30         2.04         1.96
+#&gt; 4         100         1.98         1.96
+#&gt; 5        1000         1.96         1.96</code></pre>
+</div>
+</div>
+<p>The t multiplier starts large and converges on 1.96 as the sample grows. With small samples you pay a real penalty in interval width; by n = 100 the difference is negligible.</p>
+</section>
+<section id="the-one-line-version" class="level2">
+<h2 class="anchored" data-anchor-id="the-one-line-version">The one-line version</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(my_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  One Sample t-test
+#&gt; 
+#&gt; data:  my_sample
+#&gt; t = 8.3692, df = 49, p-value = 5.237e-11
+#&gt; alternative hypothesis: true mean is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  227.4594 371.2098
+#&gt; sample estimates:
+#&gt; mean of x 
+#&gt;  299.3346</code></pre>
+</div>
+</div>
+<p><code>t.test()</code> does everything above. Read the <code>95 percent confidence interval</code> line. (The rest of that output is a hypothesis test, which is section 3.3 - ignore it for now.)</p>
+<p>To extract just the interval:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(my_sample)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 227.4594 371.2098
+#&gt; attr(,"conf.level")
+#&gt; [1] 0.95</code></pre>
+</div>
+</div>
+<p>Different confidence levels:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">level =</span> <span class="fu">c</span>(<span class="st">"90%"</span>, <span class="st">"95%"</span>, <span class="st">"99%"</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>]),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>])</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> <span class="fu">round</span>(upper <span class="sc">-</span> lower, <span class="dv">2</span>),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">lower =</span> <span class="fu">round</span>(lower, <span class="dv">2</span>),</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">upper =</span> <span class="fu">round</span>(upper, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 4
+#&gt;   level lower upper width
+#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 90%    239.  359.  120.
+#&gt; 2 95%    227.  371.  144.
+#&gt; 3 99%    203.  395.  192.</code></pre>
+</div>
+</div>
+<p><strong>Higher confidence means a wider interval.</strong> There is no free lunch: the only way to be more certain of capturing the truth is to claim less about where it is. A 100 percent confidence interval would run from minus infinity to plus infinity - perfectly reliable and perfectly useless.</p>
+</section>
+</section>
+<section id="what-a-confidence-interval-actually-means" class="level1">
+<h1>6. What a confidence interval actually means</h1>
+<p>This is the most misunderstood idea in the course, and it is worth getting exactly right.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="What it does NOT mean">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>What it does NOT mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A 95 percent confidence interval does <strong>not</strong> mean “there is a 95 percent probability the true mean is in this interval”.</p>
+<p>The true mean is a fixed number. It is either in your interval or it is not. There is no probability about it once the interval is calculated.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="What it DOES mean">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What it DOES mean
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>procedure</strong> captures the true mean 95 percent of the time.</p>
+<p>If you repeated the whole exercise - draw a sample, build an interval - a hundred times, about 95 of your intervals would contain the true value and about 5 would miss.</p>
+<p>You do not know which kind yours is.</p>
+</div>
+</div>
+<section id="demonstrating-it" class="level2">
+<h2 class="anchored" data-anchor-id="demonstrating-it">Demonstrating it</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ci_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  s  <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  ci <span class="ot">&lt;-</span> <span class="fu">t.test</span>(s)<span class="sc">$</span>conf.int</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">run      =</span> i,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower    =</span> ci[<span class="dv">1</span>],</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper    =</span> ci[<span class="dv">2</span>],</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">captured =</span> ci[<span class="dv">1</span>] <span class="sc">&lt;=</span> true_mean <span class="sc">&amp;</span> true_mean <span class="sc">&lt;=</span> ci[<span class="dv">2</span>]</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># How many of the 100 intervals contained the true mean?</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ci_results<span class="sc">$</span>captured)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 96</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ci_results, <span class="fu">aes</span>(<span class="at">y =</span> run, <span class="at">colour =</span> captured)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> lower, <span class="at">xend =</span> upper, <span class="at">yend =</span> run), <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#A83296"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D64545"</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="st">"Captured the truth"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"100 confidence intervals from 100 different samples"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"The vertical line is the true population mean"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Sample number"</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/ci_coverage_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Each horizontal line is one 95 percent confidence interval from one sample. Most cross the true mean; a handful, shown in red, miss entirely.</p>
+<p><strong>Those red intervals are not mistakes.</strong> Nothing was done wrong in producing them. They are the 5 percent the method is designed to get wrong, and there is no way to tell from the inside which of your intervals is one of them.</p>
+</section>
+</section>
+<section id="confidence-intervals-for-a-proportion" class="level1">
+<h1>7. Confidence intervals for a proportion</h1>
+<p>Not everything is a mean. Often you want a <strong>share</strong>: what percentage of customers are members?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>members <span class="ot">&lt;-</span> <span class="fu">sum</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>total   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sales)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(members, total, <span class="at">proportion =</span> <span class="fu">round</span>(members <span class="sc">/</span> total, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 3
+#&gt;   members total proportion
+#&gt;     &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;
+#&gt; 1     501  1000      0.501</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(members, total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  1-sample proportions test with continuity correction
+#&gt; 
+#&gt; data:  members out of total, null probability 0.5
+#&gt; X-squared = 0.001, df = 1, p-value = 0.9748
+#&gt; alternative hypothesis: true p is not equal to 0.5
+#&gt; 95 percent confidence interval:
+#&gt;  0.4695677 0.5324245
+#&gt; sample estimates:
+#&gt;     p 
+#&gt; 0.501</code></pre>
+</div>
+</div>
+<p><code>prop.test(successes, trials)</code> gives the interval directly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(members, total)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.4695677 0.5324245
+#&gt; attr(,"conf.level")
+#&gt; [1] 0.95</code></pre>
+</div>
+</div>
+<p>The interval comfortably includes 0.50, so on this evidence you could not rule out that the chain’s customer base is exactly half members - a useful thing to know before anyone builds a strategy on a supposed imbalance.</p>
+<section id="the-margin-of-error" class="level2">
+<h2 class="anchored" data-anchor-id="the-margin-of-error">The margin of error</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> members <span class="sc">/</span> total</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>moe <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sqrt</span>(p_hat <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat) <span class="sc">/</span> total)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate       =</span> <span class="fu">round</span>(p_hat, <span class="dv">4</span>),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_of_error =</span> <span class="fu">round</span>(moe, <span class="dv">4</span>),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower          =</span> <span class="fu">round</span>(p_hat <span class="sc">-</span> moe, <span class="dv">4</span>),</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper          =</span> <span class="fu">round</span>(p_hat <span class="sc">+</span> moe, <span class="dv">4</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 4
+#&gt;   estimate margin_of_error lower upper
+#&gt;      &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1    0.501           0.031  0.47 0.532</code></pre>
+</div>
+</div>
+<p>This is the “plus or minus 3 percentage points” you see quoted with opinion polls. Now you know exactly where that number comes from.</p>
+</section>
+</section>
+<section id="how-big-a-sample-do-i-need" class="level1">
+<h1>8. How big a sample do I need?</h1>
+<p>Turn the formula around. If you want a margin of error of <code>E</code>:</p>
+<p><span class="math display">\[n = \left(\frac{1.96 \times \sigma}{E}\right)^2\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>target_errors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_margin =</span> target_errors,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>((<span class="fl">1.96</span> <span class="sc">*</span> true_sd <span class="sc">/</span> target_errors)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 4 × 2
+#&gt;   target_margin needed_n
+#&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1            50       93
+#&gt; 2            25      372
+#&gt; 3            10     2323
+#&gt; 4             5     9291</code></pre>
+</div>
+</div>
+<p>To estimate average transaction value to within 5 either way, you need a sample of several thousand. To within 50, a few dozen. <strong>The cost of precision rises as the square of the precision you demand.</strong></p>
+<p>For a proportion, the worst case is <code>p = 0.5</code>, which makes planning easy:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>target_moe <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.03</span>, <span class="fl">0.02</span>, <span class="fl">0.01</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_margin =</span> target_moe,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>(<span class="fl">1.96</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">0.25</span> <span class="sc">/</span> target_moe<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 4 × 2
+#&gt;   target_margin needed_n
+#&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1          0.05      385
+#&gt; 2          0.03     1068
+#&gt; 3          0.02     2401
+#&gt; 4          0.01     9604</code></pre>
+</div>
+</div>
+<p>That second row is why national opinion polls almost always sample around 1,000 people. It is the cheapest sample size that delivers a 3-point margin of error - and notice that it does not depend on the size of the population at all. Polling Jordan and polling China need the same sample size for the same precision, which surprises almost everyone.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Self-check">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Self-check
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A colleague says: “our survey of 1,000 customers has a 3 percent margin of error, so if we surveyed 10,000 the margin would drop to 0.3 percent.” What is wrong?</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Show the answer">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The margin of error shrinks with the <strong>square root</strong> of the sample size, not with the sample size itself.</p>
+<p>Multiplying <code>n</code> by 10 divides the margin by <code>sqrt(10)</code>, which is about 3.16. So the margin would fall from about 3 percent to about 0.95 percent - a real improvement, but nothing like the tenfold reduction the colleague expects.</p>
+<p>To actually reach 0.3 percent you would need roughly 100 times the original sample - about 100,000 people.</p>
+<p>This misunderstanding costs real money. Someone who believes error falls linearly with sample size will happily approve a survey ten times larger expecting ten times the precision, and will be disappointed.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn---full-exercises" class="level1">
+<h1>Your turn - full exercises</h1>
+<p><strong>Exercise 1 - Sampling distribution.</strong> Draw 1,000 samples of size 25 from <code>Rating</code> and store their means. Report the mean and standard deviation of those sample means, compare the standard deviation with the theoretical standard error, and plot the distribution.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 2 - Confidence interval by hand and by function.</strong> Take a sample of 80 transactions. Build a 95 percent confidence interval for the mean <code>Total</code> <strong>by hand</strong> using <code>qt()</code>, then confirm it with <code>t.test()</code>. Do the two agree?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 3 - Confidence level and width.</strong> Using the same sample of 80, build 80, 90, 95 and 99 percent intervals. Produce a table of their widths and write one sentence explaining the pattern.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 4 - Proportion.</strong> What proportion of transactions are paid by credit card? Build a 95 percent confidence interval. Could the true proportion plausibly be one third?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Exercise 5 - Sample size planning.</strong> Your manager wants to estimate the average customer <code>Rating</code> to within 0.1 either way, with 95 percent confidence. Using the sample standard deviation of <code>Rating</code> as an estimate of sigma, how many customers must be surveyed? If each survey costs 2 dinars, what is the budget - and what would it be for a margin of 0.2 instead?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Solutions are in <code>3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.Rmd</code>.</p>
+</section>
+<section id="reference-card" class="level1">
+<h1>Reference card</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sample(x, size = n)</code></td>
+<td>Draw a random sample</td>
+</tr>
+<tr class="even">
+<td><code>sample(x, size = n, replace = TRUE)</code></td>
+<td>Draw with replacement (bootstrap)</td>
+</tr>
+<tr class="odd">
+<td><code>replicate(N, expr)</code></td>
+<td>Repeat an expression N times</td>
+</tr>
+<tr class="even">
+<td><code>sd(x) / sqrt(n)</code></td>
+<td>Standard error of the mean</td>
+</tr>
+<tr class="odd">
+<td><code>qt(0.975, df = n - 1)</code></td>
+<td>t multiplier for a 95 percent interval</td>
+</tr>
+<tr class="even">
+<td><code>qnorm(0.975)</code></td>
+<td>z multiplier, 1.96</td>
+</tr>
+<tr class="odd">
+<td><code>t.test(x)</code></td>
+<td>Confidence interval for a mean</td>
+</tr>
+<tr class="even">
+<td><code>t.test(x, conf.level = 0.99)</code></td>
+<td>A different confidence level</td>
+</tr>
+<tr class="odd">
+<td><code>t.test(x)$conf.int</code></td>
+<td>Just the interval</td>
+</tr>
+<tr class="even">
+<td><code>prop.test(successes, trials)</code></td>
+<td>Confidence interval for a proportion</td>
+</tr>
+<tr class="odd">
+<td><code>ceiling((1.96 * sd / E)^2)</code></td>
+<td>Sample size for margin of error E</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<ul>
+<li>A <strong>statistic</strong> describes your sample; a <strong>parameter</strong> describes the population. You compute the first to estimate the second.</li>
+<li>Sample means vary from sample to sample. That variation is the <strong>sampling distribution</strong>.</li>
+<li>The <strong>Central Limit Theorem</strong> says the sampling distribution of the mean becomes normal as <code>n</code> grows, whatever the shape of the population.</li>
+<li>The <strong>standard error</strong>, <code>s / sqrt(n)</code>, is the typical distance from a sample mean to the truth. Halving it requires <strong>quadrupling</strong> the sample.</li>
+<li>A <strong>confidence interval</strong> reports a range instead of a single number. Use <code>t.test()</code> for means, <code>prop.test()</code> for proportions.</li>
+<li>A 95 percent interval means <strong>the procedure</strong> succeeds 95 percent of the time. It does not assign a probability to your particular interval.</li>
+<li>Higher confidence buys width, not accuracy. Required sample size grows with the <strong>square</strong> of the precision you demand.</li>
+</ul>
+<p><strong>Next:</strong> section 3.3, where you stop estimating a value and start testing a claim about it.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../3-Inferential-Statistics/3.1-Probability-Distributions.html" class="pagination-link" aria-label="3.1 Probability Distributions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3.1 Probability Distributions</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../3-Inferential-Statistics/3.3-Hypothesis-Testing.html" class="pagination-link" aria-label="3.3 Hypothesis Testing">
+        <span class="nav-page-text">3.3 Hypothesis Testing</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>307102 Descriptive Statistics for Business</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>University of Petra</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
