@@ -20,7 +20,7 @@ website:
         href: index.qmd
       - section: "1 — Intro to R Language"
         contents:
-          - 1-Intro-to-R-Language/Fast-Intro-to-R.qmd
+          - 1-Intro-to-R-Language/Intro-to-R.qmd
           - text: "Install guide"
             href: 1-Intro-to-R-Language/Install-Guide.qmd
       - section: "2 — Descriptive Statistics"

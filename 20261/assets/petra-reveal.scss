@@ -1,0 +1,171 @@
+/*-- scss:defaults --*/
+
+// ===========================================================================
+// 307102 Statistics for Business - R Track
+// University of Petra
+//
+// Reveal.js presentation theme.
+//
+// This is a SEPARATE file from petra-theme.scss on purpose. Reveal uses its own
+// Sass variables ($presentation-*), not Bootstrap's, so the website theme cannot
+// simply be reused here. The palette is shared; the plumbing is not.
+// ===========================================================================
+
+$petra-purple:      #A83296 !default;
+$petra-purple-dark: #7A2470 !default;
+$petra-purple-tint: #FBF3F9 !default;
+$teal:              #17706E !default;
+$amber:             #B8860B !default;
+$ink:               #1A1A1A !default;
+
+// --- typography ------------------------------------------------------------
+// Slides are read from the back of a room, so the base size is much larger than
+// the website's and the line length is deliberately short.
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Helvetica Neue", Arial, sans-serif !default;
+$presentation-font-size-root: 30px;
+$presentation-line-height: 1.4;
+
+$presentation-heading-font: $font-family-sans-serif;
+$presentation-heading-color: $petra-purple-dark;
+$presentation-heading-font-weight: 600;
+$presentation-h1-font-size: 1.75em;
+$presentation-h2-font-size: 1.25em;
+$presentation-h3-font-size: 1.05em;
+$presentation-h4-font-size: 0.95em;
+
+// --- colours ---------------------------------------------------------------
+$body-bg:    #FFFFFF;
+$body-color: $ink;
+$link-color: $petra-purple;
+$selection-bg: rgba($petra-purple, 0.25);
+
+// --- code ------------------------------------------------------------------
+$code-block-font-size: 0.62em;
+$code-block-bg: #FAFAFB;
+$code-block-border-color: #E2DEE6;
+$code-color: $petra-purple-dark;
+
+// --- callouts (same mapping as the website) --------------------------------
+$callout-color-note:      $petra-purple;   // exercises and self-checks
+$callout-color-warning:   $amber;          // gotchas
+$callout-color-tip:       $teal;           // key ideas
+$callout-color-caution:   #6B6B72;         // instructor notes
+$callout-color-important: #C0392B;
+
+
+/*-- scss:rules --*/
+
+// --- section divider slides ------------------------------------------------
+// A slide produced by a level-1 heading gets a full purple panel, which gives
+// the lecture a visible rhythm: the room can see when a topic ends.
+
+.reveal .slide h1 {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, $petra-purple 0%, $petra-purple-dark 100%);
+  padding: 0.55em 0.7em;
+  border-radius: 10px;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
+}
+
+// --- ordinary slide titles -------------------------------------------------
+
+.reveal .slide h2 {
+  border-bottom: 3px solid $petra-purple;
+  padding-bottom: 0.22em;
+  margin-bottom: 0.7em;
+  text-align: left;
+}
+
+.reveal .slide h3 { color: $petra-purple-dark; text-align: left; }
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 { text-transform: none; }
+
+// --- body ------------------------------------------------------------------
+
+.reveal p, .reveal li { text-align: left; }
+
+.reveal ul, .reveal ol { display: block; margin-left: 0.9em; }
+
+.reveal li { margin-bottom: 0.35em; }
+
+.reveal strong { color: $petra-purple-dark; }
+
+// --- code ------------------------------------------------------------------
+
+.reveal div.sourceCode {
+  border-left: 4px solid $petra-purple;
+  border-radius: 5px;
+  margin: 0.5em 0;
+}
+
+.reveal pre code { max-height: 500px; }
+
+// Printed R output, distinguished from source
+.reveal pre:not(.sourceCode) {
+  background: #F4F4F6;
+  border-left: 4px solid #9A9AA2;
+  font-size: 0.58em;
+  color: #454550;
+}
+
+// --- tables ----------------------------------------------------------------
+
+.reveal table { font-size: 0.62em; margin: 0.4em 0; }
+
+.reveal table th {
+  background: $petra-purple-tint;
+  color: $petra-purple-dark;
+  border-bottom: 2px solid $petra-purple;
+  text-align: left;
+}
+
+.reveal table td { border-bottom: 1px solid #E6E6EA; }
+
+// --- callouts --------------------------------------------------------------
+
+.reveal .callout { font-size: 0.72em; margin: 0.5em 0; }
+.reveal .callout .callout-title { font-size: 1em; }
+.reveal .callout-body p:last-child { margin-bottom: 0; }
+
+// --- figures ---------------------------------------------------------------
+
+.reveal .slide img { max-height: 480px; width: auto; }
+
+// --- chrome ----------------------------------------------------------------
+
+.reveal .slide-number {
+  background: rgba($petra-purple, 0.85);
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.5em;
+}
+
+.reveal .progress { color: $petra-purple; }
+
+.reveal .footer {
+  color: #8A8A92;
+  font-size: 0.42em;
+}
+
+// --- title slide -----------------------------------------------------------
+
+#title-slide .title {
+  color: $petra-purple-dark;
+  font-size: 1.7em;
+  font-weight: 600;
+}
+
+#title-slide .subtitle {
+  color: #5A5A62;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin-top: 0.4em;
+}
+
+// --- two-column layout helper ----------------------------------------------
+
+.reveal .columns { align-items: flex-start; }

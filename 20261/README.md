@@ -21,7 +21,7 @@ R-Version/
 ├── 1-Intro-to-R-Language/
 │     Install-Guide.qmd           Posit Cloud or local RStudio
 │     setup.R                     run once: packages, data, verification
-│     Fast-Intro-to-R.qmd         the eight things needed before any statistics
+│     Intro-to-R.qmd         the eight things needed before any statistics
 │
 ├── 2-Descriptive-Statistics/
 │     Descriptive-Statistics.qmd            (+ -SOLUTIONS.qmd)

@@ -1,14 +1,55 @@
 ---
 title: "2. Descriptive Statistics"
 subtitle: "307102 Descriptive Statistics for Business | University of Petra"
+
+# Two outputs from this one file:
+#   html      - the notebook students read and work through
+#   revealjs  - the lecture deck, written to *-slides.html
+#
+# Content that should differ between them is wrapped in a div:
+#   ::: {.content-visible unless-format="revealjs"}   notebook prose
+#   ::: {.content-visible when-format="revealjs"}     slide version
+#
+# NOTE: do NOT use when-format="html" for the notebook half. Revealjs is an
+# HTML-derived format, so it matches "html" too and BOTH versions appear on
+# the slides. Always pair when-format="revealjs" with unless-format="revealjs".
+format:
+  html: default
+  revealjs:
+    output-file: Descriptive-Statistics-slides.html
+    theme: [default, ../assets/petra-reveal.scss]
+    width: 1280
+    height: 800
+    slide-number: c/t
+    show-slide-number: all
+    scrollable: true
+    chalkboard: true
+    preview-links: auto
+    history: false
+    footer: "307102 · Section 2 · Descriptive Statistics"
+
+editor:
+  markdown:
+    wrap: 72
 ---
+
+:::: {.content-visible unless-format="revealjs"}
+::: {.callout-tip title="Lecture slides"}
+This same material is also available as a slide deck: [**Open the slides
+→**](Descriptive-Statistics-slides.html)
+
+Arrow keys to move, **F** for full screen, **S** for the presenter view
+with speaker notes, **B** for the chalkboard, **Esc** for a grid of all
+slides.
+:::
+::::
 
 ## New R this week
 
 Five new functions. That is all you need to add to section 1.
 
 | Function | What it does | Why a business needs it |
-|---|---|---|
+|----|----|----|
 | `count()` | Counts rows in each category | How many sales came from each branch |
 | `ggplot()` | Draws a graph | Turning numbers into something a manager will look at |
 | `sd()`, `var()` | Standard deviation and variance | How unpredictable are our daily takings |
@@ -19,14 +60,17 @@ Five new functions. That is all you need to add to section 1.
 
 By the end of this notebook you will be able to:
 
-- Identify the measurement level of a variable and say which statistics are legitimate for it
+- Identify the measurement level of a variable and say which statistics
+  are legitimate for it
 - Build frequency tables and read what they tell you
 - Draw and interpret bar charts, histograms, boxplots and scatterplots
 - Calculate and choose between mean, median and mode
-- Measure spread with range, variance, standard deviation and the coefficient of variation
+- Measure spread with range, variance, standard deviation and the
+  coefficient of variation
 - Use quartiles and the IQR rule to identify outliers
 - Describe distribution shape using skewness, kurtosis and Q-Q plots
-- Measure association between two variables, and explain why that is not causation
+- Measure association between two variables, and explain why that is not
+  causation
 
 ## Setup
 
@@ -42,31 +86,69 @@ sales <- read_excel("../data/supermarket_sales.xlsx")
 glimpse(sales)
 ```
 
-A reminder of the business situation. This is a supermarket chain with three
-branches. Each of the 1,000 rows is one transaction: what was bought, by whom, how
-much was paid, and what rating the customer left afterwards.
+::: {.content-visible unless-format="revealjs"}
+A reminder of the business situation. This is a supermarket chain with
+three branches. Each of the 1,000 rows is one transaction: what was
+bought, by whom, how much was paid, and what rating the customer left
+afterwards.
 
-Throughout, keep asking the question a manager would ask: **so what?** A number that
-does not change a decision is not worth calculating.
+Throughout, keep asking the question a manager would ask: **so what?** A
+number that does not change a decision is not worth calculating.
+:::
+
+:::: {.content-visible when-format="revealjs"}
+- A supermarket chain, **three branches**
+- **1,000 rows**, one per transaction
+- What was bought, by whom, for how much, and the rating left afterwards
+
+. . .
+
+Throughout, keep asking what a manager would ask: **so what?**
+
+::: notes
+Ask the room for the "so what" on the first two or three results today.
+Students will happily compute a number and stop; the habit of asking
+what decision it changes has to be built deliberately.
+:::
+::::
 
 # 1. Levels of measurement
 
-Before calculating anything, you must know what kind of variable you are holding.
-This is not box-ticking - it determines which calculations are meaningful and which
-are nonsense.
+Before calculating anything, you must know what kind of variable you are
+holding. This is not box-ticking - it determines which calculations are
+meaningful and which are nonsense.
 
 | Level | What it does | Can you...? | Example here |
-|---|---|---|---|
+|----|----|----|----|
 | **Nominal** | Names categories | Count them. Nothing else. | `Branch`, `Gender`, `Payment` |
 | **Ordinal** | Categories with a rank order | Also order them. Gaps are not equal. | A scale from Poor to Excellent |
 | **Interval** | Equal gaps, no true zero | Also subtract. Ratios are meaningless. | `Rating`, `Date` |
 | **Ratio** | Has a true zero | Also divide. Ratios are meaningful. | `Total`, `Quantity`, `Unit price` |
 
-The test separating interval from ratio is whether zero means "none of it". A
-`Total` of 0 means no money changed hands, so it is ratio, and one sale can
-sensibly be twice as large as another. A `Rating` of 0 does not mean "no
-satisfaction" - it is just the bottom of a scale someone invented - so a rating of 8
-is not "twice as satisfied" as a 4.
+::: {.content-visible unless-format="revealjs"}
+The test separating interval from ratio is whether zero means "none of
+it". A `Total` of 0 means no money changed hands, so it is ratio, and
+one sale can sensibly be twice as large as another. A `Rating` of 0 does
+not mean "no satisfaction" - it is just the bottom of a scale someone
+invented - so a rating of 8 is not "twice as satisfied" as a 4.
+:::
+
+:::: {.content-visible when-format="revealjs"}
+## Interval or ratio? {.smaller}
+
+The test: **does zero mean "none of it"?**
+
+|              | Zero means                  | So you can say                |
+|--------------|-----------------------------|-------------------------------|
+| `Total` = 0  | No money changed hands      | One sale is **twice** another |
+| `Rating` = 0 | Bottom of an invented scale | An 8 is **not** twice a 4     |
+
+::: notes
+This is the distinction students most often get wrong in the exam. The
+rating example is the one that lands - nobody defends "twice as
+satisfied" once they hear it out loud.
+:::
+::::
 
 R enforces some of this for you:
 
@@ -74,31 +156,34 @@ R enforces some of this for you:
 mean(sales$Branch)
 ```
 
-R returns `NA` and warns that the argument is not numeric. That warning is R
-protecting you: the average of "A", "B" and "C" does not exist.
+R returns `NA` and warns that the argument is not numeric. That warning
+is R protecting you: the average of "A", "B" and "C" does not exist.
 
 ::: {.callout-warning title="The computer checks types; you check sense"}
-R will **not** protect you from averaging something numeric that should not be
-averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 = Ewallet, R would
-happily report a mean of 2.03.
+R will **not** protect you from averaging something numeric that should
+not be averaged. If a variable were coded 1 = Cash, 2 = Credit, 3 =
+Ewallet, R would happily report a mean of 2.03.
 
 That number is meaningless, and only you can know it.
 :::
 
 :::: {.callout-note title="Self-check 1"}
-A colleague reports that "average customer type is 1.6" after coding Member as 1 and
-Normal as 2. What has gone wrong, and what should they have reported instead?
+A colleague reports that "average customer type is 1.6" after coding
+Member as 1 and Normal as 2. What has gone wrong, and what should they
+have reported instead?
 
 ::: {.callout-note collapse="true" title="Show the answer"}
-`Customer type` is **nominal**. The numbers 1 and 2 are labels, not quantities - the
-choice of which group gets 1 was arbitrary, and reversing it would change the
-"average" to 1.4 without changing anything about the customers.
+`Customer type` is **nominal**. The numbers 1 and 2 are labels, not
+quantities - the choice of which group gets 1 was arbitrary, and
+reversing it would change the "average" to 1.4 without changing anything
+about the customers.
 
-The correct summary is a **count or a percentage**: "60 percent of transactions were
-from Normal customers". That statement survives relabelling; the average does not.
+The correct summary is a **count or a percentage**: "60 percent of
+transactions were from Normal customers". That statement survives
+relabelling; the average does not.
 
-This mistake is common with survey data, where everything arrives as numbers
-regardless of what it actually measures.
+This mistake is common with survey data, where everything arrives as
+numbers regardless of what it actually measures.
 :::
 ::::
 
@@ -120,8 +205,8 @@ sales |>
   mutate(percent = round(n / sum(n) * 100, 1))
 ```
 
-Sorting by size makes the story jump out, which matters with more than three
-categories:
+Sorting by size makes the story jump out, which matters with more than
+three categories:
 
 ```{r freq_sorted}
 sales |>
@@ -131,8 +216,8 @@ sales |>
 
 ## Cross-tabulation
 
-Two nominal variables at once. This is where frequency tables earn their keep,
-because it lets you ask whether one thing depends on another:
+Two nominal variables at once. This is where frequency tables earn their
+keep, because it lets you ask whether one thing depends on another:
 
 ```{r freq_cross}
 sales |>
@@ -140,11 +225,13 @@ sales |>
   pivot_wider(names_from = Payment, values_from = n)
 ```
 
-`pivot_wider()` reshapes the long list into a grid, which is far easier to read.
+`pivot_wider()` reshapes the long list into a grid, which is far easier
+to read.
 
-Do the three branches have noticeably different payment habits? Eyeballing a
-difference is a fine first step. In section 3.3 you will learn the chi-square test,
-which tells you whether a difference this size could plausibly be chance.
+Do the three branches have noticeably different payment habits?
+Eyeballing a difference is a fine first step. In section 3.3 you will
+learn the chi-square test, which tells you whether a difference this
+size could plausibly be chance.
 
 ## Grouping a numeric variable into classes
 
@@ -160,10 +247,11 @@ sales |>
   mutate(percent = round(n / sum(n) * 100, 1))
 ```
 
-Notice how much information this throws away - 1,000 distinct values become five
-bands. It also introduces a choice: those boundaries were a judgement, and different
-boundaries would tell a slightly different story. Frequency tables for numeric data
-are a summary for presentation, not a basis for analysis.
+Notice how much information this throws away - 1,000 distinct values
+become five bands. It also introduces a choice: those boundaries were a
+judgement, and different boundaries would tell a slightly different
+story. Frequency tables for numeric data are a summary for presentation,
+not a basis for analysis.
 
 ::: {.callout-note title="Your turn"}
 Build a frequency table of `Customer type` with percentages.
@@ -173,7 +261,6 @@ sales |>
   count(`______`) |>
   mutate(percent = round(n / sum(n) * 100, 1))
 ```
-
 :::
 
 # 3. Visualising the data
@@ -182,13 +269,15 @@ A table of numbers is precise. A graph is persuasive. You need both.
 
 Every graph in R follows the same three-part recipe:
 
-1. `ggplot(data, aes(...))` - which data, and which columns map to which visual property
-2. `+ geom_something()` - what to draw
-3. `+ labs(...)` - titles and axis labels
+1.  `ggplot(data, aes(...))` - which data, and which columns map to
+    which visual property
+2.  `+ geom_something()` - what to draw
+3.  `+ labs(...)` - titles and axis labels
 
 ::: {.callout-warning title="Plus, not pipe"}
-Inside `ggplot()`, layers join with `+`. Outside it, steps join with `|>`. The two
-are not interchangeable, and mixing them is near-universal in week one.
+Inside `ggplot()`, layers join with `+`. Outside it, steps join with
+`|>`. The two are not interchangeable, and mixing them is near-universal
+in week one.
 :::
 
 ## Bar chart - for categories
@@ -202,8 +291,9 @@ ggplot(sales, aes(x = `Product line`)) +
   theme_minimal()
 ```
 
-`coord_flip()` turns the bars sideways. With long category names this is almost
-always right - rotated vertical labels are hard to read and look amateurish.
+`coord_flip()` turns the bars sideways. With long category names this is
+almost always right - rotated vertical labels are hard to read and look
+amateurish.
 
 ## Histogram - for numeric data
 
@@ -215,7 +305,8 @@ ggplot(sales, aes(x = Total)) +
   theme_minimal()
 ```
 
-**The bin count is a real choice, not a detail.** Change it and the story changes:
+**The bin count is a real choice, not a detail.** Change it and the
+story changes:
 
 ```{r plot_hist_bins}
 ggplot(sales, aes(x = Total)) +
@@ -225,10 +316,11 @@ ggplot(sales, aes(x = Total)) +
   theme_minimal()
 ```
 
-With 5 bins the distribution looks smooth and unremarkable. With 60 it would look
-spiky. Neither is wrong, but neither is neutral. Always look at your data with two
-or three bin settings before deciding what it "looks like" - and be suspicious when
-someone shows you a histogram without saying how they binned it.
+With 5 bins the distribution looks smooth and unremarkable. With 60 it
+would look spiky. Neither is wrong, but neither is neutral. Always look
+at your data with two or three bin settings before deciding what it
+"looks like" - and be suspicious when someone shows you a histogram
+without saying how they binned it.
 
 ## Boxplot - for comparing groups
 
@@ -243,13 +335,15 @@ ggplot(sales, aes(x = Branch, y = Total)) +
 A boxplot compresses a whole distribution into five numbers:
 
 - The **thick line** is the median - half the sales are above it
-- The **box** spans the middle 50 percent, from the 25th to the 75th percentile
-- The **whiskers** reach the most extreme values within 1.5 box-lengths of the box
+- The **box** spans the middle 50 percent, from the 25th to the 75th
+  percentile
+- The **whiskers** reach the most extreme values within 1.5 box-lengths
+  of the box
 - Any **dots** beyond the whiskers are flagged as potential outliers
 
-Boxplots are the fastest way to compare several groups at once. Look at whether the
-boxes overlap: heavily overlapping boxes mean the branches are more similar than
-different, whatever the exact averages say.
+Boxplots are the fastest way to compare several groups at once. Look at
+whether the boxes overlap: heavily overlapping boxes mean the branches
+are more similar than different, whatever the exact averages say.
 
 ## Scatterplot - for two numeric variables
 
@@ -261,8 +355,9 @@ ggplot(sales, aes(x = Quantity, y = Total)) +
   theme_minimal()
 ```
 
-`alpha = 0.4` makes each point semi-transparent, so where many points overlap the
-colour builds up. With 1,000 points this reveals density that solid dots hide.
+`alpha = 0.4` makes each point semi-transparent, so where many points
+overlap the colour builds up. With 1,000 points this reveals density
+that solid dots hide.
 
 ## Adding a third variable with colour
 
@@ -286,8 +381,8 @@ ggplot(sales, aes(x = ______)) +
   theme_minimal()
 ```
 
-Look at the result. Does it have the bell shape you might have expected, or
-something else? Hold that thought - section 7 comes back to it.
+Look at the result. Does it have the bell shape you might have expected,
+or something else? Hold that thought - section 7 comes back to it.
 :::
 
 # 4. Measures of central tendency
@@ -300,8 +395,8 @@ Three ways to answer "what is typical?", and they do not always agree.
 mean(sales$Total)
 ```
 
-The arithmetic average. It uses every value, which is its strength, and it is
-dragged by extreme values, which is its weakness.
+The arithmetic average. It uses every value, which is its strength, and
+it is dragged by extreme values, which is its weakness.
 
 ## Median
 
@@ -309,15 +404,16 @@ dragged by extreme values, which is its weakness.
 median(sales$Total)
 ```
 
-The middle value when everything is lined up in order. Half the transactions are
-above it and half below. It ignores how far away the extremes are, which makes it
-**robust** - resistant to outliers.
+The middle value when everything is lined up in order. Half the
+transactions are above it and half below. It ignores how far away the
+extremes are, which makes it **robust** - resistant to outliers.
 
 ## Mode
 
 ::: {.callout-warning title="There is no mode() function for this"}
-R does have a function called `mode()`, but it reports what *type* an object is -
-a completely different thing, and a genuine source of confusion.
+R does have a function called `mode()`, but it reports what *type* an
+object is - a completely different thing, and a genuine source of
+confusion.
 :::
 
 For a categorical variable, the mode is the top row of a sorted count:
@@ -328,9 +424,10 @@ sales |>
   slice(1)
 ```
 
-For a continuous variable like `Total`, the mode is not useful - with 1,000
-transactions recorded to two decimal places, almost every value appears once. The
-mode earns its place with categorical data and with discrete counts:
+For a continuous variable like `Total`, the mode is not useful - with
+1,000 transactions recorded to two decimal places, almost every value
+appears once. The mode earns its place with categorical data and with
+discrete counts:
 
 ```{r central_mode_num}
 sales |>
@@ -349,15 +446,38 @@ sales |>
   )
 ```
 
+::: {.content-visible unless-format="revealjs"}
 The mean sits above the median. That gap is not noise - it tells you the
-distribution has a longer tail on the high side. A few very large transactions pull
-the average up while the median stays put.
+distribution has a longer tail on the high side. A few very large
+transactions pull the average up while the median stays put.
 
-Here is why that matters commercially. If you report the mean as your "average
-transaction value" target, a handful of unusually large baskets can make performance
-look better than the typical customer experience actually is. The median answers a
-different and often more useful question: what does a normal shopping trip look
-like?
+Here is why that matters commercially. If you report the mean as your
+"average transaction value" target, a handful of unusually large baskets
+can make performance look better than the typical customer experience
+actually is. The median answers a different and often more useful
+question: what does a normal shopping trip look like?
+:::
+
+:::: {.content-visible when-format="revealjs"}
+The mean sits **above** the median.
+
+. . .
+
+- Not noise — a longer tail on the high side
+- A few large baskets pull the average up; the median stays put
+
+. . .
+
+**Why a manager should care:** report the mean as your "average
+transaction" and performance looks better than the typical customer
+experience actually is.
+
+::: notes
+Worth asking before revealing: which number would you put in the annual
+report, and which would you use to decide what a normal shopping trip
+looks like? They are different questions and the answer is different.
+:::
+::::
 
 ```{r central_robust}
 totals_with_error <- c(sales$Total, 500000)   # one data entry error
@@ -369,27 +489,29 @@ tibble(
 )
 ```
 
-One mistyped figure moves the mean noticeably. The median barely notices. When you
-suspect your data has errors - and real business data always does - the median is
-the safer summary.
+One mistyped figure moves the mean noticeably. The median barely
+notices. When you suspect your data has errors - and real business data
+always does - the median is the safer summary.
 
 :::: {.callout-note title="Self-check 2"}
-A property firm reports that the mean house price in a neighbourhood is 480,000 and
-the median is 310,000. What does that gap tell you, and which figure should a
-first-time buyer pay attention to?
+A property firm reports that the mean house price in a neighbourhood is
+480,000 and the median is 310,000. What does that gap tell you, and
+which figure should a first-time buyer pay attention to?
 
 ::: {.callout-note collapse="true" title="Show the answer"}
-The mean sitting far above the median means the distribution is **right-skewed**: a
-small number of very expensive properties are pulling the average up, while most
-houses cluster much lower.
+The mean sitting far above the median means the distribution is
+**right-skewed**: a small number of very expensive properties are
+pulling the average up, while most houses cluster much lower.
 
-A first-time buyer should look at the **median**, and ideally the 25th percentile
-too. The median describes the house in the middle of the market. The mean describes
-a house that may not exist anywhere in the neighbourhood.
+A first-time buyer should look at the **median**, and ideally the 25th
+percentile too. The median describes the house in the middle of the
+market. The mean describes a house that may not exist anywhere in the
+neighbourhood.
 
-This is why property and income statistics are almost always reported as medians.
-Any time you see a mean quoted for something with a natural upper tail - salaries,
-house prices, insurance claims, transaction values - ask what the median is.
+This is why property and income statistics are almost always reported as
+medians. Any time you see a mean quoted for something with a natural
+upper tail - salaries, house prices, insurance claims, transaction
+values - ask what the median is.
 :::
 ::::
 
@@ -406,8 +528,8 @@ sales |>
 ```
 
 ::: {.callout-note title="Your turn"}
-Find the mean and median `Rating` for each product line, sorted from highest mean
-down.
+Find the mean and median `Rating` for each product line, sorted from
+highest mean down.
 
 ```{r ex_central, eval=FALSE}
 sales |>
@@ -418,18 +540,17 @@ sales |>
   ) |>
   arrange(desc(______))
 ```
-
 :::
 
 # 5. Measures of dispersion
 
-Two branches can have identical average sales and behave completely differently. The
-average tells you where the centre is; dispersion tells you how far things scatter
-around it.
+Two branches can have identical average sales and behave completely
+differently. The average tells you where the centre is; dispersion tells
+you how far things scatter around it.
 
-This matters more than students expect. A supplier who delivers in 5 days on
-average, every time, is a completely different business partner from one who
-averages 5 days but ranges from 1 to 20.
+This matters more than students expect. A supplier who delivers in 5
+days on average, every time, is a completely different business partner
+from one who averages 5 days but ranges from 1 to 20.
 
 ## Range
 
@@ -439,8 +560,8 @@ range(sales$Total)
 max(sales$Total) - min(sales$Total)
 ```
 
-Simple, and almost useless. It depends entirely on two values - the two most likely
-to be errors.
+Simple, and almost useless. It depends entirely on two values - the two
+most likely to be errors.
 
 ## Variance and standard deviation
 
@@ -450,25 +571,26 @@ var(sales$Total)
 sd(sales$Total)
 ```
 
-The variance is the average squared distance from the mean. Squaring makes it work
-mathematically, but it also means the variance is in *squared currency units*, which
-nobody can interpret.
+The variance is the average squared distance from the mean. Squaring
+makes it work mathematically, but it also means the variance is in
+*squared currency units*, which nobody can interpret.
 
-The standard deviation is its square root, which puts it back into the original
-units. That is why you almost always report the standard deviation and almost never
-the variance - though the variance reappears in section 3.3, where the squaring
-becomes genuinely useful.
+The standard deviation is its square root, which puts it back into the
+original units. That is why you almost always report the standard
+deviation and almost never the variance - though the variance reappears
+in section 3.3, where the squaring becomes genuinely useful.
 
-Read the standard deviation as **the typical distance a transaction sits from the
-average transaction**.
+Read the standard deviation as **the typical distance a transaction sits
+from the average transaction**.
 
 ## Coefficient of variation
 
 Which varies more - transaction totals, or customer ratings?
 
-You cannot compare their standard deviations directly. One is currency running into
-the hundreds; the other is a 1-to-10 scale. The **coefficient of variation**
-expresses the standard deviation as a percentage of the mean, cancelling the units:
+You cannot compare their standard deviations directly. One is currency
+running into the hundreds; the other is a 1-to-10 scale. The
+**coefficient of variation** expresses the standard deviation as a
+percentage of the mean, cancelling the units:
 
 ```{r disp_cv}
 sales |>
@@ -481,14 +603,16 @@ sales |>
 
 Now the comparison is fair. A higher CV means more relative variability.
 
-The result is intuitive once you see it: ratings are constrained to a narrow 1-to-10
-band and cluster near the middle, so they vary little in relative terms. Transaction
-totals can be almost anything, so they vary a great deal.
+The result is intuitive once you see it: ratings are constrained to a
+narrow 1-to-10 band and cluster near the middle, so they vary little in
+relative terms. Transaction totals can be almost anything, so they vary
+a great deal.
 
 ::: {.callout-warning title="When the CV is meaningless"}
-The CV only works for ratio variables with a true zero and a positive mean. Applying
-it to temperatures in Celsius, or to a scale that could sit anywhere on the number
-line, produces a number with no interpretation.
+The CV only works for ratio variables with a true zero and a positive
+mean. Applying it to temperatures in Celsius, or to a scale that could
+sit anywhere on the number line, produces a number with no
+interpretation.
 :::
 
 ## Comparing consistency between groups
@@ -503,44 +627,47 @@ sales |>
   )
 ```
 
-Two branches with similar means but different standard deviations are running
-different businesses. The one with lower spread has more predictable revenue, which
-makes staffing and stock planning easier - a real operational advantage the average
-completely hides.
+Two branches with similar means but different standard deviations are
+running different businesses. The one with lower spread has more
+predictable revenue, which makes staffing and stock planning easier - a
+real operational advantage the average completely hides.
 
 :::: {.callout-note title="Self-check 3"}
-Two investment funds both returned 8 percent on average over ten years. Fund A had a
-standard deviation of 3 percent; Fund B, 19 percent. What does that tell you, and is
-one straightforwardly better?
+Two investment funds both returned 8 percent on average over ten years.
+Fund A had a standard deviation of 3 percent; Fund B, 19 percent. What
+does that tell you, and is one straightforwardly better?
 
 ::: {.callout-note collapse="true" title="Show the answer"}
-Fund A's returns clustered tightly around 8 percent every year. Fund B's swung wildly
-- it likely had years of large gains and years of heavy losses that happened to
-average out.
+Fund A's returns clustered tightly around 8 percent every year. Fund B's
+swung wildly - it likely had years of large gains and years of heavy
+losses that happened to average out.
 
-**Neither is straightforwardly better**, and that is the point. Fund B carries far
-more **risk**, which matters enormously if you might need the money at a bad moment,
-and matters less over a thirty-year horizon. An investor near retirement should
-strongly prefer A; a young investor might rationally accept B's volatility.
+**Neither is straightforwardly better**, and that is the point. Fund B
+carries far more **risk**, which matters enormously if you might need
+the money at a bad moment, and matters less over a thirty-year horizon.
+An investor near retirement should strongly prefer A; a young investor
+might rationally accept B's volatility.
 
-In finance, the standard deviation of returns is the standard definition of risk. So
-this is not a case of the average being wrong - it is a case of the average
-answering only half the question.
+In finance, the standard deviation of returns is the standard definition
+of risk. So this is not a case of the average being wrong - it is a case
+of the average answering only half the question.
 :::
 ::::
 
 # 6. Percentiles, quartiles and outliers
 
-A **percentile** is the value below which a given percentage of the data falls. The
-75th percentile is the value 75 percent of transactions come in under.
+A **percentile** is the value below which a given percentage of the data
+falls. The 75th percentile is the value 75 percent of transactions come
+in under.
 
 ```{r pct_quantile}
 quantile(sales$Total)
 ```
 
-Those five numbers are the **five-number summary**, and they are exactly what a
-boxplot draws. The 25th, 50th and 75th percentiles are the first, second and third
-**quartiles** because they cut the data into four equal parts.
+Those five numbers are the **five-number summary**, and they are exactly
+what a boxplot draws. The 25th, 50th and 75th percentiles are the first,
+second and third **quartiles** because they cut the data into four equal
+parts.
 
 You can ask for any percentile:
 
@@ -548,9 +675,9 @@ You can ask for any percentile:
 quantile(sales$Total, probs = c(0.10, 0.50, 0.90, 0.99))
 ```
 
-The 99th percentile is worth pausing on. It tells you what your top 1 percent of
-transactions look like - useful when deciding whether a "big spender" programme is
-worth running, and where to set its threshold.
+The 99th percentile is worth pausing on. It tells you what your top 1
+percent of transactions look like - useful when deciding whether a "big
+spender" programme is worth running, and where to set its threshold.
 
 ## The interquartile range
 
@@ -558,9 +685,9 @@ worth running, and where to set its threshold.
 IQR(sales$Total)
 ```
 
-The IQR is the width of the middle 50 percent: Q3 minus Q1. Like the median it is
-robust - the extreme values that inflate the range and the standard deviation do not
-touch it.
+The IQR is the width of the middle 50 percent: Q3 minus Q1. Like the
+median it is robust - the extreme values that inflate the range and the
+standard deviation do not touch it.
 
 ## The 1.5 x IQR rule
 
@@ -582,8 +709,8 @@ outliers <- sales |>
 nrow(outliers)
 ```
 
-The `|` means **or**: keep a row if it is below the lower bound *or* above the upper
-bound.
+The `|` means **or**: keep a row if it is below the lower bound *or*
+above the upper bound.
 
 ```{r pct_outliers_show}
 outliers |>
@@ -594,29 +721,56 @@ outliers |>
 ## What to do with an outlier
 
 ::: {.callout-tip title="Flagging is not deleting"}
-**The 1.5 x IQR rule identifies unusual values. It does not identify wrong ones.**
-Deleting points because a rule flagged them is one of the most common ways to
-quietly corrupt an analysis.
+**The 1.5 x IQR rule identifies unusual values. It does not identify
+wrong ones.** Deleting points because a rule flagged them is one of the
+most common ways to quietly corrupt an analysis.
 :::
 
+::: {.content-visible unless-format="revealjs"}
 Work through three questions:
 
-1. **Is it possible?** A transaction total of -50, or a customer age of 210, is an
-   error. Investigate and correct or remove it.
-2. **Is it a different thing?** A supermarket transaction of 30,000 might be a
-   legitimate wholesale order that does not belong in an analysis of retail
-   shoppers. Analyse it separately rather than deleting it.
-3. **Is it just large?** Rich customers exist. A genuine, correctly recorded large
-   sale is real data, and removing it because it is inconvenient is falsifying your
-   results.
+1.  **Is it possible?** A transaction total of -50, or a customer age of
+    210, is an error. Investigate and correct or remove it.
+2.  **Is it a different thing?** A supermarket transaction of 30,000
+    might be a legitimate wholesale order that does not belong in an
+    analysis of retail shoppers. Analyse it separately rather than
+    deleting it.
+3.  **Is it just large?** Rich customers exist. A genuine, correctly
+    recorded large sale is real data, and removing it because it is
+    inconvenient is falsifying your results.
 
-Only category 1 justifies deletion. Whatever you decide, **write down what you did
-and why** - an analysis where points vanished without explanation cannot be trusted
-by anyone, including you in six months.
+Only category 1 justifies deletion. Whatever you decide, **write down
+what you did and why** - an analysis where points vanished without
+explanation cannot be trusted by anyone, including you in six months.
+:::
+
+::::: {.content-visible when-format="revealjs"}
+Work through three questions:
+
+::: incremental
+1.  **Is it possible?** Total of -50, age of 210 → an error. Correct or
+    remove.
+2.  **Is it a different thing?** A 30,000 wholesale order among retail
+    shoppers → analyse separately, do not delete.
+3.  **Is it just large?** Rich customers exist. Removing real data
+    because it is inconvenient is falsifying your results.
+:::
+
+. . .
+
+Only **category 1** justifies deletion — and always write down what you
+did and why.
+
+::: notes
+Push on category 3. Students reach for delete because the outlier makes
+their chart ugly. Ask what they would say to an auditor who noticed the
+row was gone.
+:::
+:::::
 
 ::: {.callout-note title="Your turn"}
-Apply the same IQR outlier check to `Rating`. Before running it, predict how many
-outliers you will find.
+Apply the same IQR outlier check to `Rating`. Before running it, predict
+how many outliers you will find.
 
 ```{r ex_outliers, eval=FALSE}
 r_q1  <- quantile(sales$Rating, ____)
@@ -628,21 +782,23 @@ sales |>
   nrow()
 ```
 
-Was your prediction right? If the answer surprised you, think about what the
-histogram of `Rating` looked like in section 3.
+Was your prediction right? If the answer surprised you, think about what
+the histogram of `Rating` looked like in section 3.
 :::
 
 # 7. The shape of a distribution
 
-Centre and spread do not fully describe a distribution. Two datasets can share both
-and look nothing alike. Shape is the third piece.
+Centre and spread do not fully describe a distribution. Two datasets can
+share both and look nothing alike. Shape is the third piece.
 
 ## Skewness
 
 Skewness measures lopsidedness.
 
-- **Positive (right) skew**: a long tail to the high side. Mean above median.
-- **Negative (left) skew**: a long tail to the low side. Mean below median.
+- **Positive (right) skew**: a long tail to the high side. Mean above
+  median.
+- **Negative (left) skew**: a long tail to the low side. Mean below
+  median.
 - **Zero**: symmetric.
 
 ```{r shape_skew}
@@ -654,10 +810,11 @@ sales |>
   )
 ```
 
-Rough guide: below 0.5 in absolute value is fairly symmetric; 0.5 to 1 is moderately
-skewed; above 1 is strongly skewed.
+Rough guide: below 0.5 in absolute value is fairly symmetric; 0.5 to 1
+is moderately skewed; above 1 is strongly skewed.
 
-Now check the number agrees with the picture, which you should always do:
+Now check the number agrees with the picture, which you should always
+do:
 
 ```{r shape_skew_plot}
 ggplot(sales, aes(x = Total)) +
@@ -671,13 +828,13 @@ ggplot(sales, aes(x = Total)) +
   theme_minimal()
 ```
 
-The solid mean line sitting to the right of the dashed median line is the visual
-signature of right skew.
+The solid mean line sitting to the right of the dashed median line is
+the visual signature of right skew.
 
 ## Kurtosis
 
-Kurtosis measures how much of the distribution lives in the tails - how prone it is
-to extreme values.
+Kurtosis measures how much of the distribution lives in the tails - how
+prone it is to extreme values.
 
 ```{r shape_kurt}
 sales |>
@@ -688,24 +845,25 @@ sales |>
 ```
 
 ::: {.callout-warning title="Important if you have used Excel"}
-`moments::kurtosis()` returns **raw kurtosis**, where a perfect normal distribution
-scores **3**. Excel's `KURT()` returns **excess kurtosis**, where a normal
-distribution scores **0** - it has already subtracted the 3.
+`moments::kurtosis()` returns **raw kurtosis**, where a perfect normal
+distribution scores **3**. Excel's `KURT()` returns **excess kurtosis**,
+where a normal distribution scores **0** - it has already subtracted the
+3.
 
 To compare with an Excel result, subtract 3: `kurtosis(sales$Total) - 3`
 
-Excel and `moments` also use slightly different sample corrections for skewness, so
-those figures differ in the second or third decimal place. The interpretation is
-unaffected, but do not be alarmed by a small discrepancy when checking your Excel
-work against your R work.
+Excel and `moments` also use slightly different sample corrections for
+skewness, so those figures differ in the second or third decimal place.
+The interpretation is unaffected, but do not be alarmed by a small
+discrepancy when checking your Excel work against your R work.
 :::
 
 ## Q-Q plots - a better test of normality
 
-Skewness and kurtosis compress the whole shape into two numbers. A **Q-Q plot** shows
-the entire comparison at once, plotting your data against what a perfect normal
-distribution would produce. If the data were normal, the points would sit on the
-diagonal line.
+Skewness and kurtosis compress the whole shape into two numbers. A **Q-Q
+plot** shows the entire comparison at once, plotting your data against
+what a perfect normal distribution would produce. If the data were
+normal, the points would sit on the diagonal line.
 
 ```{r shape_qq_rating}
 ggplot(sales, aes(sample = Rating)) +
@@ -728,36 +886,40 @@ ggplot(sales, aes(sample = Total)) +
 Reading a Q-Q plot:
 
 - Points **on the line** - close to normal
-- Points curving **up at the right end** - a heavy right tail, so right skew
+- Points curving **up at the right end** - a heavy right tail, so right
+  skew
 - Points curving **away at both ends** - heavier tails than normal
 - A distinct **S-shape** - lighter tails than normal
 
 ::: {.callout-tip title="Why this matters beyond section 2"}
-Several tests in section 3.3 assume the data is roughly normal, and a Q-Q plot is
-the quickest honest way to check that before you rely on it.
+Several tests in section 3.3 assume the data is roughly normal, and a
+Q-Q plot is the quickest honest way to check that before you rely on it.
 
-Learning to read one now will save you from a confidently-reported wrong answer
-later.
+Learning to read one now will save you from a confidently-reported wrong
+answer later.
 :::
 
 :::: {.callout-note title="Self-check 4"}
-Why might a distribution of customer ratings on a 1-to-10 scale fail a normality
-check even when nothing is wrong with the data?
+Why might a distribution of customer ratings on a 1-to-10 scale fail a
+normality check even when nothing is wrong with the data?
 
 ::: {.callout-note collapse="true" title="Show the answer"}
-Because it is **bounded and discrete**. A normal distribution runs from minus
-infinity to plus infinity and takes any value in between. A rating scale stops hard
-at its endpoints and only lands on a limited set of values.
+Because it is **bounded and discrete**. A normal distribution runs from
+minus infinity to plus infinity and takes any value in between. A rating
+scale stops hard at its endpoints and only lands on a limited set of
+values.
 
-That produces two visible effects on a Q-Q plot: a staircase pattern from the
-discreteness, and the ends bending away from the line because the data cannot run
-off to infinity the way the normal distribution expects.
+That produces two visible effects on a Q-Q plot: a staircase pattern
+from the discreteness, and the ends bending away from the line because
+the data cannot run off to infinity the way the normal distribution
+expects.
 
-The wider lesson: **"not normal" is not the same as "bad data"**. Ratings, counts,
-waiting times and proportions are all routinely non-normal for perfectly good
-structural reasons. The question is never "is this normal?" but "is this close
-enough to normal for the method I want to use?" - and section 3.3 gives you the
-tools to answer that properly.
+The wider lesson: **"not normal" is not the same as "bad data"**.
+Ratings, counts, waiting times and proportions are all routinely
+non-normal for perfectly good structural reasons. The question is never
+"is this normal?" but "is this close enough to normal for the method I
+want to use?" - and section 3.3 gives you the tools to answer that
+properly.
 :::
 ::::
 
@@ -771,27 +933,28 @@ So far, one variable at a time. Now: do two variables move together?
 cov(sales$Quantity, sales$Total)
 ```
 
-Positive means they tend to rise together. But the size is uninterpretable - it
-depends on the units of both variables. Measure the total in fils instead of dinars
-and the covariance changes by a factor of a thousand while the relationship is
-identical.
+Positive means they tend to rise together. But the size is
+uninterpretable - it depends on the units of both variables. Measure the
+total in fils instead of dinars and the covariance changes by a factor
+of a thousand while the relationship is identical.
 
 ## Correlation
 
-Correlation fixes this by standardising covariance onto a fixed scale from -1 to +1:
+Correlation fixes this by standardising covariance onto a fixed scale
+from -1 to +1:
 
 ```{r assoc_cor}
 cor(sales$Quantity, sales$Total)
 ```
 
-| Value | Meaning |
-|---|---|
-| +1 | Perfect positive relationship |
-| +0.7 to +0.9 | Strong positive |
-| +0.4 to +0.6 | Moderate positive |
-| 0 | No **linear** relationship |
-| -0.4 to -0.6 | Moderate negative |
-| -1 | Perfect negative |
+| Value        | Meaning                       |
+|--------------|-------------------------------|
+| +1           | Perfect positive relationship |
+| +0.7 to +0.9 | Strong positive               |
+| +0.4 to +0.6 | Moderate positive             |
+| 0            | No **linear** relationship    |
+| -0.4 to -0.6 | Moderate negative             |
+| -1           | Perfect negative              |
 
 ## A correlation matrix
 
@@ -802,39 +965,70 @@ sales |>
   round(3)
 ```
 
-Read across a row and down a column to find the correlation between any pair. The
-diagonal is 1 because every variable correlates perfectly with itself.
+Read across a row and down a column to find the correlation between any
+pair. The diagonal is 1 because every variable correlates perfectly with
+itself.
 
 Two things here are worth noticing.
 
-**Some correlations are near-perfect by construction, not by discovery.** `Total` and
-`gross income` are both calculated from the same underlying sale, so of course they
-move together. A correlation of 1.0 between two variables usually means one is a
-rescaled version of the other - arithmetic rather than insight.
+**Some correlations are near-perfect by construction, not by
+discovery.** `Total` and `gross income` are both calculated from the
+same underlying sale, so of course they move together. A correlation of
+1.0 between two variables usually means one is a rescaled version of the
+other - arithmetic rather than insight.
 
-**Others are close to zero.** Whatever drives customer satisfaction, basket size is
-not obviously it - itself a useful finding, and one a manager assuming "big spenders
-are happy customers" would want to know.
+**Others are close to zero.** Whatever drives customer satisfaction,
+basket size is not obviously it - itself a useful finding, and one a
+manager assuming "big spenders are happy customers" would want to know.
 
 ## Correlation is not causation
 
-A strong correlation permits exactly three explanations, and you cannot tell which
-from the correlation alone:
+::: {.content-visible unless-format="revealjs"}
+A strong correlation permits exactly three explanations, and you cannot
+tell which from the correlation alone:
 
-1. **A causes B.** Buying more items causes a higher total. True here, and known from
-   the arithmetic, not from the correlation.
-2. **B causes A.** The direction can easily run the other way.
-3. **Something else causes both.** Ice cream sales correlate with drowning deaths.
-   Neither causes the other; hot weather causes both. This is a **confounding
-   variable**, and it is the usual explanation for surprising correlations.
+1.  **A causes B.** Buying more items causes a higher total. True here,
+    and known from the arithmetic, not from the correlation.
+2.  **B causes A.** The direction can easily run the other way.
+3.  **Something else causes both.** Ice cream sales correlate with
+    drowning deaths. Neither causes the other; hot weather causes both.
+    This is a **confounding variable**, and it is the usual explanation
+    for surprising correlations.
 
-There is a fourth possibility that is easy to forget: **coincidence**. Search enough
-pairs of variables and you will find strong correlations that mean nothing.
+There is a fourth possibility that is easy to forget: **coincidence**.
+Search enough pairs of variables and you will find strong correlations
+that mean nothing.
+:::
+
+::::: {.content-visible when-format="revealjs"}
+A strong correlation permits **three** explanations — and the
+coefficient cannot tell you which.
+
+::: incremental
+1.  **A causes B**
+2.  **B causes A** — the direction can run either way
+3.  **Something else causes both** — the *confounding variable*
+:::
+
+. . .
+
+Ice cream sales correlate with drowning deaths. Hot weather causes both.
+
+. . .
+
+And a fourth, easy to forget: **coincidence**.
+
+::: notes
+Ask for the mechanism before accepting any causal story. If a student
+cannot describe how A would produce B, the correlation is not evidence
+that it does.
+:::
+:::::
 
 ## Correlation only sees straight lines
 
-`cor()` measures **linear** association. A correlation near zero does not mean "no
-relationship" - it means "no straight-line relationship".
+`cor()` measures **linear** association. A correlation near zero does
+not mean "no relationship" - it means "no straight-line relationship".
 
 ```{r assoc_nonlinear}
 demo <- tibble(
@@ -853,18 +1047,18 @@ ggplot(demo, aes(x = x, y = y)) +
   theme_minimal()
 ```
 
-The correlation is essentially zero. Yet `y` is perfectly predictable from `x` - you
-could not ask for a stronger relationship.
+The correlation is essentially zero. Yet `y` is perfectly predictable
+from `x` - you could not ask for a stronger relationship.
 
 ::: {.callout-tip title="The rule"}
-**Always plot the data before trusting a correlation coefficient.** A single number
-cannot tell you the shape of a relationship, and it will not warn you when it has
-missed one.
+**Always plot the data before trusting a correlation coefficient.** A
+single number cannot tell you the shape of a relationship, and it will
+not warn you when it has missed one.
 :::
 
 ::: {.callout-note title="Your turn"}
-Find the correlation between `Unit price` and `Rating`, then plot it to check the
-number is telling the truth.
+Find the correlation between `Unit price` and `Rating`, then plot it to
+check the number is telling the truth.
 
 ```{r ex_assoc, eval=FALSE}
 cor(sales$`______`, sales$______)
@@ -874,22 +1068,21 @@ ggplot(sales, aes(x = `______`, y = ______)) +
   labs(title = "Unit price against customer rating") +
   theme_minimal()
 ```
-
 :::
 
 # 9. A look ahead - how sure are we?
 
-Everything so far has described the 1,000 transactions in front of you. But nobody
-really cares about those 1,000 transactions. They care about the business those
-transactions came from.
+Everything so far has described the 1,000 transactions in front of you.
+But nobody really cares about those 1,000 transactions. They care about
+the business those transactions came from.
 
-The average transaction value you calculated is a fact about your sample. Collect a
-different 1,000 transactions next month and you will get a different number. So how
-much should you trust the one you have?
+The average transaction value you calculated is a fact about your
+sample. Collect a different 1,000 transactions next month and you will
+get a different number. So how much should you trust the one you have?
 
-Here is a way to find out using nothing but the data itself. Take your 1,000
-transactions, draw 1,000 of them **at random with replacement**, and compute the
-mean. Do it two thousand times.
+Here is a way to find out using nothing but the data itself. Take your
+1,000 transactions, draw 1,000 of them **at random with replacement**,
+and compute the mean. Do it two thousand times.
 
 ```{r bootstrap}
 set.seed(2024)
@@ -902,7 +1095,8 @@ boot_means <- replicate(2000, {
 quantile(boot_means, probs = c(0.025, 0.975))
 ```
 
-That interval is where the true average transaction value plausibly sits.
+That interval is where the true average transaction value plausibly
+sits.
 
 ```{r bootstrap_plot}
 tibble(boot_mean = boot_means) |>
@@ -917,24 +1111,26 @@ tibble(boot_mean = boot_means) |>
 
 Two things about that histogram deserve attention.
 
-It is **narrow**. Every resampled average lands close to the original, which tells
-you the sample mean is a stable, trustworthy estimate.
+It is **narrow**. Every resampled average lands close to the original,
+which tells you the sample mean is a stable, trustworthy estimate.
 
-It is **bell-shaped** - even though the transaction totals themselves were clearly
-right-skewed. That is not a coincidence and not specific to this dataset. It is the
-Central Limit Theorem, which you meet properly in section 3.2, and it is the reason
-most of inferential statistics works at all.
+It is **bell-shaped** - even though the transaction totals themselves
+were clearly right-skewed. That is not a coincidence and not specific to
+this dataset. It is the Central Limit Theorem, which you meet properly
+in section 3.2, and it is the reason most of inferential statistics
+works at all.
 
-You have just done statistical inference without a single formula. Section 3 shows
-you the formulas, and they will make more sense for having seen this first.
+You have just done statistical inference without a single formula.
+Section 3 shows you the formulas, and they will make more sense for
+having seen this first.
 
 # Your turn - full exercises
 
 These have less scaffolding. Work them out from what is above.
 
-**Exercise 1 - Branch performance report.**
-Produce one table showing, for each branch: number of transactions, total revenue,
-mean and median transaction value, standard deviation, and coefficient of variation.
+**Exercise 1 - Branch performance report.** Produce one table showing,
+for each branch: number of transactions, total revenue, mean and median
+transaction value, standard deviation, and coefficient of variation.
 Sort by total revenue, highest first.
 
 ```{r full_ex1, eval=FALSE}
@@ -951,48 +1147,50 @@ sales |>
   arrange(desc(______))
 ```
 
-**Exercise 2 - Product line profitability.**
-Which product line generates the most total gross income? Is it also the one with
-the highest average gross income per transaction? Explain what a difference between
-those two answers would mean for the business.
+**Exercise 2 - Product line profitability.** Which product line
+generates the most total gross income? Is it also the one with the
+highest average gross income per transaction? Explain what a difference
+between those two answers would mean for the business.
 
 ```{r full_ex2, eval=FALSE}
 # YOUR CODE HERE
 ```
 
-**Exercise 3 - Satisfaction by payment method.**
-Compare the distribution of `Rating` across the three payment methods, using both a
-summary table and a boxplot. Do the differences look large enough to matter?
+**Exercise 3 - Satisfaction by payment method.** Compare the
+distribution of `Rating` across the three payment methods, using both a
+summary table and a boxplot. Do the differences look large enough to
+matter?
 
 ```{r full_ex3, eval=FALSE}
 # YOUR CODE HERE
 ```
 
-**Exercise 4 - Shape investigation.**
-Choose `Unit price`. Calculate its mean, median, skewness and kurtosis, then draw a
-histogram and a Q-Q plot. Write two or three sentences describing its shape and
-saying whether the mean or the median is the better summary.
+**Exercise 4 - Shape investigation.** Choose `Unit price`. Calculate its
+mean, median, skewness and kurtosis, then draw a histogram and a Q-Q
+plot. Write two or three sentences describing its shape and saying
+whether the mean or the median is the better summary.
 
 ```{r full_ex4, eval=FALSE}
 # YOUR CODE HERE
 ```
 
-**Exercise 5 - A question of your own.**
-Look at the columns available and ask a question this dataset can answer that has
-not been asked above. Answer it with a table and one graph, and write down what a
+**Exercise 5 - A question of your own.** Look at the columns available
+and ask a question this dataset can answer that has not been asked
+above. Answer it with a table and one graph, and write down what a
 manager should do differently as a result.
 
 ```{r full_ex5, eval=FALSE}
 # YOUR CODE HERE
 ```
 
-Solutions are in `Descriptive-Statistics-SOLUTIONS.Rmd`. Attempt every exercise
-before opening it - reading a solution feels like learning and mostly is not.
+Solutions are in `Descriptive-Statistics-SOLUTIONS.Rmd`. Attempt every
+exercise before opening it - reading a solution feels like learning and
+mostly is not.
 
-# Reference card
+# Reference card {.smaller}
 
 | Code | What it does |
-|---|---|
+|----|----|
 | `count(d, col)` | Frequency table |
 | `count(d, col, sort = TRUE)` | Frequency table, largest first |
 | `pivot_wider(names_from = , values_from = )` | Long list into a cross-tab grid |
@@ -1016,15 +1214,38 @@ before opening it - reading a solution feels like learning and mostly is not.
 
 # Summary
 
-- **Measurement level** decides which statistics are legitimate. R checks types; only you can check sense.
-- **Frequency tables** are the complete analysis for nominal data, and are more informative as percentages.
-- **Graphs** reveal what summary numbers hide. Bin width and axis choices are arguments, not neutral defaults.
-- **Mean, median, mode** answer "what is typical?" differently. The median is robust; the mean is not.
-- **Standard deviation** measures typical distance from the centre. The **coefficient of variation** makes spread comparable across different units.
-- **Quartiles and the IQR** give a robust picture of spread and a rule for flagging outliers - but flagging is not deleting.
-- **Skewness and kurtosis** describe shape; a **Q-Q plot** shows it far more honestly than two numbers can.
-- **Correlation** measures straight-line association only, and never establishes causation. Always plot before you trust it.
-- A **bootstrap** turns a single sample into a range of plausible values, which is where section 3 begins.
+- **Measurement level** decides which statistics are legitimate. R
+  checks types; only you can check sense.
+- **Frequency tables** are the complete analysis for nominal data, and
+  are more informative as percentages.
+- **Graphs** reveal what summary numbers hide. Bin width and axis
+  choices are arguments, not neutral defaults.
+- **Mean, median, mode** answer "what is typical?" differently. The
+  median is robust; the mean is not.
+- **Standard deviation** measures typical distance from the centre. The
+  **coefficient of variation** makes spread comparable across different
+  units.
+- **Quartiles and the IQR** give a robust picture of spread and a rule
+  for flagging outliers - but flagging is not deleting.
+- **Skewness and kurtosis** describe shape; a **Q-Q plot** shows it far
+  more honestly than two numbers can.
+- **Correlation** measures straight-line association only, and never
+  establishes causation. Always plot before you trust it.
+- A **bootstrap** turns a single sample into a range of plausible
+  values, which is where section 3 begins.
 
-**Next:** section 3.1, `3-Inferential-Statistics/`, where you stop describing the
-data you have and start modelling the process that produced it.
+**Next:** section 3.1, `3-Inferential-Statistics/`, where you stop
+describing the data you have and start modelling the process that
+produced it.
+
+:::: {.content-visible when-format="revealjs"}
+# Questions?
+
+Work through the exercises in the notebook version of this section
+before the next lecture.
+
+::: notes
+Point them at the notebook rather than the slides for homework - the
+slides drop the longer explanations deliberately.
+:::
+::::

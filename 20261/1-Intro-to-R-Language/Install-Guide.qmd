@@ -35,7 +35,7 @@ notebooks and data that you can edit freely.
 to finish — the first run takes a few minutes because it downloads packages.
 
 **Step 4.** When you see `SETUP COMPLETE`, you are ready. Open
-`Fast-Intro-to-R.Rmd` and begin.
+`Intro-to-R.qmd` and begin.
 
 ::: {.callout-warning title="Free-plan hours"}
 The free plan gives you a limited number of compute hours per month. To avoid wasting
