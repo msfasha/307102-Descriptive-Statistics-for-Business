@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>307102 Statistics for Business – 1. Fast Intro to R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,13 +19,10 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -253,15 +250,15 @@
 <h1>1. R is a calculator that remembers</h1>
 <p>At its simplest, R is a calculator.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="dv">150</span> <span class="sc">*</span> <span class="fl">0.05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="dv">150</span> <span class="sc">*</span> <span class="fl">0.05</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 7.5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>(<span class="dv">45</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">38</span>) <span class="sc">/</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>(<span class="dv">45</span> <span class="sc">+</span> <span class="dv">52</span> <span class="sc">+</span> <span class="dv">38</span>) <span class="sc">/</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 45</code></pre>
 </div>
@@ -276,13 +273,13 @@
 <p>In R you give a value a <strong>name</strong> instead. The name never moves.</p>
 <p>The arrow <code>&lt;-</code> means “store this under this name”. Read it as “gets”.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>tax_rate <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb7-2"><a aria-label="2"></a></span>
-<span id="cb7-3"><a aria-label="3"></a>item_price <span class="ot">&lt;-</span> <span class="dv">120</span></span>
-<span id="cb7-4"><a aria-label="4"></a></span>
-<span id="cb7-5"><a aria-label="5"></a>tax_amount <span class="ot">&lt;-</span> item_price <span class="sc">*</span> tax_rate</span>
-<span id="cb7-6"><a aria-label="6"></a></span>
-<span id="cb7-7"><a aria-label="7"></a>tax_amount</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>tax_rate <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb7-2"><a></a></span>
+<span id="cb7-3"><a></a>item_price <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a>tax_amount <span class="ot">&lt;-</span> item_price <span class="sc">*</span> tax_rate</span>
+<span id="cb7-6"><a></a></span>
+<span id="cb7-7"><a></a>tax_amount</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 6</code></pre>
 </div>
@@ -293,8 +290,8 @@
 <p><strong>Names are case-sensitive and cannot contain spaces.</strong> <code>Tax_Rate</code> and <code>tax_rate</code> are different names. Use lowercase with underscores and you will avoid most problems.</p>
 <p>Once a value is stored you can reuse it as often as you like:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>total_paid <span class="ot">&lt;-</span> item_price <span class="sc">+</span> tax_amount</span>
-<span id="cb9-2"><a aria-label="2"></a>total_paid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>total_paid <span class="ot">&lt;-</span> item_price <span class="sc">+</span> tax_amount</span>
+<span id="cb9-2"><a></a>total_paid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 126</code></pre>
 </div>
@@ -307,17 +304,17 @@
 <p>A <strong>function</strong> is a command that does something to a value. You have used functions in Excel: <code>SUM</code>, <code>AVERAGE</code>, <code>COUNT</code>. R works the same way with different names.</p>
 <p>A function is its name followed by round brackets, with the thing it works on inside.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="fl">8.0</span>, <span class="fl">45.2</span>, <span class="fl">19.9</span>, <span class="fl">33.1</span>)</span>
-<span id="cb11-2"><a aria-label="2"></a></span>
-<span id="cb11-3"><a aria-label="3"></a><span class="fu">mean</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="fl">8.0</span>, <span class="fl">45.2</span>, <span class="fl">19.9</span>, <span class="fl">33.1</span>)</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a><span class="fu">mean</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 23.74</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">max</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">max</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 45.2</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">length</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">length</span>(prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 5</code></pre>
 </div>
@@ -325,13 +322,13 @@
 <p>The <code>c()</code> is itself a function. It stands for “combine” and glues several values into a single list of numbers. In R this is a <strong>vector</strong> - simply a column of values of the same type.</p>
 <p>Some functions take extra instructions, called <strong>arguments</strong>, separated by commas:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>messy_prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="fl">8.0</span>, <span class="cn">NA</span>, <span class="fl">19.9</span>, <span class="fl">33.1</span>)</span>
-<span id="cb17-2"><a aria-label="2"></a></span>
-<span id="cb17-3"><a aria-label="3"></a><span class="fu">mean</span>(messy_prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>messy_prices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">12.5</span>, <span class="fl">8.0</span>, <span class="cn">NA</span>, <span class="fl">19.9</span>, <span class="fl">33.1</span>)</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a><span class="fu">mean</span>(messy_prices)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NA</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">mean</span>(messy_prices, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">mean</span>(messy_prices, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 18.375</code></pre>
 </div>
@@ -391,16 +388,16 @@
 <p>That structure is a <strong>data frame</strong>. It is the single most important idea in this notebook: a spreadsheet that lives inside R.</p>
 <p>Here is a tiny one, built by hand:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb21-2"><a aria-label="2"></a></span>
-<span id="cb21-3"><a aria-label="3"></a>branches <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb21-4"><a aria-label="4"></a>  <span class="at">branch      =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
-<span id="cb21-5"><a aria-label="5"></a>  <span class="at">city        =</span> <span class="fu">c</span>(<span class="st">"Yangon"</span>, <span class="st">"Mandalay"</span>, <span class="st">"Naypyitaw"</span>),</span>
-<span id="cb21-6"><a aria-label="6"></a>  <span class="at">staff_count =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">19</span>, <span class="dv">21</span>),</span>
-<span id="cb21-7"><a aria-label="7"></a>  <span class="at">open_year   =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2017</span>, <span class="dv">2016</span>)</span>
-<span id="cb21-8"><a aria-label="8"></a>)</span>
-<span id="cb21-9"><a aria-label="9"></a></span>
-<span id="cb21-10"><a aria-label="10"></a>branches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb21-2"><a></a></span>
+<span id="cb21-3"><a></a>branches <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-4"><a></a>  <span class="at">branch      =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>),</span>
+<span id="cb21-5"><a></a>  <span class="at">city        =</span> <span class="fu">c</span>(<span class="st">"Yangon"</span>, <span class="st">"Mandalay"</span>, <span class="st">"Naypyitaw"</span>),</span>
+<span id="cb21-6"><a></a>  <span class="at">staff_count =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">19</span>, <span class="dv">21</span>),</span>
+<span id="cb21-7"><a></a>  <span class="at">open_year   =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2017</span>, <span class="dv">2016</span>)</span>
+<span id="cb21-8"><a></a>)</span>
+<span id="cb21-9"><a></a></span>
+<span id="cb21-10"><a></a>branches</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;   branch      city staff_count open_year
 #&gt; 1      A    Yangon          24      2015
@@ -447,11 +444,11 @@
 <p>You will not usually type data by hand. You will load it from a file.</p>
 <p>For the rest of this course the file is <code>supermarket_sales.xlsx</code>: 1,000 transactions from a supermarket chain with three branches. <code>read_excel()</code> reads it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb23-2"><a aria-label="2"></a></span>
-<span id="cb23-3"><a aria-label="3"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span>
-<span id="cb23-4"><a aria-label="4"></a></span>
-<span id="cb23-5"><a aria-label="5"></a>sales</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb23-2"><a></a></span>
+<span id="cb23-3"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span>
+<span id="cb23-4"><a></a></span>
+<span id="cb23-5"><a></a>sales</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 17
 #&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`
@@ -479,14 +476,14 @@
 <h2>Getting your bearings</h2>
 <p>Before analysing any dataset, look at it. Three functions do this.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">dim</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">dim</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1000   17</code></pre>
 </div>
 </div>
 <p><code>dim()</code> gives the size: rows first, then columns. So 1,000 transactions, each with 17 pieces of information.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="fu">names</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">names</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;  [1] "Invoice ID"              "Branch"                 
 #&gt;  [3] "City"                    "Customer type"          
@@ -501,7 +498,7 @@
 </div>
 <p><code>names()</code> lists the column names. Notice that several contain spaces - <code>Unit price</code>, <code>Product line</code>, <code>Customer type</code>. That is common in real business data and it has a consequence you will meet in a moment.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">glimpse</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">glimpse</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Rows: 1,000
 #&gt; Columns: 17
@@ -569,7 +566,7 @@
 <h1>6. The dollar sign - pulling out one column</h1>
 <p>To work with a single column, write the data frame name, then <code>$</code>, then the column name.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="fu">mean</span>(sales<span class="sc">$</span>Rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span>Rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 6.9727</code></pre>
 </div>
@@ -577,15 +574,15 @@
 <p>Read <code>sales$Rating</code> as “the Rating column of sales”.</p>
 <p>Because <code>sales$Rating</code> is just a vector of numbers, every function from section 3 works on it:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="fu">max</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">max</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1042.65</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a><span class="fu">min</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">min</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 10.6785</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a><span class="fu">length</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">length</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1000</code></pre>
 </div>
@@ -602,7 +599,7 @@
 <div class="callout-content">
 <p>When a column name contains a space, R needs help seeing where the name starts and ends. Wrap it in <strong>backticks</strong> - the key above Tab on most keyboards.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 55.67213</code></pre>
 </div>
@@ -634,7 +631,7 @@
 <p><strong>Show the answer</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Backticks are required because of the space. Note also that this column is spelled in lowercase - <code>gross income</code>, not <code>Gross Income</code>. R is case-sensitive, so capitalisation must match exactly what <code>names(sales)</code> showed you.</p>
 </div>
 </div>
@@ -650,14 +647,14 @@
 <h1>7. The pipe - reading code as a sentence</h1>
 <p>Suppose you want the average transaction value for Branch A only. Written the direct way:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="fu">summarise</span>(<span class="fu">filter</span>(sales, Branch <span class="sc">==</span> <span class="st">"A"</span>), <span class="at">avg =</span> <span class="fu">mean</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">summarise</span>(<span class="fu">filter</span>(sales, Branch <span class="sc">==</span> <span class="st">"A"</span>), <span class="at">avg =</span> <span class="fu">mean</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>That works, but it reads inside-out: the first thing that happens (<code>filter</code>) is buried in the middle. With four or five steps it becomes unreadable.</p>
 <p>The <strong>pipe</strong>, written <code>|&gt;</code>, fixes this. It takes whatever is on its left and passes it into the function on its right. It means <strong>“and then”</strong>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb43-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">avg_transaction =</span> <span class="fu">mean</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a></a>  <span class="fu">summarise</span>(<span class="at">avg_transaction =</span> <span class="fu">mean</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 1
 #&gt;   avg_transaction
@@ -735,8 +732,8 @@
 <section id="filter---choosing-rows" class="slide level2">
 <h2>filter() - choosing rows</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb45-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 340 × 17
 #&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`
@@ -759,8 +756,8 @@
 </div>
 <p>Note the <strong>double</strong> equals sign. A single <code>=</code> means “set this to”; <code>==</code> means “is this equal to”. Using <code>=</code> where you meant <code>==</code> is another very common early error.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Total <span class="sc">&gt;</span> <span class="dv">900</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a></a>  <span class="fu">filter</span>(Total <span class="sc">&gt;</span> <span class="dv">900</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 26 × 17
 #&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`
@@ -783,8 +780,8 @@
 </div>
 <p>Conditions can be combined. A comma means “and”:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>, Payment <span class="sc">==</span> <span class="st">"Cash"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a></a>  <span class="fu">filter</span>(Branch <span class="sc">==</span> <span class="st">"A"</span>, Payment <span class="sc">==</span> <span class="st">"Cash"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 110 × 17
 #&gt;    `Invoice ID` Branch City   `Customer type` Gender `Product line` `Unit price`
@@ -809,8 +806,8 @@
 <section id="select---choosing-columns" class="slide level2">
 <h2>select() - choosing columns</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a aria-label="2"></a>  <span class="fu">select</span>(Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total, Rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a></a>  <span class="fu">select</span>(Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total, Rating)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 4
 #&gt;    Branch `Product line`         Total Rating
@@ -833,9 +830,9 @@
 <section id="arrange---sorting" class="slide level2">
 <h2>arrange() - sorting</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb53-2"><a aria-label="2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total)) <span class="sc">|&gt;</span></span>
-<span id="cb53-3"><a aria-label="3"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total)) <span class="sc">|&gt;</span></span>
+<span id="cb53-3"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 4
 #&gt;    `Invoice ID` Branch `Product line`      Total
@@ -859,9 +856,9 @@
 <section id="mutate---adding-a-column" class="slide level2">
 <h2>mutate() - adding a column</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb55-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">margin_pct =</span> (<span class="st">`</span><span class="at">gross income</span><span class="st">`</span> <span class="sc">/</span> Total) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb55-3"><a aria-label="3"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, margin_pct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a></a>  <span class="fu">mutate</span>(<span class="at">margin_pct =</span> (<span class="st">`</span><span class="at">gross income</span><span class="st">`</span> <span class="sc">/</span> Total) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb55-3"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, margin_pct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 4
 #&gt;    `Invoice ID` Total `gross income` margin_pct
@@ -884,13 +881,13 @@
 <section id="summarise---collapsing-to-one-number" class="slide level2">
 <h2>summarise() - collapsing to one number</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb57-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb57-3"><a aria-label="3"></a>    <span class="at">transactions  =</span> <span class="fu">n</span>(),</span>
-<span id="cb57-4"><a aria-label="4"></a>    <span class="at">avg_sale      =</span> <span class="fu">mean</span>(Total),</span>
-<span id="cb57-5"><a aria-label="5"></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(Total),</span>
-<span id="cb57-6"><a aria-label="6"></a>    <span class="at">avg_rating    =</span> <span class="fu">mean</span>(Rating)</span>
-<span id="cb57-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb57-3"><a></a>    <span class="at">transactions  =</span> <span class="fu">n</span>(),</span>
+<span id="cb57-4"><a></a>    <span class="at">avg_sale      =</span> <span class="fu">mean</span>(Total),</span>
+<span id="cb57-5"><a></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(Total),</span>
+<span id="cb57-6"><a></a>    <span class="at">avg_rating    =</span> <span class="fu">mean</span>(Rating)</span>
+<span id="cb57-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   transactions avg_sale total_revenue avg_rating
@@ -904,13 +901,13 @@
 <h2>group_by() - the one that makes summarise powerful</h2>
 <p>A single average across all 1,000 transactions is rarely the interesting number. What you usually want is the average <strong>for each branch</strong>, or <strong>for each product line</strong>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb59-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
-<span id="cb59-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb59-4"><a aria-label="4"></a>    <span class="at">transactions  =</span> <span class="fu">n</span>(),</span>
-<span id="cb59-5"><a aria-label="5"></a>    <span class="at">avg_sale      =</span> <span class="fu">mean</span>(Total),</span>
-<span id="cb59-6"><a aria-label="6"></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(Total)</span>
-<span id="cb59-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
+<span id="cb59-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb59-4"><a></a>    <span class="at">transactions  =</span> <span class="fu">n</span>(),</span>
+<span id="cb59-5"><a></a>    <span class="at">avg_sale      =</span> <span class="fu">mean</span>(Total),</span>
+<span id="cb59-6"><a></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(Total)</span>
+<span id="cb59-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   Branch transactions avg_sale total_revenue
@@ -924,13 +921,13 @@
 <p>This is the R equivalent of a PivotTable, and it is the single most useful thing in this notebook.</p>
 <p>You can group by more than one column:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(Branch, <span class="st">`</span><span class="at">Customer type</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb61-4"><a aria-label="4"></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
-<span id="cb61-5"><a aria-label="5"></a>    <span class="at">avg_sale     =</span> <span class="fu">mean</span>(Total),</span>
-<span id="cb61-6"><a aria-label="6"></a>    <span class="at">.groups      =</span> <span class="st">"drop"</span></span>
-<span id="cb61-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">group_by</span>(Branch, <span class="st">`</span><span class="at">Customer type</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb61-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb61-4"><a></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
+<span id="cb61-5"><a></a>    <span class="at">avg_sale     =</span> <span class="fu">mean</span>(Total),</span>
+<span id="cb61-6"><a></a>    <span class="at">.groups      =</span> <span class="st">"drop"</span></span>
+<span id="cb61-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 4
 #&gt;   Branch `Customer type` transactions avg_sale
@@ -964,10 +961,10 @@
 <p><strong>Show the answer</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb63-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">total_income =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb63-4"><a aria-label="4"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_income))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb63-3"><a></a>  <span class="fu">summarise</span>(<span class="at">total_income =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb63-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_income))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The order matters. You must group and summarise before you can sort, because the column you are sorting by (<code>total_income</code>) does not exist until <code>summarise()</code> creates it.</p>
 <p>A follow-up worth thinking about: the product line with the highest total income is not necessarily the most profitable <em>per sale</em>. Adding <code>mean()</code> of the same column would let you check whether the leader is winning on margin or simply on volume. That distinction is exactly what descriptive statistics exists to expose, and you will meet it again in section 2 of the course.</p>
 </div>
@@ -986,14 +983,14 @@
 <p>Among member customers, which branch has the highest average customer rating, and how many transactions is that average based on?</p>
 </blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a aria-label="2"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb64-3"><a aria-label="3"></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
-<span id="cb64-4"><a aria-label="4"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb64-5"><a aria-label="5"></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
-<span id="cb64-6"><a aria-label="6"></a>    <span class="at">avg_rating   =</span> <span class="fu">mean</span>(Rating)</span>
-<span id="cb64-7"><a aria-label="7"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb64-8"><a aria-label="8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_rating))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
+<span id="cb64-4"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb64-5"><a></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
+<span id="cb64-6"><a></a>    <span class="at">avg_rating   =</span> <span class="fu">mean</span>(Rating)</span>
+<span id="cb64-7"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb64-8"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_rating))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 3
 #&gt;   Branch transactions avg_rating
@@ -1027,26 +1024,26 @@
 <p>Fill in the blanks. The answer to each is directly above.</p>
 <p><strong>Exercise 1.</strong> How many transactions were paid for with an Ewallet?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Payment <span class="sc">==</span> <span class="st">"______"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb66-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">filter</span>(Payment <span class="sc">==</span> <span class="st">"______"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb66-3"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 2.</strong> What is the average <code>Unit price</code> in each product line, sorted from most expensive to least?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb67-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">avg_price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb67-4"><a aria-label="4"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb67-3"><a></a>  <span class="fu">summarise</span>(<span class="at">avg_price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb67-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 3.</strong> Add a column showing the tax as a percentage of the total, then show only the invoice ID, total, and your new column.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">tax_pct =</span> (<span class="st">`</span><span class="at">Tax 5%</span><span class="st">`</span> <span class="sc">/</span> ______) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb68-3"><a aria-label="3"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, ______, tax_pct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb68-2"><a></a>  <span class="fu">mutate</span>(<span class="at">tax_pct =</span> (<span class="st">`</span><span class="at">Tax 5%</span><span class="st">`</span> <span class="sc">/</span> ______) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb68-3"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, ______, tax_pct)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 4.</strong> Write this one from scratch. Which single transaction had the highest gross income, and which branch was it in?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div title="Show all answers">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -1058,27 +1055,27 @@
 <p><strong>Show all answers</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-label="1"></a><span class="co"># Exercise 1</span></span>
-<span id="cb70-2"><a aria-label="2"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb70-3"><a aria-label="3"></a>  <span class="fu">filter</span>(Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb70-4"><a aria-label="4"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span>
-<span id="cb70-5"><a aria-label="5"></a></span>
-<span id="cb70-6"><a aria-label="6"></a><span class="co"># Exercise 2</span></span>
-<span id="cb70-7"><a aria-label="7"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb70-8"><a aria-label="8"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb70-9"><a aria-label="9"></a>  <span class="fu">summarise</span>(<span class="at">avg_price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb70-10"><a aria-label="10"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_price))</span>
-<span id="cb70-11"><a aria-label="11"></a></span>
-<span id="cb70-12"><a aria-label="12"></a><span class="co"># Exercise 3</span></span>
-<span id="cb70-13"><a aria-label="13"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb70-14"><a aria-label="14"></a>  <span class="fu">mutate</span>(<span class="at">tax_pct =</span> (<span class="st">`</span><span class="at">Tax 5%</span><span class="st">`</span> <span class="sc">/</span> Total) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb70-15"><a aria-label="15"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, tax_pct)</span>
-<span id="cb70-16"><a aria-label="16"></a></span>
-<span id="cb70-17"><a aria-label="17"></a><span class="co"># Exercise 4</span></span>
-<span id="cb70-18"><a aria-label="18"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb70-19"><a aria-label="19"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb70-20"><a aria-label="20"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb70-21"><a aria-label="21"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a><span class="co"># Exercise 1</span></span>
+<span id="cb70-2"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb70-3"><a></a>  <span class="fu">filter</span>(Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb70-4"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span>
+<span id="cb70-5"><a></a></span>
+<span id="cb70-6"><a></a><span class="co"># Exercise 2</span></span>
+<span id="cb70-7"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb70-8"><a></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb70-9"><a></a>  <span class="fu">summarise</span>(<span class="at">avg_price =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb70-10"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_price))</span>
+<span id="cb70-11"><a></a></span>
+<span id="cb70-12"><a></a><span class="co"># Exercise 3</span></span>
+<span id="cb70-13"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb70-14"><a></a>  <span class="fu">mutate</span>(<span class="at">tax_pct =</span> (<span class="st">`</span><span class="at">Tax 5%</span><span class="st">`</span> <span class="sc">/</span> Total) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb70-15"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, tax_pct)</span>
+<span id="cb70-16"><a></a></span>
+<span id="cb70-17"><a></a><span class="co"># Exercise 4</span></span>
+<span id="cb70-18"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb70-19"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">gross income</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb70-20"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb70-21"><a></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On Exercise 3, every answer comes out at 4.7619 percent rather than 5. That is not an error. The tax is 5 percent <em>of the pre-tax amount</em>, and <code>Total</code> already includes the tax, so the tax is a slightly smaller share of the larger number.</p>
 <p>Noticing that a result is not quite what you expected, and then working out why, is the habit this whole course is trying to build.</p>
 </div>

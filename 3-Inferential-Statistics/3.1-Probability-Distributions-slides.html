@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>307102 Statistics for Business – 3.1 Probability Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,13 +19,10 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -264,10 +261,10 @@
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a aria-label="3"></a></span>
-<span id="cb1-4"><a aria-label="4"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="from-describing-to-modelling" class="title-slide slide level1 center">
@@ -336,30 +333,30 @@
 <h2>A business question</h2>
 <p>About half of the chain’s customers are members. If 20 customers walk in, what is the chance that exactly 12 of them are members?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># First, the actual member rate in our data</span></span>
-<span id="cb2-2"><a aria-label="2"></a>p_member <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
-<span id="cb2-3"><a aria-label="3"></a>p_member</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># First, the actual member rate in our data</span></span>
+<span id="cb2-2"><a></a>p_member <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
+<span id="cb2-3"><a></a>p_member</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.501</code></pre>
 </div>
 </div>
 <p>That line is worth reading carefully. <code>sales$\</code>Customer type` == “Member”<code>produces a column of</code>TRUE<code>/</code>FALSE<code>. R treats</code>TRUE<code>as 1 and</code>FALSE<code>as 0, so taking the mean of that column gives the **proportion** that are</code>TRUE`. This is a very common R idiom and you will use it constantly.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Probability of exactly 12 members out of 20 customers</span></span>
-<span id="cb4-2"><a aria-label="2"></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Probability of exactly 12 members out of 20 customers</span></span>
+<span id="cb4-2"><a></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1210944</code></pre>
 </div>
 </div>
 <p>About a 12 percent chance. Now some more useful questions:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># 12 or fewer members</span></span>
-<span id="cb6-2"><a aria-label="2"></a><span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># 12 or fewer members</span></span>
+<span id="cb6-2"><a></a><span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.8664802</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># More than 12 members (note: 1 minus "12 or fewer")</span></span>
-<span id="cb8-2"><a aria-label="2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># More than 12 members (note: 1 minus "12 or fewer")</span></span>
+<span id="cb8-2"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1335198</code></pre>
 </div>
@@ -384,26 +381,26 @@
 <section id="seeing-the-whole-distribution" class="slide level2">
 <h2>Seeing the whole distribution</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>binom_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb10-2"><a aria-label="2"></a>  <span class="at">members     =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>,</span>
-<span id="cb10-3"><a aria-label="3"></a>  <span class="at">probability =</span> <span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
-<span id="cb10-4"><a aria-label="4"></a>)</span>
-<span id="cb10-5"><a aria-label="5"></a></span>
-<span id="cb10-6"><a aria-label="6"></a><span class="fu">ggplot</span>(binom_dist, <span class="fu">aes</span>(<span class="at">x =</span> members, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
-<span id="cb10-7"><a aria-label="7"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
-<span id="cb10-8"><a aria-label="8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Members among 20 random customers"</span>,</span>
-<span id="cb10-9"><a aria-label="9"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Binomial, n = 20, p = "</span>, <span class="fu">round</span>(p_member, <span class="dv">3</span>)),</span>
-<span id="cb10-10"><a aria-label="10"></a>       <span class="at">x =</span> <span class="st">"Number of members"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb10-11"><a aria-label="11"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>binom_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a></a>  <span class="at">members     =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb10-3"><a></a>  <span class="at">probability =</span> <span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
+<span id="cb10-4"><a></a>)</span>
+<span id="cb10-5"><a></a></span>
+<span id="cb10-6"><a></a><span class="fu">ggplot</span>(binom_dist, <span class="fu">aes</span>(<span class="at">x =</span> members, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
+<span id="cb10-7"><a></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Members among 20 random customers"</span>,</span>
+<span id="cb10-9"><a></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Binomial, n = 20, p = "</span>, <span class="fu">round</span>(p_member, <span class="dv">3</span>)),</span>
+<span id="cb10-10"><a></a>       <span class="at">x =</span> <span class="st">"Number of members"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.1-Probability-Distributions_files/figure-html/binom_plot-1.png" width="672" class="r-stretch"><p>The distribution peaks at 10, which is what you would expect when half of all customers are members. Its <strong>mean is n times p</strong>, and its spread is <code>sqrt(n * p * (1 - p))</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
-<span id="cb11-2"><a aria-label="2"></a><span class="fu">tibble</span>(</span>
-<span id="cb11-3"><a aria-label="3"></a>  <span class="at">mean =</span> n <span class="sc">*</span> p_member,</span>
-<span id="cb11-4"><a aria-label="4"></a>  <span class="at">sd   =</span> <span class="fu">sqrt</span>(n <span class="sc">*</span> p_member <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_member))</span>
-<span id="cb11-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb11-2"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb11-3"><a></a>  <span class="at">mean =</span> n <span class="sc">*</span> p_member,</span>
+<span id="cb11-4"><a></a>  <span class="at">sd   =</span> <span class="fu">sqrt</span>(n <span class="sc">*</span> p_member <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_member))</span>
+<span id="cb11-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;    mean    sd
@@ -423,10 +420,10 @@
 <div class="callout-content">
 <p>About one third of transactions are paid by Ewallet. Out of 15 customers, what is the probability that <strong>fewer than 4</strong> pay by Ewallet?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"______"</span>)</span>
-<span id="cb13-2"><a aria-label="2"></a></span>
-<span id="cb13-3"><a aria-label="3"></a><span class="co"># "Fewer than 4" means 3 or fewer</span></span>
-<span id="cb13-4"><a aria-label="4"></a><span class="fu">pbinom</span>(____, <span class="at">size =</span> ____, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"______"</span>)</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a><span class="co"># "Fewer than 4" means 3 or fewer</span></span>
+<span id="cb13-4"><a></a><span class="fu">pbinom</span>(____, <span class="at">size =</span> ____, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div title="Show the answer">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -438,8 +435,8 @@
 <p><strong>Show the answer</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>)</span>
-<span id="cb14-2"><a aria-label="2"></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>p_ewallet <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Payment <span class="sc">==</span> <span class="st">"Ewallet"</span>)</span>
+<span id="cb14-2"><a></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">prob =</span> p_ewallet)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The key step is translating “fewer than 4” into “3 or fewer”. <code>pbinom</code> always includes the value you give it, so you must subtract one from a strict inequality.</p>
 </div>
 </div>
@@ -491,36 +488,36 @@
 <h2>A business question</h2>
 <p>The three branches together handled 1,000 transactions over about 90 days. Suppose a branch averages 4 transactions per hour. Staffing needs to cope with busy hours.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb15-2"><a aria-label="2"></a></span>
-<span id="cb15-3"><a aria-label="3"></a><span class="co"># Exactly 6 transactions in an hour</span></span>
-<span id="cb15-4"><a aria-label="4"></a><span class="fu">dpois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a><span class="co"># Exactly 6 transactions in an hour</span></span>
+<span id="cb15-4"><a></a><span class="fu">dpois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1041956</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="co"># 6 or fewer</span></span>
-<span id="cb17-2"><a aria-label="2"></a><span class="fu">ppois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># 6 or fewer</span></span>
+<span id="cb17-2"><a></a><span class="fu">ppois</span>(<span class="dv">6</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.889326</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># More than 8 - a genuinely busy hour</span></span>
-<span id="cb19-2"><a aria-label="2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">8</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># More than 8 - a genuinely busy hour</span></span>
+<span id="cb19-2"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">8</span>, <span class="at">lambda =</span> lambda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.02136343</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a>pois_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb21-2"><a aria-label="2"></a>  <span class="at">transactions =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>,</span>
-<span id="cb21-3"><a aria-label="3"></a>  <span class="at">probability  =</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">lambda =</span> lambda)</span>
-<span id="cb21-4"><a aria-label="4"></a>)</span>
-<span id="cb21-5"><a aria-label="5"></a></span>
-<span id="cb21-6"><a aria-label="6"></a><span class="fu">ggplot</span>(pois_dist, <span class="fu">aes</span>(<span class="at">x =</span> transactions, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
-<span id="cb21-7"><a aria-label="7"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a aria-label="8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transactions per hour"</span>,</span>
-<span id="cb21-9"><a aria-label="9"></a>       <span class="at">subtitle =</span> <span class="st">"Poisson, lambda = 4"</span>,</span>
-<span id="cb21-10"><a aria-label="10"></a>       <span class="at">x =</span> <span class="st">"Transactions in one hour"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb21-11"><a aria-label="11"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>pois_dist <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb21-2"><a></a>  <span class="at">transactions =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>,</span>
+<span id="cb21-3"><a></a>  <span class="at">probability  =</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">lambda =</span> lambda)</span>
+<span id="cb21-4"><a></a>)</span>
+<span id="cb21-5"><a></a></span>
+<span id="cb21-6"><a></a><span class="fu">ggplot</span>(pois_dist, <span class="fu">aes</span>(<span class="at">x =</span> transactions, <span class="at">y =</span> probability)) <span class="sc">+</span></span>
+<span id="cb21-7"><a></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transactions per hour"</span>,</span>
+<span id="cb21-9"><a></a>       <span class="at">subtitle =</span> <span class="st">"Poisson, lambda = 4"</span>,</span>
+<span id="cb21-10"><a></a>       <span class="at">x =</span> <span class="st">"Transactions in one hour"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.1-Probability-Distributions_files/figure-html/pois_plot-1.png" width="672" class="r-stretch"><p>Notice the shape is <strong>right-skewed</strong>. There is a hard floor at zero - you cannot have negative transactions - but no ceiling, so the tail runs to the right. This is why count data so often fails a normality check, as you saw in section 2.</p>
@@ -544,10 +541,10 @@
 <section id="why-the-shape-matters-for-staffing" class="slide level2">
 <h2>Why the shape matters for staffing</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">tibble</span>(</span>
-<span id="cb22-2"><a aria-label="2"></a>  <span class="at">capacity          =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>,</span>
-<span id="cb22-3"><a aria-label="3"></a>  <span class="at">prob_overwhelmed  =</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">lambda =</span> <span class="dv">4</span>), <span class="dv">4</span>)</span>
-<span id="cb22-4"><a aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a></a>  <span class="at">capacity          =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb22-3"><a></a>  <span class="at">prob_overwhelmed  =</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">lambda =</span> <span class="dv">4</span>), <span class="dv">4</span>)</span>
+<span id="cb22-4"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 7 × 2
 #&gt;   capacity prob_overwhelmed
@@ -588,7 +585,7 @@
 <div class="callout-content">
 <p>A branch receives an average of 2.5 customer complaints per week. What is the probability of a week with <strong>no complaints at all</strong>?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">dpois</span>(____, <span class="at">lambda =</span> ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">dpois</span>(____, <span class="at">lambda =</span> ____)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div title="Show the answer">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -600,7 +597,7 @@
 <p><strong>Show the answer</strong></p>
 </div>
 <div class="callout-content">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">2.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="at">lambda =</span> <span class="fl">2.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>About 8 percent. A complaint-free week is uncommon but not remarkable - which is worth knowing before anyone declares a quality initiative a success on one good week’s evidence.</p>
 </div>
 </div>
@@ -616,22 +613,22 @@
 <h1>4. The normal distribution</h1>
 <p>The most important continuous distribution. It is symmetric, bell-shaped, and defined by exactly two numbers: the <strong>mean</strong> (where the centre sits) and the <strong>standard deviation</strong> (how wide it is).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a>norm_demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb26-2"><a aria-label="2"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
-<span id="cb26-3"><a aria-label="3"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a aria-label="4"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb26-5"><a aria-label="5"></a>    <span class="st">`</span><span class="at">SD = 1</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb26-6"><a aria-label="6"></a>    <span class="st">`</span><span class="at">SD = 2</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
-<span id="cb26-7"><a aria-label="7"></a>    <span class="st">`</span><span class="at">SD = 0.5</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb26-8"><a aria-label="8"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb26-9"><a aria-label="9"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x, <span class="at">names_to =</span> <span class="st">"spread"</span>, <span class="at">values_to =</span> <span class="st">"density"</span>)</span>
-<span id="cb26-10"><a aria-label="10"></a></span>
-<span id="cb26-11"><a aria-label="11"></a><span class="fu">ggplot</span>(norm_demo, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> density, <span class="at">colour =</span> spread)) <span class="sc">+</span></span>
-<span id="cb26-12"><a aria-label="12"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb26-13"><a aria-label="13"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#A83296"</span>, <span class="st">"#D070D0"</span>, <span class="st">"#5C1A54"</span>)) <span class="sc">+</span></span>
-<span id="cb26-14"><a aria-label="14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Three normal distributions with the same mean"</span>,</span>
-<span id="cb26-15"><a aria-label="15"></a>       <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
-<span id="cb26-16"><a aria-label="16"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>norm_demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb26-2"><a></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb26-3"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-5"><a></a>    <span class="st">`</span><span class="at">SD = 1</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb26-6"><a></a>    <span class="st">`</span><span class="at">SD = 2</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb26-7"><a></a>    <span class="st">`</span><span class="at">SD = 0.5</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb26-8"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x, <span class="at">names_to =</span> <span class="st">"spread"</span>, <span class="at">values_to =</span> <span class="st">"density"</span>)</span>
+<span id="cb26-10"><a></a></span>
+<span id="cb26-11"><a></a><span class="fu">ggplot</span>(norm_demo, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> density, <span class="at">colour =</span> spread)) <span class="sc">+</span></span>
+<span id="cb26-12"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#A83296"</span>, <span class="st">"#D070D0"</span>, <span class="st">"#5C1A54"</span>)) <span class="sc">+</span></span>
+<span id="cb26-14"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Three normal distributions with the same mean"</span>,</span>
+<span id="cb26-15"><a></a>       <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb26-16"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.1-Probability-Distributions_files/figure-html/norm_shapes-1.png" width="672" class="r-stretch"><p>All three are centred at zero. The standard deviation alone controls how spread out they are.</p>
@@ -663,10 +660,10 @@
 </table>
 <p>Verify it in R rather than taking it on trust:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="fu">tibble</span>(</span>
-<span id="cb27-2"><a aria-label="2"></a>  <span class="at">within_sd =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb27-3"><a aria-label="3"></a>  <span class="at">proportion =</span> <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="dv">4</span>)</span>
-<span id="cb27-4"><a aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb27-2"><a></a>  <span class="at">within_sd =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb27-3"><a></a>  <span class="at">proportion =</span> <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)), <span class="dv">4</span>)</span>
+<span id="cb27-4"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 2
 #&gt;   within_sd proportion
@@ -682,10 +679,10 @@
 <h2>Applying it to the ratings data</h2>
 <p><code>Rating</code> is not perfectly normal - you saw that in section 2 - but it is symmetric enough to illustrate the method.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a>r_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Rating)</span>
-<span id="cb29-2"><a aria-label="2"></a>r_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Rating)</span>
-<span id="cb29-3"><a aria-label="3"></a></span>
-<span id="cb29-4"><a aria-label="4"></a><span class="fu">tibble</span>(<span class="at">mean =</span> <span class="fu">round</span>(r_mean, <span class="dv">3</span>), <span class="at">sd =</span> <span class="fu">round</span>(r_sd, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>r_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Rating)</span>
+<span id="cb29-2"><a></a>r_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Rating)</span>
+<span id="cb29-3"><a></a></span>
+<span id="cb29-4"><a></a><span class="fu">tibble</span>(<span class="at">mean =</span> <span class="fu">round</span>(r_mean, <span class="dv">3</span>), <span class="at">sd =</span> <span class="fu">round</span>(r_sd, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;    mean    sd
@@ -694,13 +691,13 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="co"># What proportion of customers should rate us below 5, if ratings were normal?</span></span>
-<span id="cb31-2"><a aria-label="2"></a><span class="fu">pnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># What proportion of customers should rate us below 5, if ratings were normal?</span></span>
+<span id="cb31-2"><a></a><span class="fu">pnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1255119</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="co"># What proportion actually did?</span></span>
-<span id="cb33-2"><a aria-label="2"></a><span class="fu">mean</span>(sales<span class="sc">$</span>Rating <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># What proportion actually did?</span></span>
+<span id="cb33-2"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span>Rating <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.153</code></pre>
 </div>
@@ -711,13 +708,13 @@
 <h2>Going the other way with qnorm</h2>
 <p><code>pnorm</code> takes a value and returns a probability. <code>qnorm</code> does the reverse.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a><span class="co"># Which rating do the bottom 10 percent of customers fall below?</span></span>
-<span id="cb35-2"><a aria-label="2"></a><span class="fu">qnorm</span>(<span class="fl">0.10</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Which rating do the bottom 10 percent of customers fall below?</span></span>
+<span id="cb35-2"><a></a><span class="fu">qnorm</span>(<span class="fl">0.10</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 4.770251</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a><span class="co"># Which rating marks the top 5 percent?</span></span>
-<span id="cb37-2"><a aria-label="2"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># Which rating marks the top 5 percent?</span></span>
+<span id="cb37-2"><a></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> r_mean, <span class="at">sd =</span> r_sd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 9.799513</code></pre>
 </div>
@@ -731,22 +728,22 @@
 <p><span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p>
 <p>It converts any normal distribution into the <strong>standard normal</strong> - mean 0, standard deviation 1 - which is what the printed z-tables in your course folder tabulate.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="co"># A customer who left a rating of 9. How unusual is that?</span></span>
-<span id="cb39-2"><a aria-label="2"></a>z <span class="ot">&lt;-</span> (<span class="dv">9</span> <span class="sc">-</span> r_mean) <span class="sc">/</span> r_sd</span>
-<span id="cb39-3"><a aria-label="3"></a>z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># A customer who left a rating of 9. How unusual is that?</span></span>
+<span id="cb39-2"><a></a>z <span class="ot">&lt;-</span> (<span class="dv">9</span> <span class="sc">-</span> r_mean) <span class="sc">/</span> r_sd</span>
+<span id="cb39-3"><a></a>z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1.179636</code></pre>
 </div>
 </div>
 <p>A z-score of about 1.2 means this rating sits 1.2 standard deviations above average.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="co"># What proportion of customers rate us 9 or lower?</span></span>
-<span id="cb41-2"><a aria-label="2"></a><span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="co"># What proportion of customers rate us 9 or lower?</span></span>
+<span id="cb41-2"><a></a><span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.8809276</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="co"># So what proportion rate us above 9?</span></span>
-<span id="cb43-2"><a aria-label="2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># So what proportion rate us above 9?</span></span>
+<span id="cb43-2"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(z)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1190724</code></pre>
 </div>
@@ -772,16 +769,16 @@
 <section id="standardising-a-whole-column" class="slide level2">
 <h2>Standardising a whole column</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a>sales_z <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
-<span id="cb45-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb45-3"><a aria-label="3"></a>    <span class="at">total_z  =</span> (Total <span class="sc">-</span> <span class="fu">mean</span>(Total)) <span class="sc">/</span> <span class="fu">sd</span>(Total),</span>
-<span id="cb45-4"><a aria-label="4"></a>    <span class="at">rating_z =</span> (Rating <span class="sc">-</span> <span class="fu">mean</span>(Rating)) <span class="sc">/</span> <span class="fu">sd</span>(Rating)</span>
-<span id="cb45-5"><a aria-label="5"></a>  )</span>
-<span id="cb45-6"><a aria-label="6"></a></span>
-<span id="cb45-7"><a aria-label="7"></a>sales_z <span class="sc">|&gt;</span></span>
-<span id="cb45-8"><a aria-label="8"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, total_z, Rating, rating_z) <span class="sc">|&gt;</span></span>
-<span id="cb45-9"><a aria-label="9"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z)) <span class="sc">|&gt;</span></span>
-<span id="cb45-10"><a aria-label="10"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>sales_z <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-3"><a></a>    <span class="at">total_z  =</span> (Total <span class="sc">-</span> <span class="fu">mean</span>(Total)) <span class="sc">/</span> <span class="fu">sd</span>(Total),</span>
+<span id="cb45-4"><a></a>    <span class="at">rating_z =</span> (Rating <span class="sc">-</span> <span class="fu">mean</span>(Rating)) <span class="sc">/</span> <span class="fu">sd</span>(Rating)</span>
+<span id="cb45-5"><a></a>  )</span>
+<span id="cb45-6"><a></a></span>
+<span id="cb45-7"><a></a>sales_z <span class="sc">|&gt;</span></span>
+<span id="cb45-8"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Total, total_z, Rating, rating_z) <span class="sc">|&gt;</span></span>
+<span id="cb45-9"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z)) <span class="sc">|&gt;</span></span>
+<span id="cb45-10"><a></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 5
 #&gt;   `Invoice ID` Total total_z Rating rating_z
@@ -795,11 +792,11 @@
 </div>
 <p>R has a built-in shortcut, <code>scale()</code>, though it returns a matrix rather than a plain column, so the explicit version above is clearer while you are learning.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a><span class="co"># A standardised column always has mean 0 and sd 1</span></span>
-<span id="cb47-2"><a aria-label="2"></a><span class="fu">tibble</span>(</span>
-<span id="cb47-3"><a aria-label="3"></a>  <span class="at">mean_z =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sales_z<span class="sc">$</span>total_z), <span class="dv">10</span>),</span>
-<span id="cb47-4"><a aria-label="4"></a>  <span class="at">sd_z   =</span> <span class="fu">sd</span>(sales_z<span class="sc">$</span>total_z)</span>
-<span id="cb47-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="co"># A standardised column always has mean 0 and sd 1</span></span>
+<span id="cb47-2"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb47-3"><a></a>  <span class="at">mean_z =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sales_z<span class="sc">$</span>total_z), <span class="dv">10</span>),</span>
+<span id="cb47-4"><a></a>  <span class="at">sd_z   =</span> <span class="fu">sd</span>(sales_z<span class="sc">$</span>total_z)</span>
+<span id="cb47-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;   mean_z  sd_z
@@ -827,10 +824,10 @@
 <section id="using-z-scores-to-find-unusual-transactions" class="slide level2">
 <h2>Using z-scores to find unusual transactions</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a>sales_z <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a aria-label="2"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(total_z) <span class="sc">&gt;</span> <span class="fl">2.5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-3"><a aria-label="3"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total, total_z) <span class="sc">|&gt;</span></span>
-<span id="cb49-4"><a aria-label="4"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>sales_z <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(total_z) <span class="sc">&gt;</span> <span class="fl">2.5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Total, total_z) <span class="sc">|&gt;</span></span>
+<span id="cb49-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 17 × 5
 #&gt;    `Invoice ID` Branch `Product line`         Total total_z
@@ -956,30 +953,30 @@
 <h1>7. Simulation - checking your reasoning</h1>
 <p>The <code>r</code> functions generate random draws. This lets you verify an answer you worked out with formulas, which is the single best habit you can build in this course.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
-<span id="cb51-2"><a aria-label="2"></a></span>
-<span id="cb51-3"><a aria-label="3"></a><span class="co"># Simulate 10,000 groups of 20 customers each</span></span>
-<span id="cb51-4"><a aria-label="4"></a>simulated <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
-<span id="cb51-5"><a aria-label="5"></a></span>
-<span id="cb51-6"><a aria-label="6"></a><span class="co"># How often were exactly 12 members?</span></span>
-<span id="cb51-7"><a aria-label="7"></a><span class="fu">mean</span>(simulated <span class="sc">==</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb51-2"><a></a></span>
+<span id="cb51-3"><a></a><span class="co"># Simulate 10,000 groups of 20 customers each</span></span>
+<span id="cb51-4"><a></a>simulated <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span>
+<span id="cb51-5"><a></a></span>
+<span id="cb51-6"><a></a><span class="co"># How often were exactly 12 members?</span></span>
+<span id="cb51-7"><a></a><span class="fu">mean</span>(simulated <span class="sc">==</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="co"># Compare with the exact formula</span></span>
-<span id="cb53-2"><a aria-label="2"></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># Compare with the exact formula</span></span>
+<span id="cb53-2"><a></a><span class="fu">dbinom</span>(<span class="dv">12</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> p_member)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1210944</code></pre>
 </div>
 </div>
 <p>The two agree to about two decimal places. If they had not, one of them would be wrong, and you would know to look again.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="fu">tibble</span>(<span class="at">members =</span> simulated) <span class="sc">|&gt;</span></span>
-<span id="cb55-2"><a aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> members)) <span class="sc">+</span></span>
-<span id="cb55-3"><a aria-label="3"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
-<span id="cb55-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"10,000 simulated groups of 20 customers"</span>,</span>
-<span id="cb55-5"><a aria-label="5"></a>       <span class="at">x =</span> <span class="st">"Number of members in the group"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb55-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">tibble</span>(<span class="at">members =</span> simulated) <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> members)) <span class="sc">+</span></span>
+<span id="cb55-3"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"10,000 simulated groups of 20 customers"</span>,</span>
+<span id="cb55-5"><a></a>       <span class="at">x =</span> <span class="st">"Number of members in the group"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.1-Probability-Distributions_files/figure-html/sim_plot-1.png" width="672" class="r-stretch"><div title="set.seed()">
@@ -1009,7 +1006,7 @@
 <li>What is the expected number, and the standard deviation?</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 2 - Poisson.</strong> A branch averages 3 refund requests per day.</p>
 <ol type="a">
@@ -1018,7 +1015,7 @@
 <li>Produce a table showing, for daily capacities of 3 through 9, the probability of being overwhelmed. What capacity would you recommend and why?</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 3 - Normal.</strong> Using the actual mean and standard deviation of <code>Total</code>:</p>
 <ol type="a">
@@ -1027,11 +1024,11 @@
 <li>Explain the gap. Which section 2 finding predicts it?</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 4 - Z-scores.</strong> Find the transaction with the highest <code>Total</code>. Compute its z-score and state in one sentence how unusual it is. Then compute the z-score of the highest <code>Rating</code> and say which of the two is the more extreme observation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 5 - Choose and justify.</strong> For each situation, name the distribution and justify it in one sentence:</p>
 <ol type="a">
@@ -1041,7 +1038,7 @@
 <li>Number of the next 40 online orders that are returned</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE - and write your reasoning as comments</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="co"># YOUR CODE HERE - and write your reasoning as comments</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Solutions are in <code>3.1-Probability-Distributions-SOLUTIONS.Rmd</code>.</p>
 </section>

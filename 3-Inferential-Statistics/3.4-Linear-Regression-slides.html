@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>307102 Statistics for Business – 3.4 Linear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,13 +19,10 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -267,11 +264,11 @@
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a aria-label="4"></a></span>
-<span id="cb1-5"><a aria-label="5"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="from-comparing-to-predicting" class="title-slide slide level1 center">
@@ -329,18 +326,18 @@
 <p><strong>The question:</strong> how much does each additional item add to a customer’s bill?</p>
 <p>Always plot first.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
-<span id="cb2-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb2-3"><a aria-label="3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb2-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction total against basket size"</span>,</span>
-<span id="cb2-5"><a aria-label="5"></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb2-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction total against basket size"</span>,</span>
+<span id="cb2-5"><a></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.4-Linear-Regression_files/figure-html/simple_plot-1.png" width="672" class="r-stretch"><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity, <span class="at">data =</span> sales)</span>
-<span id="cb3-2"><a aria-label="2"></a></span>
-<span id="cb3-3"><a aria-label="3"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity, <span class="at">data =</span> sales)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -367,7 +364,7 @@
 <h2>Reading the output</h2>
 <p><strong>The coefficients table</strong> is the heart of it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">tidy</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">tidy</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 2 × 5
 #&gt;   term        estimate std.error statistic   p.value
@@ -424,8 +421,8 @@
 <section id="r-squared" class="slide level2">
 <h2>R-squared</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">glance</span>(model1) <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a aria-label="2"></a>  <span class="fu">select</span>(r.squared, adj.r.squared, sigma, p.value, nobs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">glance</span>(model1) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">select</span>(r.squared, adj.r.squared, sigma, p.value, nobs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 5
 #&gt;   r.squared adj.r.squared sigma   p.value  nobs
@@ -477,9 +474,9 @@
 <p>One predictor is rarely enough. Adding more asks a sharper question.</p>
 <p><strong>The question:</strong> what drives transaction value - basket size, unit price, or both?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, <span class="at">data =</span> sales)</span>
-<span id="cb9-2"><a aria-label="2"></a></span>
-<span id="cb9-3"><a aria-label="3"></a><span class="fu">summary</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, <span class="at">data =</span> sales)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a><span class="fu">summary</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -503,7 +500,7 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">tidy</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">tidy</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 5
 #&gt;   term         estimate std.error statistic   p.value
@@ -530,11 +527,11 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb13-2"><a aria-label="2"></a>  <span class="fu">glance</span>(model1) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Quantity only"</span>),</span>
-<span id="cb13-3"><a aria-label="3"></a>  <span class="fu">glance</span>(model2) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Quantity + Unit price"</span>)</span>
-<span id="cb13-4"><a aria-label="4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb13-5"><a aria-label="5"></a>  <span class="fu">select</span>(model, r.squared, adj.r.squared, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">bind_rows</span>(</span>
+<span id="cb13-2"><a></a>  <span class="fu">glance</span>(model1) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Quantity only"</span>),</span>
+<span id="cb13-3"><a></a>  <span class="fu">glance</span>(model2) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Quantity + Unit price"</span>)</span>
+<span id="cb13-4"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a></a>  <span class="fu">select</span>(model, r.squared, adj.r.squared, sigma)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 2 × 4
 #&gt;   model                 r.squared adj.r.squared sigma
@@ -564,9 +561,9 @@
 <section id="adding-a-categorical-predictor" class="slide level2">
 <h2>Adding a categorical predictor</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="sc">+</span> Branch, <span class="at">data =</span> sales)</span>
-<span id="cb15-2"><a aria-label="2"></a></span>
-<span id="cb15-3"><a aria-label="3"></a><span class="fu">tidy</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="sc">+</span> Branch, <span class="at">data =</span> sales)</span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a><span class="fu">tidy</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 5
 #&gt;   term         estimate std.error statistic   p.value
@@ -585,13 +582,13 @@
 <section id="making-predictions" class="title-slide slide level1 center">
 <h1>4. Making predictions</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>new_baskets <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb17-2"><a aria-label="2"></a>  <span class="at">Quantity     =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">10</span>),</span>
-<span id="cb17-3"><a aria-label="3"></a>  <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">80</span>)</span>
-<span id="cb17-4"><a aria-label="4"></a>)</span>
-<span id="cb17-5"><a aria-label="5"></a></span>
-<span id="cb17-6"><a aria-label="6"></a>new_baskets <span class="sc">|&gt;</span></span>
-<span id="cb17-7"><a aria-label="7"></a>  <span class="fu">mutate</span>(<span class="at">predicted_total =</span> <span class="fu">round</span>(<span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets), <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>new_baskets <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb17-2"><a></a>  <span class="at">Quantity     =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">10</span>),</span>
+<span id="cb17-3"><a></a>  <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">80</span>)</span>
+<span id="cb17-4"><a></a>)</span>
+<span id="cb17-5"><a></a></span>
+<span id="cb17-6"><a></a>new_baskets <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a></a>  <span class="fu">mutate</span>(<span class="at">predicted_total =</span> <span class="fu">round</span>(<span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets), <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 3
 #&gt;   Quantity `Unit price` predicted_total
@@ -605,8 +602,8 @@
 <section id="two-kinds-of-interval" class="slide level2">
 <h2>Two kinds of interval</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="co"># Confidence interval: where is the AVERAGE total for baskets like this?</span></span>
-<span id="cb19-2"><a aria-label="2"></a><span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets, <span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># Confidence interval: where is the AVERAGE total for baskets like this?</span></span>
+<span id="cb19-2"><a></a><span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets, <span class="at">interval =</span> <span class="st">"confidence"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;      fit    lwr    upr
 #&gt; 1  -2.87 -11.72   5.99
@@ -615,8 +612,8 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="co"># Prediction interval: where will an INDIVIDUAL transaction fall?</span></span>
-<span id="cb21-2"><a aria-label="2"></a><span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets, <span class="at">interval =</span> <span class="st">"prediction"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># Prediction interval: where will an INDIVIDUAL transaction fall?</span></span>
+<span id="cb21-2"><a></a><span class="fu">predict</span>(model2, <span class="at">newdata =</span> new_baskets, <span class="at">interval =</span> <span class="st">"prediction"</span>) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;      fit     lwr    upr
 #&gt; 1  -2.87 -163.22 157.49
@@ -685,10 +682,10 @@
 </tbody>
 </table>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb23-2"><a aria-label="2"></a><span class="fu">plot</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb23-2"><a></a><span class="fu">plot</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <img data-src="3.4-Linear-Regression_files/figure-html/diagnostics-1.png" width="864" class="r-stretch"></section>
 <section id="reading-each-plot" class="slide level2">
@@ -701,16 +698,16 @@
 <section id="doing-it-with-ggplot" class="slide level2">
 <h2>Doing it with ggplot</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a>aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(model2)</span>
-<span id="cb25-2"><a aria-label="2"></a></span>
-<span id="cb25-3"><a aria-label="3"></a><span class="fu">ggplot</span>(aug, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb25-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
-<span id="cb25-5"><a aria-label="5"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb25-6"><a aria-label="6"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#D64545"</span>) <span class="sc">+</span></span>
-<span id="cb25-7"><a aria-label="7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals against fitted values"</span>,</span>
-<span id="cb25-8"><a aria-label="8"></a>       <span class="at">subtitle =</span> <span class="st">"Look for a flat red line and an even band of points"</span>,</span>
-<span id="cb25-9"><a aria-label="9"></a>       <span class="at">x =</span> <span class="st">"Fitted value"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>) <span class="sc">+</span></span>
-<span id="cb25-10"><a aria-label="10"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(model2)</span>
+<span id="cb25-2"><a></a></span>
+<span id="cb25-3"><a></a><span class="fu">ggplot</span>(aug, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb25-4"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#D64545"</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals against fitted values"</span>,</span>
+<span id="cb25-8"><a></a>       <span class="at">subtitle =</span> <span class="st">"Look for a flat red line and an even band of points"</span>,</span>
+<span id="cb25-9"><a></a>       <span class="at">x =</span> <span class="st">"Fitted value"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>) <span class="sc">+</span></span>
+<span id="cb25-10"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.4-Linear-Regression_files/figure-html/diagnostics_gg-1.png" width="672" class="r-stretch"><div title="What a residual plot is really asking">
@@ -760,10 +757,10 @@
 <h2>Multicollinearity</h2>
 <p>When two predictors are themselves strongly correlated, the model cannot separate their effects.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># Total and gross income are perfectly proportional - a deliberate example</span></span>
-<span id="cb26-2"><a aria-label="2"></a>model_bad <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, <span class="at">data =</span> sales)</span>
-<span id="cb26-3"><a aria-label="3"></a></span>
-<span id="cb26-4"><a aria-label="4"></a><span class="fu">summary</span>(model_bad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="co"># Total and gross income are perfectly proportional - a deliberate example</span></span>
+<span id="cb26-2"><a></a>model_bad <span class="ot">&lt;-</span> <span class="fu">lm</span>(Total <span class="sc">~</span> Quantity <span class="sc">+</span> <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, <span class="at">data =</span> sales)</span>
+<span id="cb26-3"><a></a></span>
+<span id="cb26-4"><a></a><span class="fu">summary</span>(model_bad)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -792,9 +789,9 @@
 <section id="outliers-and-influence" class="slide level2">
 <h2>Outliers and influence</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>aug <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a aria-label="2"></a>  <span class="fu">slice_max</span>(.cooksd, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a aria-label="3"></a>  <span class="fu">select</span>(Total, Quantity, <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, .fitted, .resid, .cooksd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>aug <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a></a>  <span class="fu">slice_max</span>(.cooksd, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a></a>  <span class="fu">select</span>(Total, Quantity, <span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, .fitted, .resid, .cooksd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 6
 #&gt;   Total Quantity `Unit price` .fitted .resid .cooksd
@@ -812,23 +809,23 @@
 <h1>Your turn - full exercises</h1>
 <p><strong>Exercise 1 - Simple regression.</strong> Fit a model predicting <code>gross income</code> from <code>Quantity</code>. Interpret the slope and the intercept in business terms, report R-squared, and say whether the model is useful.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 2 - Multiple regression.</strong> Fit a model predicting <code>Total</code> from <code>Quantity</code>, <code>Unit price</code> and <code>Rating</code>. Which predictors matter? Interpret the <code>Rating</code> coefficient carefully - what does it mean to hold quantity and unit price constant?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 3 - Diagnostics.</strong> Produce the four diagnostic plots for your model from Exercise 2. Comment on each assumption in one sentence. Is there anything that would make you distrust the model?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 4 - Prediction.</strong> Using the Exercise 2 model, predict the total for a basket of 6 items at a unit price of 45 with a rating of 8. Give both a confidence and a prediction interval, and explain in one sentence which a shop manager should use and why.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 5 - Model comparison and judgement.</strong> Build three models predicting <code>Total</code> with increasing numbers of predictors. Compare them using adjusted R-squared. Then write a short paragraph: which model would you recommend, and does the best-fitting model tell you anything a manager could act on?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Solutions are in <code>3.4-Linear-Regression-SOLUTIONS.Rmd</code>.</p>
 </section>

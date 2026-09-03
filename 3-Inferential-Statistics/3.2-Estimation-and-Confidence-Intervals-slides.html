@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>307102 Statistics for Business – 3.2 Estimation and Confidence Intervals</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,13 +19,10 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -268,12 +265,12 @@
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a aria-label="3"></a></span>
-<span id="cb1-4"><a aria-label="4"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
-<span id="cb1-5"><a aria-label="5"></a></span>
-<span id="cb1-6"><a aria-label="6"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="population-sample-parameter-statistic" class="title-slide slide level1 center">
@@ -338,10 +335,10 @@
 </div>
 <p>For teaching purposes we are going to treat our 1,000 transactions as if they were the entire population, then draw samples from them. That lets us see the true answer and check whether our methods find it - something you can never do with real data, which is exactly why simulation is such a good teacher.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>true_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Total)</span>
-<span id="cb2-2"><a aria-label="2"></a>true_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Total)</span>
-<span id="cb2-3"><a aria-label="3"></a></span>
-<span id="cb2-4"><a aria-label="4"></a><span class="fu">tibble</span>(<span class="at">true_mean =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>), <span class="at">true_sd =</span> <span class="fu">round</span>(true_sd, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>true_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Total)</span>
+<span id="cb2-2"><a></a>true_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(sales<span class="sc">$</span>Total)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a><span class="fu">tibble</span>(<span class="at">true_mean =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>), <span class="at">true_sd =</span> <span class="fu">round</span>(true_sd, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;   true_mean true_sd
@@ -355,14 +352,14 @@
 <h1>2. Sampling variation</h1>
 <p>Take a sample of 50 transactions and compute the mean. Then do it again.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>sample_1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb4-2"><a aria-label="2"></a>sample_2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb4-3"><a aria-label="3"></a>sample_3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb4-4"><a aria-label="4"></a></span>
-<span id="cb4-5"><a aria-label="5"></a><span class="fu">tibble</span>(</span>
-<span id="cb4-6"><a aria-label="6"></a>  <span class="at">sample =</span> <span class="fu">c</span>(<span class="st">"Sample 1"</span>, <span class="st">"Sample 2"</span>, <span class="st">"Sample 3"</span>, <span class="st">"TRUE POPULATION"</span>),</span>
-<span id="cb4-7"><a aria-label="7"></a>  <span class="at">mean   =</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="fu">mean</span>(sample_1), <span class="fu">mean</span>(sample_2), <span class="fu">mean</span>(sample_3), true_mean), <span class="dv">2</span>)</span>
-<span id="cb4-8"><a aria-label="8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>sample_1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-2"><a></a>sample_2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-3"><a></a>sample_3 <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb4-6"><a></a>  <span class="at">sample =</span> <span class="fu">c</span>(<span class="st">"Sample 1"</span>, <span class="st">"Sample 2"</span>, <span class="st">"Sample 3"</span>, <span class="st">"TRUE POPULATION"</span>),</span>
+<span id="cb4-7"><a></a>  <span class="at">mean   =</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="fu">mean</span>(sample_1), <span class="fu">mean</span>(sample_2), <span class="fu">mean</span>(sample_3), true_mean), <span class="dv">2</span>)</span>
+<span id="cb4-8"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 2
 #&gt;   sample           mean
@@ -381,13 +378,13 @@
 <h1>3. The sampling distribution</h1>
 <p>If one sample mean is unreliable, what happens if we look at thousands of them?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>sample_means_50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)))</span>
-<span id="cb6-2"><a aria-label="2"></a></span>
-<span id="cb6-3"><a aria-label="3"></a><span class="fu">tibble</span>(</span>
-<span id="cb6-4"><a aria-label="4"></a>  <span class="at">mean_of_the_means =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample_means_50), <span class="dv">2</span>),</span>
-<span id="cb6-5"><a aria-label="5"></a>  <span class="at">true_mean         =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>),</span>
-<span id="cb6-6"><a aria-label="6"></a>  <span class="at">sd_of_the_means   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">2</span>)</span>
-<span id="cb6-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>sample_means_50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)))</span>
+<span id="cb6-2"><a></a></span>
+<span id="cb6-3"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb6-4"><a></a>  <span class="at">mean_of_the_means =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sample_means_50), <span class="dv">2</span>),</span>
+<span id="cb6-5"><a></a>  <span class="at">true_mean         =</span> <span class="fu">round</span>(true_mean, <span class="dv">2</span>),</span>
+<span id="cb6-6"><a></a>  <span class="at">sd_of_the_means   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">2</span>)</span>
+<span id="cb6-7"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   mean_of_the_means true_mean sd_of_the_means
@@ -399,14 +396,14 @@
 <p><strong>The average of the sample means lands almost exactly on the true mean.</strong> Individual samples are unreliable, but they are unreliable <em>symmetrically</em> - they miss high as often as low. The sample mean is an <strong>unbiased</strong> estimator.</p>
 <p><strong>The sample means vary far less than individual transactions do.</strong> The transactions had a standard deviation of about 246; the sample means have one of about 35. Averaging cancels out noise.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">tibble</span>(<span class="at">sample_mean =</span> sample_means_50) <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
-<span id="cb8-3"><a aria-label="3"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a aria-label="4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a aria-label="5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2,000 sample means, each from a sample of 50"</span>,</span>
-<span id="cb8-6"><a aria-label="6"></a>       <span class="at">subtitle =</span> <span class="st">"The solid line is the true population mean"</span>,</span>
-<span id="cb8-7"><a aria-label="7"></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a aria-label="8"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">tibble</span>(<span class="at">sample_mean =</span> sample_means_50) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2,000 sample means, each from a sample of 50"</span>,</span>
+<span id="cb8-6"><a></a>       <span class="at">subtitle =</span> <span class="st">"The solid line is the true population mean"</span>,</span>
+<span id="cb8-7"><a></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/sampling_dist_plot-1.png" width="672" class="r-stretch"></section>
@@ -437,23 +434,23 @@
 <section id="watching-it-happen" class="slide level2">
 <h2>Watching it happen</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">100</span>)</span>
-<span id="cb9-2"><a aria-label="2"></a></span>
-<span id="cb9-3"><a aria-label="3"></a>clt_data <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(sample_sizes, <span class="cf">function</span>(size_n) {</span>
-<span id="cb9-4"><a aria-label="4"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb9-5"><a aria-label="5"></a>    <span class="at">n           =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, size_n),</span>
-<span id="cb9-6"><a aria-label="6"></a>    <span class="at">sample_mean =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> size_n)))</span>
-<span id="cb9-7"><a aria-label="7"></a>  )</span>
-<span id="cb9-8"><a aria-label="8"></a>}) <span class="sc">|&gt;</span></span>
-<span id="cb9-9"><a aria-label="9"></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">factor</span>(n, <span class="at">levels =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, sample_sizes)))</span>
-<span id="cb9-10"><a aria-label="10"></a></span>
-<span id="cb9-11"><a aria-label="11"></a><span class="fu">ggplot</span>(clt_data, <span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
-<span id="cb9-12"><a aria-label="12"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb9-13"><a aria-label="13"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb9-14"><a aria-label="14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Central Limit Theorem in action"</span>,</span>
-<span id="cb9-15"><a aria-label="15"></a>       <span class="at">subtitle =</span> <span class="st">"Skewed at n = 2, unmistakably normal by n = 30"</span>,</span>
-<span id="cb9-16"><a aria-label="16"></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a aria-label="17"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">100</span>)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>clt_data <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(sample_sizes, <span class="cf">function</span>(size_n) {</span>
+<span id="cb9-4"><a></a>  <span class="fu">tibble</span>(</span>
+<span id="cb9-5"><a></a>    <span class="at">n           =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, size_n),</span>
+<span id="cb9-6"><a></a>    <span class="at">sample_mean =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> size_n)))</span>
+<span id="cb9-7"><a></a>  )</span>
+<span id="cb9-8"><a></a>}) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a></a>  <span class="fu">mutate</span>(<span class="at">n =</span> <span class="fu">factor</span>(n, <span class="at">levels =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, sample_sizes)))</span>
+<span id="cb9-10"><a></a></span>
+<span id="cb9-11"><a></a><span class="fu">ggplot</span>(clt_data, <span class="fu">aes</span>(<span class="at">x =</span> sample_mean)) <span class="sc">+</span></span>
+<span id="cb9-12"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> n, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Central Limit Theorem in action"</span>,</span>
+<span id="cb9-15"><a></a>       <span class="at">subtitle =</span> <span class="st">"Skewed at n = 2, unmistakably normal by n = 30"</span>,</span>
+<span id="cb9-16"><a></a>       <span class="at">x =</span> <span class="st">"Sample mean"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/clt_demo-1.png" width="672" class="r-stretch"><p>At <code>n = 2</code> the distribution still carries the right skew of the original data. By <code>n = 30</code> it is convincingly bell-shaped. This is where the common rule of thumb “n of at least 30” comes from.</p>
@@ -477,12 +474,12 @@
 <section id="the-standard-error" class="slide level2">
 <h2>The standard error</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb10-2"><a aria-label="2"></a></span>
-<span id="cb10-3"><a aria-label="3"></a><span class="fu">tibble</span>(</span>
-<span id="cb10-4"><a aria-label="4"></a>  <span class="at">formula_se  =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n), <span class="dv">3</span>),</span>
-<span id="cb10-5"><a aria-label="5"></a>  <span class="at">simulated_se =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">3</span>)</span>
-<span id="cb10-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb10-4"><a></a>  <span class="at">formula_se  =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n), <span class="dv">3</span>),</span>
+<span id="cb10-5"><a></a>  <span class="at">simulated_se =</span> <span class="fu">round</span>(<span class="fu">sd</span>(sample_means_50), <span class="dv">3</span>)</span>
+<span id="cb10-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;   formula_se simulated_se
@@ -506,10 +503,10 @@
           display:block!important;
       }</style></aside>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">tibble</span>(</span>
-<span id="cb12-2"><a aria-label="2"></a>  <span class="at">sample_size    =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>),</span>
-<span id="cb12-3"><a aria-label="3"></a>  <span class="at">standard_error =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>)), <span class="dv">2</span>)</span>
-<span id="cb12-4"><a aria-label="4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a></a>  <span class="at">sample_size    =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>),</span>
+<span id="cb12-3"><a></a>  <span class="at">standard_error =</span> <span class="fu">round</span>(true_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>)), <span class="dv">2</span>)</span>
+<span id="cb12-4"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 2
 #&gt;   sample_size standard_error
@@ -534,23 +531,23 @@
 <p>The recipe: take your estimate, and go out a certain number of standard errors either side.</p>
 <p><span class="math display">\[\bar{x} \pm t^* \times \frac{s}{\sqrt{n}}\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>my_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb14-2"><a aria-label="2"></a></span>
-<span id="cb14-3"><a aria-label="3"></a>x_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(my_sample)</span>
-<span id="cb14-4"><a aria-label="4"></a>s     <span class="ot">&lt;-</span> <span class="fu">sd</span>(my_sample)</span>
-<span id="cb14-5"><a aria-label="5"></a>n     <span class="ot">&lt;-</span> <span class="fu">length</span>(my_sample)</span>
-<span id="cb14-6"><a aria-label="6"></a>se    <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb14-7"><a aria-label="7"></a></span>
-<span id="cb14-8"><a aria-label="8"></a><span class="co"># The multiplier for 95 percent confidence, with n - 1 degrees of freedom</span></span>
-<span id="cb14-9"><a aria-label="9"></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb14-10"><a aria-label="10"></a></span>
-<span id="cb14-11"><a aria-label="11"></a><span class="fu">tibble</span>(</span>
-<span id="cb14-12"><a aria-label="12"></a>  <span class="at">x_bar  =</span> <span class="fu">round</span>(x_bar, <span class="dv">2</span>),</span>
-<span id="cb14-13"><a aria-label="13"></a>  <span class="at">se     =</span> <span class="fu">round</span>(se, <span class="dv">2</span>),</span>
-<span id="cb14-14"><a aria-label="14"></a>  <span class="at">t_star =</span> <span class="fu">round</span>(t_star, <span class="dv">3</span>),</span>
-<span id="cb14-15"><a aria-label="15"></a>  <span class="at">lower  =</span> <span class="fu">round</span>(x_bar <span class="sc">-</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>),</span>
-<span id="cb14-16"><a aria-label="16"></a>  <span class="at">upper  =</span> <span class="fu">round</span>(x_bar <span class="sc">+</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>)</span>
-<span id="cb14-17"><a aria-label="17"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>my_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb14-2"><a></a></span>
+<span id="cb14-3"><a></a>x_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(my_sample)</span>
+<span id="cb14-4"><a></a>s     <span class="ot">&lt;-</span> <span class="fu">sd</span>(my_sample)</span>
+<span id="cb14-5"><a></a>n     <span class="ot">&lt;-</span> <span class="fu">length</span>(my_sample)</span>
+<span id="cb14-6"><a></a>se    <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb14-7"><a></a></span>
+<span id="cb14-8"><a></a><span class="co"># The multiplier for 95 percent confidence, with n - 1 degrees of freedom</span></span>
+<span id="cb14-9"><a></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb14-10"><a></a></span>
+<span id="cb14-11"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb14-12"><a></a>  <span class="at">x_bar  =</span> <span class="fu">round</span>(x_bar, <span class="dv">2</span>),</span>
+<span id="cb14-13"><a></a>  <span class="at">se     =</span> <span class="fu">round</span>(se, <span class="dv">2</span>),</span>
+<span id="cb14-14"><a></a>  <span class="at">t_star =</span> <span class="fu">round</span>(t_star, <span class="dv">3</span>),</span>
+<span id="cb14-15"><a></a>  <span class="at">lower  =</span> <span class="fu">round</span>(x_bar <span class="sc">-</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>),</span>
+<span id="cb14-16"><a></a>  <span class="at">upper  =</span> <span class="fu">round</span>(x_bar <span class="sc">+</span> t_star <span class="sc">*</span> se, <span class="dv">2</span>)</span>
+<span id="cb14-17"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 5
 #&gt;   x_bar    se t_star lower upper
@@ -563,11 +560,11 @@
 <p><strong>Why the t-distribution rather than the normal?</strong> Because you are using the <em>sample</em> standard deviation <code>s</code> in place of the unknown population sigma. That substitution adds uncertainty, and the t-distribution’s slightly fatter tails account for it.</p>
 <p><strong>Why <code>n - 1</code>?</strong> These are the degrees of freedom. Once you know the sample mean and <code>n - 1</code> of the values, the last value is determined - so only <code>n - 1</code> pieces of information are genuinely free.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="fu">tibble</span>(</span>
-<span id="cb16-2"><a aria-label="2"></a>  <span class="at">sample_size =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
-<span id="cb16-3"><a aria-label="3"></a>  <span class="at">t_multiplier =</span> <span class="fu">round</span>(<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>) <span class="sc">-</span> <span class="dv">1</span>), <span class="dv">3</span>),</span>
-<span id="cb16-4"><a aria-label="4"></a>  <span class="at">z_multiplier =</span> <span class="fu">round</span>(<span class="fu">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">3</span>)</span>
-<span id="cb16-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb16-2"><a></a>  <span class="at">sample_size =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
+<span id="cb16-3"><a></a>  <span class="at">t_multiplier =</span> <span class="fu">round</span>(<span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">1000</span>) <span class="sc">-</span> <span class="dv">1</span>), <span class="dv">3</span>),</span>
+<span id="cb16-4"><a></a>  <span class="at">z_multiplier =</span> <span class="fu">round</span>(<span class="fu">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">3</span>)</span>
+<span id="cb16-5"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 3
 #&gt;   sample_size t_multiplier z_multiplier
@@ -584,7 +581,7 @@
 <section id="the-one-line-version" class="slide level2">
 <h2>The one-line version</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">t.test</span>(my_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">t.test</span>(my_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  One Sample t-test
@@ -602,7 +599,7 @@
 <p><code>t.test()</code> does everything above. Read the <code>95 percent confidence interval</code> line. (The rest of that output is a hypothesis test, which is section 3.3 - ignore it for now.)</p>
 <p>To extract just the interval:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="fu">t.test</span>(my_sample)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">t.test</span>(my_sample)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 227.4594 371.2098
 #&gt; attr(,"conf.level")
@@ -611,18 +608,18 @@
 </div>
 <p>Different confidence levels:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">tibble</span>(</span>
-<span id="cb22-2"><a aria-label="2"></a>  <span class="at">level =</span> <span class="fu">c</span>(<span class="st">"90%"</span>, <span class="st">"95%"</span>, <span class="st">"99%"</span>),</span>
-<span id="cb22-3"><a aria-label="3"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
-<span id="cb22-4"><a aria-label="4"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
-<span id="cb22-5"><a aria-label="5"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>]),</span>
-<span id="cb22-6"><a aria-label="6"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
-<span id="cb22-7"><a aria-label="7"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
-<span id="cb22-8"><a aria-label="8"></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>])</span>
-<span id="cb22-9"><a aria-label="9"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb22-10"><a aria-label="10"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> <span class="fu">round</span>(upper <span class="sc">-</span> lower, <span class="dv">2</span>),</span>
-<span id="cb22-11"><a aria-label="11"></a>         <span class="at">lower =</span> <span class="fu">round</span>(lower, <span class="dv">2</span>),</span>
-<span id="cb22-12"><a aria-label="12"></a>         <span class="at">upper =</span> <span class="fu">round</span>(upper, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a></a>  <span class="at">level =</span> <span class="fu">c</span>(<span class="st">"90%"</span>, <span class="st">"95%"</span>, <span class="st">"99%"</span>),</span>
+<span id="cb22-3"><a></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
+<span id="cb22-4"><a></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>],</span>
+<span id="cb22-5"><a></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">1</span>]),</span>
+<span id="cb22-6"><a></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.90</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
+<span id="cb22-7"><a></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>],</span>
+<span id="cb22-8"><a></a>            <span class="fu">t.test</span>(my_sample, <span class="at">conf.level =</span> <span class="fl">0.99</span>)<span class="sc">$</span>conf.int[<span class="dv">2</span>])</span>
+<span id="cb22-9"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a></a>  <span class="fu">mutate</span>(<span class="at">width =</span> <span class="fu">round</span>(upper <span class="sc">-</span> lower, <span class="dv">2</span>),</span>
+<span id="cb22-11"><a></a>         <span class="at">lower =</span> <span class="fu">round</span>(lower, <span class="dv">2</span>),</span>
+<span id="cb22-12"><a></a>         <span class="at">upper =</span> <span class="fu">round</span>(upper, <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   level lower upper width
@@ -688,35 +685,35 @@
 <section id="demonstrating-it" class="slide level2">
 <h2>Demonstrating it</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
-<span id="cb24-2"><a aria-label="2"></a></span>
-<span id="cb24-3"><a aria-label="3"></a>ci_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(i) {</span>
-<span id="cb24-4"><a aria-label="4"></a>  s  <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb24-5"><a aria-label="5"></a>  ci <span class="ot">&lt;-</span> <span class="fu">t.test</span>(s)<span class="sc">$</span>conf.int</span>
-<span id="cb24-6"><a aria-label="6"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-7"><a aria-label="7"></a>    <span class="at">run      =</span> i,</span>
-<span id="cb24-8"><a aria-label="8"></a>    <span class="at">lower    =</span> ci[<span class="dv">1</span>],</span>
-<span id="cb24-9"><a aria-label="9"></a>    <span class="at">upper    =</span> ci[<span class="dv">2</span>],</span>
-<span id="cb24-10"><a aria-label="10"></a>    <span class="at">captured =</span> ci[<span class="dv">1</span>] <span class="sc">&lt;=</span> true_mean <span class="sc">&amp;</span> true_mean <span class="sc">&lt;=</span> ci[<span class="dv">2</span>]</span>
-<span id="cb24-11"><a aria-label="11"></a>  )</span>
-<span id="cb24-12"><a aria-label="12"></a>})</span>
-<span id="cb24-13"><a aria-label="13"></a></span>
-<span id="cb24-14"><a aria-label="14"></a><span class="co"># How many of the 100 intervals contained the true mean?</span></span>
-<span id="cb24-15"><a aria-label="15"></a><span class="fu">sum</span>(ci_results<span class="sc">$</span>captured)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">set.seed</span>(<span class="dv">99</span>)</span>
+<span id="cb24-2"><a></a></span>
+<span id="cb24-3"><a></a>ci_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb24-4"><a></a>  s  <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb24-5"><a></a>  ci <span class="ot">&lt;-</span> <span class="fu">t.test</span>(s)<span class="sc">$</span>conf.int</span>
+<span id="cb24-6"><a></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-7"><a></a>    <span class="at">run      =</span> i,</span>
+<span id="cb24-8"><a></a>    <span class="at">lower    =</span> ci[<span class="dv">1</span>],</span>
+<span id="cb24-9"><a></a>    <span class="at">upper    =</span> ci[<span class="dv">2</span>],</span>
+<span id="cb24-10"><a></a>    <span class="at">captured =</span> ci[<span class="dv">1</span>] <span class="sc">&lt;=</span> true_mean <span class="sc">&amp;</span> true_mean <span class="sc">&lt;=</span> ci[<span class="dv">2</span>]</span>
+<span id="cb24-11"><a></a>  )</span>
+<span id="cb24-12"><a></a>})</span>
+<span id="cb24-13"><a></a></span>
+<span id="cb24-14"><a></a><span class="co"># How many of the 100 intervals contained the true mean?</span></span>
+<span id="cb24-15"><a></a><span class="fu">sum</span>(ci_results<span class="sc">$</span>captured)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 96</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="fu">ggplot</span>(ci_results, <span class="fu">aes</span>(<span class="at">y =</span> run, <span class="at">colour =</span> captured)) <span class="sc">+</span></span>
-<span id="cb26-2"><a aria-label="2"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> lower, <span class="at">xend =</span> upper, <span class="at">yend =</span> run), <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb26-3"><a aria-label="3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb26-4"><a aria-label="4"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#A83296"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D64545"</span>),</span>
-<span id="cb26-5"><a aria-label="5"></a>                      <span class="at">name =</span> <span class="st">"Captured the truth"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a aria-label="6"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"100 confidence intervals from 100 different samples"</span>,</span>
-<span id="cb26-7"><a aria-label="7"></a>       <span class="at">subtitle =</span> <span class="st">"The vertical line is the true population mean"</span>,</span>
-<span id="cb26-8"><a aria-label="8"></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Sample number"</span>) <span class="sc">+</span></span>
-<span id="cb26-9"><a aria-label="9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">ggplot</span>(ci_results, <span class="fu">aes</span>(<span class="at">y =</span> run, <span class="at">colour =</span> captured)) <span class="sc">+</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> lower, <span class="at">xend =</span> upper, <span class="at">yend =</span> run), <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> true_mean, <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"#A83296"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"#D64545"</span>),</span>
+<span id="cb26-5"><a></a>                      <span class="at">name =</span> <span class="st">"Captured the truth"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"100 confidence intervals from 100 different samples"</span>,</span>
+<span id="cb26-7"><a></a>       <span class="at">subtitle =</span> <span class="st">"The vertical line is the true population mean"</span>,</span>
+<span id="cb26-8"><a></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Sample number"</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="3.2-Estimation-and-Confidence-Intervals_files/figure-html/ci_coverage_plot-1.png" width="672" class="r-stretch"><p>Each horizontal line is one 95 percent confidence interval from one sample. Most cross the true mean; a handful, shown in red, miss entirely.</p>
@@ -727,10 +724,10 @@
 <h1>7. Confidence intervals for a proportion</h1>
 <p>Not everything is a mean. Often you want a <strong>share</strong>: what percentage of customers are members?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>members <span class="ot">&lt;-</span> <span class="fu">sum</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
-<span id="cb27-2"><a aria-label="2"></a>total   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sales)</span>
-<span id="cb27-3"><a aria-label="3"></a></span>
-<span id="cb27-4"><a aria-label="4"></a><span class="fu">tibble</span>(members, total, <span class="at">proportion =</span> <span class="fu">round</span>(members <span class="sc">/</span> total, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>members <span class="ot">&lt;-</span> <span class="fu">sum</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">Customer type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Member"</span>)</span>
+<span id="cb27-2"><a></a>total   <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sales)</span>
+<span id="cb27-3"><a></a></span>
+<span id="cb27-4"><a></a><span class="fu">tibble</span>(members, total, <span class="at">proportion =</span> <span class="fu">round</span>(members <span class="sc">/</span> total, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   members total proportion
@@ -739,7 +736,7 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">prop.test</span>(members, total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">prop.test</span>(members, total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  1-sample proportions test with continuity correction
@@ -756,7 +753,7 @@
 </div>
 <p><code>prop.test(successes, trials)</code> gives the interval directly.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a><span class="fu">prop.test</span>(members, total)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">prop.test</span>(members, total)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.4695677 0.5324245
 #&gt; attr(,"conf.level")
@@ -768,16 +765,16 @@
 <section id="the-margin-of-error" class="slide level2">
 <h2>The margin of error</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a>p_hat <span class="ot">&lt;-</span> members <span class="sc">/</span> total</span>
-<span id="cb33-2"><a aria-label="2"></a></span>
-<span id="cb33-3"><a aria-label="3"></a>moe <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sqrt</span>(p_hat <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat) <span class="sc">/</span> total)</span>
-<span id="cb33-4"><a aria-label="4"></a></span>
-<span id="cb33-5"><a aria-label="5"></a><span class="fu">tibble</span>(</span>
-<span id="cb33-6"><a aria-label="6"></a>  <span class="at">estimate       =</span> <span class="fu">round</span>(p_hat, <span class="dv">4</span>),</span>
-<span id="cb33-7"><a aria-label="7"></a>  <span class="at">margin_of_error =</span> <span class="fu">round</span>(moe, <span class="dv">4</span>),</span>
-<span id="cb33-8"><a aria-label="8"></a>  <span class="at">lower          =</span> <span class="fu">round</span>(p_hat <span class="sc">-</span> moe, <span class="dv">4</span>),</span>
-<span id="cb33-9"><a aria-label="9"></a>  <span class="at">upper          =</span> <span class="fu">round</span>(p_hat <span class="sc">+</span> moe, <span class="dv">4</span>)</span>
-<span id="cb33-10"><a aria-label="10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>p_hat <span class="ot">&lt;-</span> members <span class="sc">/</span> total</span>
+<span id="cb33-2"><a></a></span>
+<span id="cb33-3"><a></a>moe <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sqrt</span>(p_hat <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat) <span class="sc">/</span> total)</span>
+<span id="cb33-4"><a></a></span>
+<span id="cb33-5"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb33-6"><a></a>  <span class="at">estimate       =</span> <span class="fu">round</span>(p_hat, <span class="dv">4</span>),</span>
+<span id="cb33-7"><a></a>  <span class="at">margin_of_error =</span> <span class="fu">round</span>(moe, <span class="dv">4</span>),</span>
+<span id="cb33-8"><a></a>  <span class="at">lower          =</span> <span class="fu">round</span>(p_hat <span class="sc">-</span> moe, <span class="dv">4</span>),</span>
+<span id="cb33-9"><a></a>  <span class="at">upper          =</span> <span class="fu">round</span>(p_hat <span class="sc">+</span> moe, <span class="dv">4</span>)</span>
+<span id="cb33-10"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 4
 #&gt;   estimate margin_of_error lower upper
@@ -792,12 +789,12 @@
 <p>Turn the formula around. If you want a margin of error of <code>E</code>:</p>
 <p><span class="math display">\[n = \left(\frac{1.96 \times \sigma}{E}\right)^2\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-label="1"></a>target_errors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span>
-<span id="cb35-2"><a aria-label="2"></a></span>
-<span id="cb35-3"><a aria-label="3"></a><span class="fu">tibble</span>(</span>
-<span id="cb35-4"><a aria-label="4"></a>  <span class="at">target_margin =</span> target_errors,</span>
-<span id="cb35-5"><a aria-label="5"></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>((<span class="fl">1.96</span> <span class="sc">*</span> true_sd <span class="sc">/</span> target_errors)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb35-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>target_errors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb35-2"><a></a></span>
+<span id="cb35-3"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb35-4"><a></a>  <span class="at">target_margin =</span> target_errors,</span>
+<span id="cb35-5"><a></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>((<span class="fl">1.96</span> <span class="sc">*</span> true_sd <span class="sc">/</span> target_errors)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb35-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 2
 #&gt;   target_margin needed_n
@@ -811,12 +808,12 @@
 <p>To estimate average transaction value to within 5 either way, you need a sample of several thousand. To within 50, a few dozen. <strong>The cost of precision rises as the square of the precision you demand.</strong></p>
 <p>For a proportion, the worst case is <code>p = 0.5</code>, which makes planning easy:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a>target_moe <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.03</span>, <span class="fl">0.02</span>, <span class="fl">0.01</span>)</span>
-<span id="cb37-2"><a aria-label="2"></a></span>
-<span id="cb37-3"><a aria-label="3"></a><span class="fu">tibble</span>(</span>
-<span id="cb37-4"><a aria-label="4"></a>  <span class="at">target_margin =</span> target_moe,</span>
-<span id="cb37-5"><a aria-label="5"></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>(<span class="fl">1.96</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">0.25</span> <span class="sc">/</span> target_moe<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb37-6"><a aria-label="6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>target_moe <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.03</span>, <span class="fl">0.02</span>, <span class="fl">0.01</span>)</span>
+<span id="cb37-2"><a></a></span>
+<span id="cb37-3"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb37-4"><a></a>  <span class="at">target_margin =</span> target_moe,</span>
+<span id="cb37-5"><a></a>  <span class="at">needed_n      =</span> <span class="fu">ceiling</span>(<span class="fl">1.96</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">0.25</span> <span class="sc">/</span> target_moe<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb37-6"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 2
 #&gt;   target_margin needed_n
@@ -867,23 +864,23 @@
 <h1>Your turn - full exercises</h1>
 <p><strong>Exercise 1 - Sampling distribution.</strong> Draw 1,000 samples of size 25 from <code>Rating</code> and store their means. Report the mean and standard deviation of those sample means, compare the standard deviation with the theoretical standard error, and plot the distribution.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 2 - Confidence interval by hand and by function.</strong> Take a sample of 80 transactions. Build a 95 percent confidence interval for the mean <code>Total</code> <strong>by hand</strong> using <code>qt()</code>, then confirm it with <code>t.test()</code>. Do the two agree?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 3 - Confidence level and width.</strong> Using the same sample of 80, build 80, 90, 95 and 99 percent intervals. Produce a table of their widths and write one sentence explaining the pattern.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 4 - Proportion.</strong> What proportion of transactions are paid by credit card? Build a 95 percent confidence interval. Could the true proportion plausibly be one third?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 5 - Sample size planning.</strong> Your manager wants to estimate the average customer <code>Rating</code> to within 0.1 either way, with 95 percent confidence. Using the sample standard deviation of <code>Rating</code> as an estimate of sigma, how many customers must be surveyed? If each survey costs 2 dinars, what is the budget - and what would it be for a margin of 0.2 instead?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Solutions are in <code>3.2-Estimation-and-Confidence-Intervals-SOLUTIONS.Rmd</code>.</p>
 </section>

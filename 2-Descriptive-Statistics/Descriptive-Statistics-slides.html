@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>307102 Statistics for Business – 2. Descriptive Statistics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,13 +19,10 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -271,13 +268,13 @@
 <h2>Setup</h2>
 <p>Run this chunk first, every time you open this notebook.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">library</span>(moments)</span>
-<span id="cb1-4"><a aria-label="4"></a></span>
-<span id="cb1-5"><a aria-label="5"></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span>
-<span id="cb1-6"><a aria-label="6"></a></span>
-<span id="cb1-7"><a aria-label="7"></a><span class="fu">glimpse</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a></a><span class="fu">library</span>(moments)</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a>sales <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"../data/supermarket_sales.xlsx"</span>)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a><span class="fu">glimpse</span>(sales)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Rows: 1,000
 #&gt; Columns: 17
@@ -413,7 +410,7 @@
       }</style></aside>
 <p>R enforces some of this for you:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">mean</span>(sales<span class="sc">$</span>Branch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span>Branch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Warning in mean.default(sales$Branch): argument is not numeric or logical:
 #&gt; returning NA</code></pre>
@@ -477,8 +474,8 @@
 <h1>2. Frequency tables</h1>
 <p>For a nominal variable, counting is the whole analysis.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a aria-label="2"></a>  <span class="fu">count</span>(Branch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a></a>  <span class="fu">count</span>(Branch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 2
 #&gt;   Branch     n
@@ -490,9 +487,9 @@
 </div>
 <p>Raw counts are hard to compare when groups differ in size, so convert to percentages:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a aria-label="2"></a>  <span class="fu">count</span>(Branch) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">count</span>(Branch) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 3
 #&gt;   Branch     n percent
@@ -504,9 +501,9 @@
 </div>
 <p>Sorting by size makes the story jump out, which matters with more than three categories:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a aria-label="2"></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 3
 #&gt;   `Product line`             n percent
@@ -524,9 +521,9 @@
 <h2>Cross-tabulation</h2>
 <p>Two nominal variables at once. This is where frequency tables earn their keep, because it lets you ask whether one thing depends on another:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a aria-label="2"></a>  <span class="fu">count</span>(Branch, Payment) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a aria-label="3"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Payment, <span class="at">values_from =</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">count</span>(Branch, Payment) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Payment, <span class="at">values_from =</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   Branch  Cash `Credit card` Ewallet
@@ -543,13 +540,13 @@
 <h2>Grouping a numeric variable into classes</h2>
 <p>Frequency tables also work on numeric data once you cut it into bands.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">spend_band =</span> <span class="fu">cut</span>(Total,</span>
-<span id="cb14-3"><a aria-label="3"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>, <span class="dv">750</span>, <span class="dv">1100</span>),</span>
-<span id="cb14-4"><a aria-label="4"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Under 100"</span>, <span class="st">"100-250"</span>, <span class="st">"250-500"</span>,</span>
-<span id="cb14-5"><a aria-label="5"></a>                                     <span class="st">"500-750"</span>, <span class="st">"Over 750"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a aria-label="6"></a>  <span class="fu">count</span>(spend_band) <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a aria-label="7"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">mutate</span>(<span class="at">spend_band =</span> <span class="fu">cut</span>(Total,</span>
+<span id="cb14-3"><a></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">250</span>, <span class="dv">500</span>, <span class="dv">750</span>, <span class="dv">1100</span>),</span>
+<span id="cb14-4"><a></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Under 100"</span>, <span class="st">"100-250"</span>, <span class="st">"250-500"</span>,</span>
+<span id="cb14-5"><a></a>                                     <span class="st">"500-750"</span>, <span class="st">"Over 750"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a></a>  <span class="fu">count</span>(spend_band) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 3
 #&gt;   spend_band     n percent
@@ -574,9 +571,9 @@
 <div class="callout-content">
 <p>Build a frequency table of <code>Customer type</code> with percentages.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a aria-label="2"></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(n <span class="sc">/</span> <span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -612,12 +609,12 @@
 <section id="bar-chart---for-categories" class="slide level2">
 <h2>Bar chart - for categories</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb17-2"><a aria-label="2"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
-<span id="cb17-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transactions by product line"</span>,</span>
-<span id="cb17-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
-<span id="cb17-5"><a aria-label="5"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb17-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transactions by product line"</span>,</span>
+<span id="cb17-4"><a></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb17-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/plot_bar-1.png" width="672" class="r-stretch"><p><code>coord_flip()</code> turns the bars sideways. With long category names this is almost always right - rotated vertical labels are hard to read and look amateurish.</p>
@@ -625,11 +622,11 @@
 <section id="histogram---for-numeric-data" class="slide level2">
 <h2>Histogram - for numeric data</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
-<span id="cb18-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb18-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of transaction values"</span>,</span>
-<span id="cb18-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of transaction values"</span>,</span>
+<span id="cb18-4"><a></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -640,11 +637,11 @@
 </div>
 <p><strong>The bin count is a real choice, not a detail.</strong> Change it and the story changes:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
-<span id="cb19-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb19-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The same data with only 5 bins"</span>,</span>
-<span id="cb19-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
-<span id="cb19-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The same data with only 5 bins"</span>,</span>
+<span id="cb19-4"><a></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -658,11 +655,11 @@
 <section id="boxplot---for-comparing-groups" class="slide level2">
 <h2>Boxplot - for comparing groups</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Branch, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
-<span id="cb20-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb20-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction values by branch"</span>,</span>
-<span id="cb20-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Branch"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
-<span id="cb20-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Branch, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb20-2"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction values by branch"</span>,</span>
+<span id="cb20-4"><a></a>       <span class="at">x =</span> <span class="st">"Branch"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/plot_box-1.png" width="672" class="r-stretch"><p>A boxplot compresses a whole distribution into five numbers:</p>
@@ -677,11 +674,11 @@
 <section id="scatterplot---for-two-numeric-variables" class="slide level2">
 <h2>Scatterplot - for two numeric variables</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
-<span id="cb21-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb21-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Basket size against transaction value"</span>,</span>
-<span id="cb21-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total)) <span class="sc">+</span></span>
+<span id="cb21-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Basket size against transaction value"</span>,</span>
+<span id="cb21-4"><a></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/plot_scatter-1.png" width="672" class="r-stretch"><p><code>alpha = 0.4</code> makes each point semi-transparent, so where many points overlap the colour builds up. With 1,000 points this reveals density that solid dots hide.</p>
@@ -689,12 +686,12 @@
 <section id="adding-a-third-variable-with-colour" class="slide level2">
 <h2>Adding a third variable with colour</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total, <span class="at">colour =</span> Branch)) <span class="sc">+</span></span>
-<span id="cb22-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb22-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Basket size against value, by branch"</span>,</span>
-<span id="cb22-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
-<span id="cb22-5"><a aria-label="5"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#A83296"</span>, <span class="st">"#D070D0"</span>, <span class="st">"#5C1A54"</span>)) <span class="sc">+</span></span>
-<span id="cb22-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Quantity, <span class="at">y =</span> Total, <span class="at">colour =</span> Branch)) <span class="sc">+</span></span>
+<span id="cb22-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Basket size against value, by branch"</span>,</span>
+<span id="cb22-4"><a></a>       <span class="at">x =</span> <span class="st">"Items purchased"</span>, <span class="at">y =</span> <span class="st">"Transaction total"</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#A83296"</span>, <span class="st">"#D070D0"</span>, <span class="st">"#5C1A54"</span>)) <span class="sc">+</span></span>
+<span id="cb22-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/plot_scatter_colour-1.png" width="672" class="r-stretch"><div title="Your turn">
@@ -709,11 +706,11 @@
 <div class="callout-content">
 <p>Draw a histogram of <code>Rating</code> with 20 bins.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> ______)) <span class="sc">+</span></span>
-<span id="cb23-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> ____, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb23-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of customer ratings"</span>,</span>
-<span id="cb23-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Rating"</span>, <span class="at">y =</span> <span class="st">"Number of customers"</span>) <span class="sc">+</span></span>
-<span id="cb23-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> ______)) <span class="sc">+</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> ____, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of customer ratings"</span>,</span>
+<span id="cb23-4"><a></a>       <span class="at">x =</span> <span class="st">"Rating"</span>, <span class="at">y =</span> <span class="st">"Number of customers"</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Look at the result. Does it have the bell shape you might have expected, or something else? Hold that thought - section 7 comes back to it.</p>
 </div>
@@ -729,7 +726,7 @@
 <section id="mean" class="slide level2">
 <h2>Mean</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">mean</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">mean</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 322.9667</code></pre>
 </div>
@@ -739,7 +736,7 @@
 <section id="median" class="slide level2">
 <h2>Median</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="fu">median</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">median</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 253.848</code></pre>
 </div>
@@ -765,9 +762,9 @@
 </div>
 <p>For a categorical variable, the mode is the top row of a sorted count:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a aria-label="2"></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a aria-label="3"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;   `Product line`          n
@@ -777,9 +774,9 @@
 </div>
 <p>For a continuous variable like <code>Total</code>, the mode is not useful - with 1,000 transactions recorded to two decimal places, almost every value appears once. The mode earns its place with categorical data and with discrete counts:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a aria-label="2"></a>  <span class="fu">count</span>(Quantity, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a aria-label="3"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a></a>  <span class="fu">count</span>(Quantity, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 2
 #&gt;   Quantity     n
@@ -793,12 +790,12 @@
 <section id="why-the-choice-matters" class="slide level2">
 <h2>Why the choice matters</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb32-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb32-3"><a aria-label="3"></a>    <span class="at">mean_total   =</span> <span class="fu">mean</span>(Total),</span>
-<span id="cb32-4"><a aria-label="4"></a>    <span class="at">median_total =</span> <span class="fu">median</span>(Total),</span>
-<span id="cb32-5"><a aria-label="5"></a>    <span class="at">difference   =</span> <span class="fu">mean</span>(Total) <span class="sc">-</span> <span class="fu">median</span>(Total)</span>
-<span id="cb32-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb32-3"><a></a>    <span class="at">mean_total   =</span> <span class="fu">mean</span>(Total),</span>
+<span id="cb32-4"><a></a>    <span class="at">median_total =</span> <span class="fu">median</span>(Total),</span>
+<span id="cb32-5"><a></a>    <span class="at">difference   =</span> <span class="fu">mean</span>(Total) <span class="sc">-</span> <span class="fu">median</span>(Total)</span>
+<span id="cb32-6"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   mean_total median_total difference
@@ -829,13 +826,13 @@
           display:block!important;
       }</style></aside>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a>totals_with_error <span class="ot">&lt;-</span> <span class="fu">c</span>(sales<span class="sc">$</span>Total, <span class="dv">500000</span>)   <span class="co"># one data entry error</span></span>
-<span id="cb34-2"><a aria-label="2"></a></span>
-<span id="cb34-3"><a aria-label="3"></a><span class="fu">tibble</span>(</span>
-<span id="cb34-4"><a aria-label="4"></a>  <span class="at">statistic =</span> <span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"Median"</span>),</span>
-<span id="cb34-5"><a aria-label="5"></a>  <span class="at">original  =</span> <span class="fu">c</span>(<span class="fu">mean</span>(sales<span class="sc">$</span>Total), <span class="fu">median</span>(sales<span class="sc">$</span>Total)),</span>
-<span id="cb34-6"><a aria-label="6"></a>  <span class="at">with_typo =</span> <span class="fu">c</span>(<span class="fu">mean</span>(totals_with_error), <span class="fu">median</span>(totals_with_error))</span>
-<span id="cb34-7"><a aria-label="7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>totals_with_error <span class="ot">&lt;-</span> <span class="fu">c</span>(sales<span class="sc">$</span>Total, <span class="dv">500000</span>)   <span class="co"># one data entry error</span></span>
+<span id="cb34-2"><a></a></span>
+<span id="cb34-3"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb34-4"><a></a>  <span class="at">statistic =</span> <span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"Median"</span>),</span>
+<span id="cb34-5"><a></a>  <span class="at">original  =</span> <span class="fu">c</span>(<span class="fu">mean</span>(sales<span class="sc">$</span>Total), <span class="fu">median</span>(sales<span class="sc">$</span>Total)),</span>
+<span id="cb34-6"><a></a>  <span class="at">with_typo =</span> <span class="fu">c</span>(<span class="fu">mean</span>(totals_with_error), <span class="fu">median</span>(totals_with_error))</span>
+<span id="cb34-7"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 2 × 3
 #&gt;   statistic original with_typo
@@ -882,13 +879,13 @@
 <section id="comparing-groups" class="slide level2">
 <h2>Comparing groups</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb36-4"><a aria-label="4"></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
-<span id="cb36-5"><a aria-label="5"></a>    <span class="at">mean_total   =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Total), <span class="dv">2</span>),</span>
-<span id="cb36-6"><a aria-label="6"></a>    <span class="at">median_total =</span> <span class="fu">round</span>(<span class="fu">median</span>(Total), <span class="dv">2</span>)</span>
-<span id="cb36-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb36-4"><a></a>    <span class="at">transactions =</span> <span class="fu">n</span>(),</span>
+<span id="cb36-5"><a></a>    <span class="at">mean_total   =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Total), <span class="dv">2</span>),</span>
+<span id="cb36-6"><a></a>    <span class="at">median_total =</span> <span class="fu">round</span>(<span class="fu">median</span>(Total), <span class="dv">2</span>)</span>
+<span id="cb36-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   Branch transactions mean_total median_total
@@ -910,13 +907,13 @@
 <div class="callout-content">
 <p>Find the mean and median <code>Rating</code> for each product line, sorted from highest mean down.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb38-4"><a aria-label="4"></a>    <span class="at">mean_rating   =</span> <span class="fu">round</span>(<span class="fu">mean</span>(______), <span class="dv">2</span>),</span>
-<span id="cb38-5"><a aria-label="5"></a>    <span class="at">median_rating =</span> <span class="fu">round</span>(<span class="fu">median</span>(______), <span class="dv">2</span>)</span>
-<span id="cb38-6"><a aria-label="6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb38-7"><a aria-label="7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">______</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb38-4"><a></a>    <span class="at">mean_rating   =</span> <span class="fu">round</span>(<span class="fu">mean</span>(______), <span class="dv">2</span>),</span>
+<span id="cb38-5"><a></a>    <span class="at">median_rating =</span> <span class="fu">round</span>(<span class="fu">median</span>(______), <span class="dv">2</span>)</span>
+<span id="cb38-6"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb38-7"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -932,11 +929,11 @@
 <section id="range" class="slide level2">
 <h2>Range</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a><span class="fu">range</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">range</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1]   10.6785 1042.6500</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="fu">max</span>(sales<span class="sc">$</span>Total) <span class="sc">-</span> <span class="fu">min</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">max</span>(sales<span class="sc">$</span>Total) <span class="sc">-</span> <span class="fu">min</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1031.972</code></pre>
 </div>
@@ -946,11 +943,11 @@
 <section id="variance-and-standard-deviation" class="slide level2">
 <h2>Variance and standard deviation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="fu">var</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">var</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 60459.6</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a><span class="fu">sd</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">sd</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 245.8853</code></pre>
 </div>
@@ -964,12 +961,12 @@
 <p>Which varies more - transaction totals, or customer ratings?</p>
 <p>You cannot compare their standard deviations directly. One is currency running into the hundreds; the other is a 1-to-10 scale. The <strong>coefficient of variation</strong> expresses the standard deviation as a percentage of the mean, cancelling the units:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb47-3"><a aria-label="3"></a>    <span class="at">cv_total    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total)   <span class="sc">/</span> <span class="fu">mean</span>(Total)    <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
-<span id="cb47-4"><a aria-label="4"></a>    <span class="at">cv_rating   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Rating)  <span class="sc">/</span> <span class="fu">mean</span>(Rating)   <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
-<span id="cb47-5"><a aria-label="5"></a>    <span class="at">cv_quantity =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Quantity)<span class="sc">/</span> <span class="fu">mean</span>(Quantity) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb47-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb47-3"><a></a>    <span class="at">cv_total    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total)   <span class="sc">/</span> <span class="fu">mean</span>(Total)    <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb47-4"><a></a>    <span class="at">cv_rating   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Rating)  <span class="sc">/</span> <span class="fu">mean</span>(Rating)   <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb47-5"><a></a>    <span class="at">cv_quantity =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Quantity)<span class="sc">/</span> <span class="fu">mean</span>(Quantity) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb47-6"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   cv_total cv_rating cv_quantity
@@ -998,13 +995,13 @@
 <section id="comparing-consistency-between-groups" class="slide level2">
 <h2>Comparing consistency between groups</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
-<span id="cb49-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb49-4"><a aria-label="4"></a>    <span class="at">mean_total =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Total), <span class="dv">2</span>),</span>
-<span id="cb49-5"><a aria-label="5"></a>    <span class="at">sd_total   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total), <span class="dv">2</span>),</span>
-<span id="cb49-6"><a aria-label="6"></a>    <span class="at">cv_percent =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total) <span class="sc">/</span> <span class="fu">mean</span>(Total) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb49-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a></a>  <span class="fu">group_by</span>(Branch) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb49-4"><a></a>    <span class="at">mean_total =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Total), <span class="dv">2</span>),</span>
+<span id="cb49-5"><a></a>    <span class="at">sd_total   =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total), <span class="dv">2</span>),</span>
+<span id="cb49-6"><a></a>    <span class="at">cv_percent =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Total) <span class="sc">/</span> <span class="fu">mean</span>(Total) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb49-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
 #&gt;   Branch mean_total sd_total cv_percent
@@ -1053,7 +1050,7 @@
 <h1>6. Percentiles, quartiles and outliers</h1>
 <p>A <strong>percentile</strong> is the value below which a given percentage of the data falls. The 75th percentile is the value 75 percent of transactions come in under.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a><span class="fu">quantile</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">quantile</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;        0%       25%       50%       75%      100% 
 #&gt;   10.6785  124.4224  253.8480  471.3502 1042.6500</code></pre>
@@ -1062,7 +1059,7 @@
 <p>Those five numbers are the <strong>five-number summary</strong>, and they are exactly what a boxplot draws. The 25th, 50th and 75th percentiles are the first, second and third <strong>quartiles</strong> because they cut the data into four equal parts.</p>
 <p>You can ask for any percentile:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.10</span>, <span class="fl">0.50</span>, <span class="fl">0.90</span>, <span class="fl">0.99</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.10</span>, <span class="fl">0.50</span>, <span class="fl">0.90</span>, <span class="fl">0.99</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;      10%      50%      90%      99% 
 #&gt;  68.1030 253.8480 718.9108 950.2657</code></pre>
@@ -1073,7 +1070,7 @@
 <section id="the-interquartile-range" class="slide level2">
 <h2>The interquartile range</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="fu">IQR</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">IQR</span>(sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 346.9279</code></pre>
 </div>
@@ -1083,14 +1080,14 @@
 <section id="the-1.5-x-iqr-rule" class="slide level2">
 <h2>The 1.5 x IQR rule</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-label="1"></a>q1  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="fl">0.25</span>)</span>
-<span id="cb57-2"><a aria-label="2"></a>q3  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="fl">0.75</span>)</span>
-<span id="cb57-3"><a aria-label="3"></a>iqr <span class="ot">&lt;-</span> <span class="fu">IQR</span>(sales<span class="sc">$</span>Total)</span>
-<span id="cb57-4"><a aria-label="4"></a></span>
-<span id="cb57-5"><a aria-label="5"></a>lower_bound <span class="ot">&lt;-</span> q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr</span>
-<span id="cb57-6"><a aria-label="6"></a>upper_bound <span class="ot">&lt;-</span> q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr</span>
-<span id="cb57-7"><a aria-label="7"></a></span>
-<span id="cb57-8"><a aria-label="8"></a><span class="fu">tibble</span>(q1, q3, iqr, lower_bound, upper_bound)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>q1  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="fl">0.25</span>)</span>
+<span id="cb57-2"><a></a>q3  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Total, <span class="fl">0.75</span>)</span>
+<span id="cb57-3"><a></a>iqr <span class="ot">&lt;-</span> <span class="fu">IQR</span>(sales<span class="sc">$</span>Total)</span>
+<span id="cb57-4"><a></a></span>
+<span id="cb57-5"><a></a>lower_bound <span class="ot">&lt;-</span> q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr</span>
+<span id="cb57-6"><a></a>upper_bound <span class="ot">&lt;-</span> q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr</span>
+<span id="cb57-7"><a></a></span>
+<span id="cb57-8"><a></a><span class="fu">tibble</span>(q1, q3, iqr, lower_bound, upper_bound)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 5
 #&gt;      q1    q3   iqr lower_bound upper_bound
@@ -1099,19 +1096,19 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-label="1"></a>outliers <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
-<span id="cb59-2"><a aria-label="2"></a>  <span class="fu">filter</span>(Total <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> Total <span class="sc">&gt;</span> upper_bound)</span>
-<span id="cb59-3"><a aria-label="3"></a></span>
-<span id="cb59-4"><a aria-label="4"></a><span class="fu">nrow</span>(outliers)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>outliers <span class="ot">&lt;-</span> sales <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">filter</span>(Total <span class="sc">&lt;</span> lower_bound <span class="sc">|</span> Total <span class="sc">&gt;</span> upper_bound)</span>
+<span id="cb59-3"><a></a></span>
+<span id="cb59-4"><a></a><span class="fu">nrow</span>(outliers)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 9</code></pre>
 </div>
 </div>
 <p>The <code>|</code> means <strong>or</strong>: keep a row if it is below the lower bound <em>or</em> above the upper bound.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-label="1"></a>outliers <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a aria-label="2"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Quantity, Total) <span class="sc">|&gt;</span></span>
-<span id="cb61-3"><a aria-label="3"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>outliers <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Invoice ID</span><span class="st">`</span>, Branch, <span class="st">`</span><span class="at">Product line</span><span class="st">`</span>, Quantity, Total) <span class="sc">|&gt;</span></span>
+<span id="cb61-3"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 9 × 5
 #&gt;   `Invoice ID` Branch `Product line`      Quantity Total
@@ -1178,13 +1175,13 @@
 <div class="callout-content">
 <p>Apply the same IQR outlier check to <code>Rating</code>. Before running it, predict how many outliers you will find.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-label="1"></a>r_q1  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Rating, ____)</span>
-<span id="cb63-2"><a aria-label="2"></a>r_q3  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Rating, ____)</span>
-<span id="cb63-3"><a aria-label="3"></a>r_iqr <span class="ot">&lt;-</span> <span class="fu">IQR</span>(sales<span class="sc">$</span>______)</span>
-<span id="cb63-4"><a aria-label="4"></a></span>
-<span id="cb63-5"><a aria-label="5"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb63-6"><a aria-label="6"></a>  <span class="fu">filter</span>(Rating <span class="sc">&lt;</span> r_q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> r_iqr <span class="sc">|</span> Rating <span class="sc">&gt;</span> r_q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> r_iqr) <span class="sc">|&gt;</span></span>
-<span id="cb63-7"><a aria-label="7"></a>  <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>r_q1  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Rating, ____)</span>
+<span id="cb63-2"><a></a>r_q3  <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sales<span class="sc">$</span>Rating, ____)</span>
+<span id="cb63-3"><a></a>r_iqr <span class="ot">&lt;-</span> <span class="fu">IQR</span>(sales<span class="sc">$</span>______)</span>
+<span id="cb63-4"><a></a></span>
+<span id="cb63-5"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb63-6"><a></a>  <span class="fu">filter</span>(Rating <span class="sc">&lt;</span> r_q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> r_iqr <span class="sc">|</span> Rating <span class="sc">&gt;</span> r_q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> r_iqr) <span class="sc">|&gt;</span></span>
+<span id="cb63-7"><a></a>  <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Was your prediction right? If the answer surprised you, think about what the histogram of <code>Rating</code> looked like in section 3.</p>
 </div>
@@ -1207,12 +1204,12 @@
 <li><strong>Zero</strong>: symmetric.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb64-3"><a aria-label="3"></a>    <span class="at">skew_total    =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Total), <span class="dv">3</span>),</span>
-<span id="cb64-4"><a aria-label="4"></a>    <span class="at">skew_rating   =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Rating), <span class="dv">3</span>),</span>
-<span id="cb64-5"><a aria-label="5"></a>    <span class="at">skew_quantity =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Quantity), <span class="dv">3</span>)</span>
-<span id="cb64-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb64-3"><a></a>    <span class="at">skew_total    =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Total), <span class="dv">3</span>),</span>
+<span id="cb64-4"><a></a>    <span class="at">skew_rating   =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Rating), <span class="dv">3</span>),</span>
+<span id="cb64-5"><a></a>    <span class="at">skew_quantity =</span> <span class="fu">round</span>(<span class="fu">skewness</span>(Quantity), <span class="dv">3</span>)</span>
+<span id="cb64-6"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   skew_total skew_rating skew_quantity
@@ -1223,15 +1220,15 @@
 <p>Rough guide: below 0.5 in absolute value is fairly symmetric; 0.5 to 1 is moderately skewed; above 1 is strongly skewed.</p>
 <p>Now check the number agrees with the picture, which you should always do:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
-<span id="cb66-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb66-3"><a aria-label="3"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(Total)),</span>
-<span id="cb66-4"><a aria-label="4"></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb66-5"><a aria-label="5"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(Total)),</span>
-<span id="cb66-6"><a aria-label="6"></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb66-7"><a aria-label="7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction totals, with mean (solid) and median (dashed)"</span>,</span>
-<span id="cb66-8"><a aria-label="8"></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
-<span id="cb66-9"><a aria-label="9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Total)) <span class="sc">+</span></span>
+<span id="cb66-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb66-3"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(Total)),</span>
+<span id="cb66-4"><a></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb66-5"><a></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(Total)),</span>
+<span id="cb66-6"><a></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb66-7"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Transaction totals, with mean (solid) and median (dashed)"</span>,</span>
+<span id="cb66-8"><a></a>       <span class="at">x =</span> <span class="st">"Transaction total"</span>, <span class="at">y =</span> <span class="st">"Number of transactions"</span>) <span class="sc">+</span></span>
+<span id="cb66-9"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/shape_skew_plot-1.png" width="672" class="r-stretch"><p>The solid mean line sitting to the right of the dashed median line is the visual signature of right skew.</p>
@@ -1240,11 +1237,11 @@
 <h2>Kurtosis</h2>
 <p>Kurtosis measures how much of the distribution lives in the tails - how prone it is to extreme values.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb67-3"><a aria-label="3"></a>    <span class="at">kurt_total  =</span> <span class="fu">round</span>(<span class="fu">kurtosis</span>(Total), <span class="dv">3</span>),</span>
-<span id="cb67-4"><a aria-label="4"></a>    <span class="at">kurt_rating =</span> <span class="fu">round</span>(<span class="fu">kurtosis</span>(Rating), <span class="dv">3</span>)</span>
-<span id="cb67-5"><a aria-label="5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb67-3"><a></a>    <span class="at">kurt_total  =</span> <span class="fu">round</span>(<span class="fu">kurtosis</span>(Total), <span class="dv">3</span>),</span>
+<span id="cb67-4"><a></a>    <span class="at">kurt_rating =</span> <span class="fu">round</span>(<span class="fu">kurtosis</span>(Rating), <span class="dv">3</span>)</span>
+<span id="cb67-5"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 2
 #&gt;   kurt_total kurt_rating
@@ -1274,12 +1271,12 @@
 <h2>Q-Q plots - a better test of normality</h2>
 <p>Skewness and kurtosis compress the whole shape into two numbers. A <strong>Q-Q plot</strong> shows the entire comparison at once, plotting your data against what a perfect normal distribution would produce. If the data were normal, the points would sit on the diagonal line.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">sample =</span> Rating)) <span class="sc">+</span></span>
-<span id="cb69-2"><a aria-label="2"></a>  <span class="fu">stat_qq</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb69-3"><a aria-label="3"></a>  <span class="fu">stat_qq_line</span>(<span class="at">colour =</span> <span class="st">"#1A1A1A"</span>) <span class="sc">+</span></span>
-<span id="cb69-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q plot: Rating"</span>,</span>
-<span id="cb69-5"><a aria-label="5"></a>       <span class="at">x =</span> <span class="st">"Theoretical normal quantiles"</span>, <span class="at">y =</span> <span class="st">"Observed ratings"</span>) <span class="sc">+</span></span>
-<span id="cb69-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">sample =</span> Rating)) <span class="sc">+</span></span>
+<span id="cb69-2"><a></a>  <span class="fu">stat_qq</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb69-3"><a></a>  <span class="fu">stat_qq_line</span>(<span class="at">colour =</span> <span class="st">"#1A1A1A"</span>) <span class="sc">+</span></span>
+<span id="cb69-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q plot: Rating"</span>,</span>
+<span id="cb69-5"><a></a>       <span class="at">x =</span> <span class="st">"Theoretical normal quantiles"</span>, <span class="at">y =</span> <span class="st">"Observed ratings"</span>) <span class="sc">+</span></span>
+<span id="cb69-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1289,12 +1286,12 @@
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a aria-label="1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">sample =</span> Total)) <span class="sc">+</span></span>
-<span id="cb70-2"><a aria-label="2"></a>  <span class="fu">stat_qq</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb70-3"><a aria-label="3"></a>  <span class="fu">stat_qq_line</span>(<span class="at">colour =</span> <span class="st">"#1A1A1A"</span>) <span class="sc">+</span></span>
-<span id="cb70-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q plot: Total"</span>,</span>
-<span id="cb70-5"><a aria-label="5"></a>       <span class="at">x =</span> <span class="st">"Theoretical normal quantiles"</span>, <span class="at">y =</span> <span class="st">"Observed totals"</span>) <span class="sc">+</span></span>
-<span id="cb70-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">sample =</span> Total)) <span class="sc">+</span></span>
+<span id="cb70-2"><a></a>  <span class="fu">stat_qq</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb70-3"><a></a>  <span class="fu">stat_qq_line</span>(<span class="at">colour =</span> <span class="st">"#1A1A1A"</span>) <span class="sc">+</span></span>
+<span id="cb70-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q plot: Total"</span>,</span>
+<span id="cb70-5"><a></a>       <span class="at">x =</span> <span class="st">"Theoretical normal quantiles"</span>, <span class="at">y =</span> <span class="st">"Observed totals"</span>) <span class="sc">+</span></span>
+<span id="cb70-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1367,7 +1364,7 @@
 <section id="covariance" class="slide level2">
 <h2>Covariance</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a aria-label="1"></a><span class="fu">cov</span>(sales<span class="sc">$</span>Quantity, sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a><span class="fu">cov</span>(sales<span class="sc">$</span>Quantity, sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 507.141</code></pre>
 </div>
@@ -1378,7 +1375,7 @@
 <h2>Correlation</h2>
 <p>Correlation fixes this by standardising covariance onto a fixed scale from -1 to +1:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-label="1"></a><span class="fu">cor</span>(sales<span class="sc">$</span>Quantity, sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a><span class="fu">cor</span>(sales<span class="sc">$</span>Quantity, sales<span class="sc">$</span>Total)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.7055102</code></pre>
 </div>
@@ -1421,10 +1418,10 @@
 <section id="a-correlation-matrix" class="slide level2">
 <h2>A correlation matrix</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb75-2"><a aria-label="2"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, Quantity, Total, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, Rating) <span class="sc">|&gt;</span></span>
-<span id="cb75-3"><a aria-label="3"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
-<span id="cb75-4"><a aria-label="4"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb75-2"><a></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Unit price</span><span class="st">`</span>, Quantity, Total, <span class="st">`</span><span class="at">gross income</span><span class="st">`</span>, Rating) <span class="sc">|&gt;</span></span>
+<span id="cb75-3"><a></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb75-4"><a></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;              Unit price Quantity  Total gross income Rating
 #&gt; Unit price        1.000    0.011  0.634        0.634 -0.009
@@ -1471,22 +1468,22 @@
 <h2>Correlation only sees straight lines</h2>
 <p><code>cor()</code> measures <strong>linear</strong> association. A correlation near zero does not mean “no relationship” - it means “no straight-line relationship”.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a aria-label="1"></a>demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb77-2"><a aria-label="2"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">200</span>),</span>
-<span id="cb77-3"><a aria-label="3"></a>  <span class="at">y =</span> x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb77-4"><a aria-label="4"></a>)</span>
-<span id="cb77-5"><a aria-label="5"></a></span>
-<span id="cb77-6"><a aria-label="6"></a><span class="fu">cor</span>(demo<span class="sc">$</span>x, demo<span class="sc">$</span>y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>demo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb77-2"><a></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">200</span>),</span>
+<span id="cb77-3"><a></a>  <span class="at">y =</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb77-4"><a></a>)</span>
+<span id="cb77-5"><a></a></span>
+<span id="cb77-6"><a></a><span class="fu">cor</span>(demo<span class="sc">$</span>x, demo<span class="sc">$</span>y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1.692728e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a aria-label="1"></a><span class="fu">ggplot</span>(demo, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb79-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
-<span id="cb79-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Correlation is about zero, but y is completely determined by x"</span>,</span>
-<span id="cb79-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
-<span id="cb79-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a><span class="fu">ggplot</span>(demo, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb79-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>) <span class="sc">+</span></span>
+<span id="cb79-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Correlation is about zero, but y is completely determined by x"</span>,</span>
+<span id="cb79-4"><a></a>       <span class="at">x =</span> <span class="st">"x"</span>, <span class="at">y =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb79-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/assoc_nonlinear_plot-1.png" width="672" class="r-stretch"><p>The correlation is essentially zero. Yet <code>y</code> is perfectly predictable from <code>x</code> - you could not ask for a stronger relationship.</p>
@@ -1517,12 +1514,12 @@
 <div class="callout-content">
 <p>Find the correlation between <code>Unit price</code> and <code>Rating</code>, then plot it to check the number is telling the truth.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a aria-label="1"></a><span class="fu">cor</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">______</span><span class="st">`</span>, sales<span class="sc">$</span>______)</span>
-<span id="cb80-2"><a aria-label="2"></a></span>
-<span id="cb80-3"><a aria-label="3"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">______</span><span class="st">`</span>, <span class="at">y =</span> ______)) <span class="sc">+</span></span>
-<span id="cb80-4"><a aria-label="4"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb80-5"><a aria-label="5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unit price against customer rating"</span>) <span class="sc">+</span></span>
-<span id="cb80-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a><span class="fu">cor</span>(sales<span class="sc">$</span><span class="st">`</span><span class="at">______</span><span class="st">`</span>, sales<span class="sc">$</span>______)</span>
+<span id="cb80-2"><a></a></span>
+<span id="cb80-3"><a></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">______</span><span class="st">`</span>, <span class="at">y =</span> ______)) <span class="sc">+</span></span>
+<span id="cb80-4"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#A83296"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb80-5"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unit price against customer rating"</span>) <span class="sc">+</span></span>
+<span id="cb80-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1535,14 +1532,14 @@
 <p>The average transaction value you calculated is a fact about your sample. Collect a different 1,000 transactions next month and you will get a different number. So how much should you trust the one you have?</p>
 <p>Here is a way to find out using nothing but the data itself. Take your 1,000 transactions, draw 1,000 of them <strong>at random with replacement</strong>, and compute the mean. Do it two thousand times.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
-<span id="cb81-2"><a aria-label="2"></a></span>
-<span id="cb81-3"><a aria-label="3"></a>boot_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, {</span>
-<span id="cb81-4"><a aria-label="4"></a>  resample <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="fu">nrow</span>(sales), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-5"><a aria-label="5"></a>  <span class="fu">mean</span>(resample)</span>
-<span id="cb81-6"><a aria-label="6"></a>})</span>
-<span id="cb81-7"><a aria-label="7"></a></span>
-<span id="cb81-8"><a aria-label="8"></a><span class="fu">quantile</span>(boot_means, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb81-2"><a></a></span>
+<span id="cb81-3"><a></a>boot_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, {</span>
+<span id="cb81-4"><a></a>  resample <span class="ot">&lt;-</span> <span class="fu">sample</span>(sales<span class="sc">$</span>Total, <span class="at">size =</span> <span class="fu">nrow</span>(sales), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-5"><a></a>  <span class="fu">mean</span>(resample)</span>
+<span id="cb81-6"><a></a>})</span>
+<span id="cb81-7"><a></a></span>
+<span id="cb81-8"><a></a><span class="fu">quantile</span>(boot_means, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;     2.5%    97.5% 
 #&gt; 307.6260 338.2253</code></pre>
@@ -1550,14 +1547,14 @@
 </div>
 <p>That interval is where the true average transaction value plausibly sits.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-label="1"></a><span class="fu">tibble</span>(<span class="at">boot_mean =</span> boot_means) <span class="sc">|&gt;</span></span>
-<span id="cb83-2"><a aria-label="2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> boot_mean)) <span class="sc">+</span></span>
-<span id="cb83-3"><a aria-label="3"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb83-4"><a aria-label="4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Total),</span>
-<span id="cb83-5"><a aria-label="5"></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb83-6"><a aria-label="6"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2,000 resampled averages; the solid line is our actual sample mean"</span>,</span>
-<span id="cb83-7"><a aria-label="7"></a>       <span class="at">x =</span> <span class="st">"Resampled mean transaction value"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb83-8"><a aria-label="8"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a><span class="fu">tibble</span>(<span class="at">boot_mean =</span> boot_means) <span class="sc">|&gt;</span></span>
+<span id="cb83-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> boot_mean)) <span class="sc">+</span></span>
+<span id="cb83-3"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#A83296"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb83-4"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(sales<span class="sc">$</span>Total),</span>
+<span id="cb83-5"><a></a>             <span class="at">colour =</span> <span class="st">"#1A1A1A"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb83-6"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2,000 resampled averages; the solid line is our actual sample mean"</span>,</span>
+<span id="cb83-7"><a></a>       <span class="at">x =</span> <span class="st">"Resampled mean transaction value"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb83-8"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="Descriptive-Statistics_files/figure-html/bootstrap_plot-1.png" width="672" class="r-stretch"><p>Two things about that histogram deserve attention.</p>
@@ -1571,33 +1568,33 @@
 <p>These have less scaffolding. Work them out from what is above.</p>
 <p><strong>Exercise 1 - Branch performance report.</strong> Produce one table showing, for each branch: number of transactions, total revenue, mean and median transaction value, standard deviation, and coefficient of variation. Sort by total revenue, highest first.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a aria-label="1"></a>sales <span class="sc">|&gt;</span></span>
-<span id="cb84-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(______) <span class="sc">|&gt;</span></span>
-<span id="cb84-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb84-4"><a aria-label="4"></a>    <span class="at">transactions  =</span> ____,</span>
-<span id="cb84-5"><a aria-label="5"></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(______),</span>
-<span id="cb84-6"><a aria-label="6"></a>    <span class="at">mean_sale     =</span> <span class="fu">round</span>(<span class="fu">mean</span>(______), <span class="dv">2</span>),</span>
-<span id="cb84-7"><a aria-label="7"></a>    <span class="at">median_sale   =</span> <span class="fu">round</span>(<span class="fu">median</span>(______), <span class="dv">2</span>),</span>
-<span id="cb84-8"><a aria-label="8"></a>    <span class="at">sd_sale       =</span> <span class="fu">round</span>(<span class="fu">sd</span>(______), <span class="dv">2</span>),</span>
-<span id="cb84-9"><a aria-label="9"></a>    <span class="at">cv_percent    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(______) <span class="sc">/</span> <span class="fu">mean</span>(______) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
-<span id="cb84-10"><a aria-label="10"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb84-11"><a aria-label="11"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a>sales <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a></a>  <span class="fu">group_by</span>(______) <span class="sc">|&gt;</span></span>
+<span id="cb84-3"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb84-4"><a></a>    <span class="at">transactions  =</span> ____,</span>
+<span id="cb84-5"><a></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(______),</span>
+<span id="cb84-6"><a></a>    <span class="at">mean_sale     =</span> <span class="fu">round</span>(<span class="fu">mean</span>(______), <span class="dv">2</span>),</span>
+<span id="cb84-7"><a></a>    <span class="at">median_sale   =</span> <span class="fu">round</span>(<span class="fu">median</span>(______), <span class="dv">2</span>),</span>
+<span id="cb84-8"><a></a>    <span class="at">sd_sale       =</span> <span class="fu">round</span>(<span class="fu">sd</span>(______), <span class="dv">2</span>),</span>
+<span id="cb84-9"><a></a>    <span class="at">cv_percent    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(______) <span class="sc">/</span> <span class="fu">mean</span>(______) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb84-10"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb84-11"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(______))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 2 - Product line profitability.</strong> Which product line generates the most total gross income? Is it also the one with the highest average gross income per transaction? Explain what a difference between those two answers would mean for the business.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 3 - Satisfaction by payment method.</strong> Compare the distribution of <code>Rating</code> across the three payment methods, using both a summary table and a boxplot. Do the differences look large enough to matter?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 4 - Shape investigation.</strong> Choose <code>Unit price</code>. Calculate its mean, median, skewness and kurtosis, then draw a histogram and a Q-Q plot. Write two or three sentences describing its shape and saying whether the mean or the median is the better summary.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Exercise 5 - A question of your own.</strong> Look at the columns available and ask a question this dataset can answer that has not been asked above. Answer it with a table and one graph, and write down what a manager should do differently as a result.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Solutions are in <code>Descriptive-Statistics-SOLUTIONS.Rmd</code>. Attempt every exercise before opening it - reading a solution feels like learning and mostly is not.</p>
 </section>
